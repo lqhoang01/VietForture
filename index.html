@@ -1,20 +1,43 @@
+<!doctype html>
 <html lang="vi">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Vietforture – Công ty Cổ phần Việt Thịnh Vượng</title>
-  <meta name="description" content="Công ty Cổ phần Việt Thịnh Vượng – Thịnh Vượng - Vươn Tầm" />
-  <link rel="preload" href="avatar.png" as="image"/>
-  <link rel="preload" href="dragon-red.png" as="image"/>
+  <meta name="description" content="Công ty Cổ phần Việt Thịnh Vượng – Thịnh Vượng - Vươn Tầm. Dịch vụ tín dụng thế chấp và ký túc xá tiện nghi, minh bạch." />
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="https://vietforture.example/" />
+
+  <!-- Icons -->
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+  <!-- Preloads (only critical assets) -->
   <link rel="preload" href="SVN-Mightiest.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="dragon-red.png" as="image" fetchpriority="high">
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="vi_VN">
+  <meta property="og:title" content="Vietforture – Công ty Cổ phần Việt Thịnh Vượng">
+  <meta property="og:description" content="Giải pháp tín dụng thế chấp minh bạch & hệ thống ký túc xá tiện nghi.">
+  <meta property="og:image" content="avatar.png">
+  <meta property="og:image:alt" content="Logo Vietforture">
+  <meta property="og:site_name" content="Vietforture">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <meta name="theme-color" content="#9b111e">
+
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <a class="skip-link" href="#main">Bỏ qua điều hướng</a>
+
   <!-- Header -->
   <header class="site-header" role="banner">
     <div class="container inner">
-      <a class="brand" id="brandHome" data-nav="gioithieu" href="#gioithieu" aria-label="Trang chủ">
-        <span class="logo-wrap"><img class="logo" src="avatar.png" alt="Vietforture logo" /></span>
+      <a class="brand" id="brandHome" data-nav="gioithieu" href="#gioithieu" aria-label="Trang chủ, về phần Giới thiệu">
+        <span class="logo-wrap"><img class="logo" src="avatar.png" alt="Logo Vietforture" /></span>
         <span class="brand-title">
           <span class="company">Công ty Cổ phần Việt Thịnh Vượng</span>
           <span class="motto">Thịnh Vượng - Vươn Tầm</span>
@@ -22,33 +45,44 @@
       </a>
       <nav aria-label="Điều hướng tabs">
         <ul class="tabs" role="tablist">
-          <li><button role="tab" class="tab is-active" data-nav="gioithieu" aria-controls="view-gioithieu">Giới Thiệu</button></li>
-          <li><button role="tab" class="tab" data-nav="dichvu" aria-controls="view-dichvu">Dịch Vụ</button></li>
-          <li><button role="tab" class="tab" data-nav="tuyendung" aria-controls="view-tuyendung">Tuyển Dụng</button></li>
-          <li><button role="tab" class="tab" data-nav="tintuc" aria-controls="view-tintuc">Tin Tức</button></li>
+          <li>
+            <button role="tab" class="tab is-active" id="tab-gioithieu" data-nav="gioithieu" aria-controls="view-gioithieu" aria-selected="true">Giới Thiệu</button>
+          </li>
+          <li>
+            <button role="tab" class="tab" id="tab-dichvu" data-nav="dichvu" aria-controls="view-dichvu" aria-selected="false">Dịch Vụ</button>
+          </li>
+          <li>
+            <button role="tab" class="tab" id="tab-tuyendung" data-nav="tuyendung" aria-controls="view-tuyendung" aria-selected="false">Tuyển Dụng</button>
+          </li>
+          <li>
+            <button role="tab" class="tab" id="tab-tintuc" data-nav="tintuc" aria-controls="view-tintuc" aria-selected="false">Tin Tức</button>
+          </li>
         </ul>
       </nav>
     </div>
   </header>
 
   <!-- Main (each section is a view; no long scroll) -->
-  <main id="app" class="container">
+  <main id="main" class="container" tabindex="-1">
     <!-- View: Giới Thiệu (FULL SCREEN) -->
-    <section id="view-gioithieu" class="view is-visible" role="tabpanel">
+    <section id="view-gioithieu" class="view is-visible" role="tabpanel" aria-labelledby="tab-gioithieu">
       <div class="panel hero">
         <div class="hero-inner">
-          <img id="dragonBg" src="dragon-red.png" alt="" aria-hidden="true"/>
-          <h1 class="headline" id="headline"><span class="line top">VIETFORTURE</span><span class="line bottom">XIN CHÀO</span></h1>
+          <img id="dragonBg" src="dragon-red.png" alt="" aria-hidden="true" />
+          <h1 class="headline" id="headline">
+            <span class="line top">VIETFORTURE</span>
+            <span class="line bottom">XIN CHÀO</span>
+          </h1>
           <div class="cta-row">
-            <button class="btn alt" data-nav="tindung">Tín Dụng</button>
-            <button class="btn outline" data-nav="kitucxa">Kí Túc Xá</button>
+            <button class="btn alt" data-nav="tindung" aria-controls="view-tindung">Tín Dụng</button>
+            <button class="btn outline" data-nav="kitucxa" aria-controls="view-kitucxa">Kí Túc Xá</button>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- View: Dịch Vụ (tạm thời để trống theo yêu cầu) -->
-    <section id="view-dichvu" class="view" role="tabpanel">
+    <!-- View: Dịch Vụ -->
+    <section id="view-dichvu" class="view" role="tabpanel" aria-labelledby="tab-dichvu">
       <div class="panel empty-panel">
         <h2 class="view-title sr-only">Dịch Vụ</h2>
         <div class="empty-note">(Đang cập nhật nội dung theo brand guideline)</div>
@@ -56,7 +90,7 @@
     </section>
 
     <!-- View: Tuyển Dụng -->
-    <section id="view-tuyendung" class="view" role="tabpanel">
+    <section id="view-tuyendung" class="view" role="tabpanel" aria-labelledby="tab-tuyendung">
       <div class="panel">
         <h2 class="view-title">Tuyển Dụng</h2>
         <div class="jobs">
@@ -75,7 +109,7 @@
     </section>
 
     <!-- View: Tin Tức -->
-    <section id="view-tintuc" class="view" role="tabpanel">
+    <section id="view-tintuc" class="view" role="tabpanel" aria-labelledby="tab-tintuc">
       <div class="panel">
         <h2 class="view-title">Tin Tức</h2>
         <div class="news list">
@@ -93,8 +127,8 @@
           <h2>Giải pháp <span>tín dụng thế chấp</span></h2>
           <p>Minh bạch · Bảo mật · Quy trình rõ ràng</p>
           <div class="cta-row">
-            <button class="btn alt lg js-open-consult">Yêu cầu tư vấn</button>
-            <button class="btn outline lg" data-nav="tintuc">Xem thêm tin tức</button>
+            <button class="btn alt lg js-open-consult" aria-haspopup="dialog" aria-controls="consultModal">Yêu cầu tư vấn</button>
+            <button class="btn outline lg" data-nav="tintuc" aria-controls="view-tintuc">Xem thêm tin tức</button>
           </div>
         </div>
       </div>
@@ -113,20 +147,21 @@
             <div class="value">3–60 tháng</div>
           </div>
         </div>
-        <div class="accordion">
+        <div class="accordion" role="region" aria-label="Câu hỏi thường gặp tín dụng">
           <div class="acc-item">
-            <button class="acc-head">Hồ sơ cần gì?<span class="caret"></span></button>
-            <div class="acc-content"><p>CMND/CCCD, Sổ hộ khẩu/KT3, giấy tờ tài sản, thu nhập (nếu có).</p></div>
+            <button class="acc-head" aria-expanded="false">Hồ sơ cần gì?<span class="caret" aria-hidden="true"></span></button>
+            <div class="acc-content" hidden><p>CMND/CCCD, Sổ hộ khẩu/KT3, giấy tờ tài sản, thu nhập (nếu có).</p></div>
           </div>
           <div class="acc-item">
-            <button class="acc-head">Quy trình tóm tắt<span class="caret"></span></button>
-            <div class="acc-content"><ol><li>Đăng ký tư vấn</li><li>Thẩm định</li><li>Ký hợp đồng & giải ngân</li></ol></div>
+            <button class="acc-head" aria-expanded="false">Quy trình tóm tắt<span class="caret" aria-hidden="true"></span></button>
+            <div class="acc-content" hidden><ol><li>Đăng ký tư vấn</li><li>Thẩm định</li><li>Ký hợp đồng & giải ngân</li></ol></div>
           </div>
           <div class="acc-item">
-            <button class="acc-head">Phí & lãi suất<span class="caret"></span></button>
-            <div class="acc-content"><p>Tùy hồ sơ & tài sản đảm bảo. Liên hệ để nhận bảng mô phỏng chi tiết.</p></div>
+            <button class="acc-head" aria-expanded="false">Phí & lãi suất<span class="caret" aria-hidden="true"></span></button>
+            <div class="acc-content" hidden><p>Tùy hồ sơ & tài sản đảm bảo. Liên hệ để nhận bảng mô phỏng chi tiết.</p></div>
           </div>
         </div>
+        <p class="disclaimer">*Lãi suất chỉ mang tính tham chiếu và có thể thay đổi tùy hồ sơ. Không phải là cam kết cho vay. Vui lòng đọc kỹ điều khoản.</p>
       </div>
     </section>
 
@@ -137,8 +172,8 @@
           <h2>Kí túc xá <span>tiện nghi</span></h2>
           <p>An ninh · Vệ sinh · Hỗ trợ 24/7</p>
           <div class="cta-row">
-            <button class="btn alt lg js-open-dorm">Đăng ký chỗ ở</button>
-            <button class="btn outline lg" data-nav="tintuc">Xem phản hồi</button>
+            <button class="btn alt lg js-open-dorm" aria-haspopup="dialog" aria-controls="dormModal">Đăng ký chỗ ở</button>
+            <button class="btn outline lg" data-nav="tintuc" aria-controls="view-tintuc">Xem phản hồi</button>
           </div>
         </div>
       </div>
@@ -157,18 +192,18 @@
             <div class="value">Wifi · Giặt sấy · Bếp chung</div>
           </div>
         </div>
-        <div class="accordion">
+        <div class="accordion" role="region" aria-label="Câu hỏi thường gặp KTX">
           <div class="acc-item">
-            <button class="acc-head">Quy định chung<span class="caret"></span></button>
-            <div class="acc-content"><p>Giờ giấc, vệ sinh, an ninh – rõ ràng, dễ tuân thủ.</p></div>
+            <button class="acc-head" aria-expanded="false">Quy định chung<span class="caret" aria-hidden="true"></span></button>
+            <div class="acc-content" hidden><p>Giờ giấc, vệ sinh, an ninh – rõ ràng, dễ tuân thủ.</p></div>
           </div>
           <div class="acc-item">
-            <button class="acc-head">Hồ sơ đăng ký<span class="caret"></span></button>
-            <div class="acc-content"><p>CCCD, giấy xác nhận sinh viên/nhân viên (nếu có).</p></div>
+            <button class="acc-head" aria-expanded="false">Hồ sơ đăng ký<span class="caret" aria-hidden="true"></span></button>
+            <div class="acc-content" hidden><p>CCCD, giấy xác nhận sinh viên/nhân viên (nếu có).</p></div>
           </div>
           <div class="acc-item">
-            <button class="acc-head">Ưu đãi hiện có<span class="caret"></span></button>
-            <div class="acc-content"><p>Giảm 50% phí đặt cọc cho nhóm đăng ký từ 3 người.</p></div>
+            <button class="acc-head" aria-expanded="false">Ưu đãi hiện có<span class="caret" aria-hidden="true"></span></button>
+            <div class="acc-content" hidden><p>Giảm 50% phí đặt cọc cho nhóm đăng ký từ 3 người.</p></div>
           </div>
         </div>
       </div>
@@ -177,69 +212,94 @@
   </main>
 
   <!-- Corporate Footer (hiện ở mọi tab trừ Giới Thiệu) -->
-  <footer class="corp-footer">
-    <div class="container fgrid">
-      <div class="fcol">
-        <h4>Về chúng tôi</h4>
-        <p>© <span id="y"></span> Vietforture.</p>
-        <a href="#">Điều khoản & Điều kiện</a>
-      </div>
-      <div class="fcol">
-        <h4>Thông tin công ty</h4>
-        <ul class="fkv">
-          <li>Chủ sở hữu Website: <strong>Công ty Cổ phần Việt Thịnh Vượng</strong></li>
-          <li>Địa chỉ: <strong>(Điền địa chỉ)</strong></li>
-          <li>GPKD/MST: <strong>(Điền số) – (Ngày cấp) – (Nơi cấp)</strong></li>
-        </ul>
-      </div>
-      <div class="fcol">
-        <h4>Hotline</h4>
-        <ul class="fkv">
-          <li>CSKH: <a href="tel:0888679880">0888.679.880</a></li>
-          <li>Tư vấn sản phẩm: <a href="tel:0888363880">0888.363.880</a></li>
-        </ul>
-      </div>
-      <div class="fcol">
-        <h4>Mạng xã hội</h4>
-        <ul class="social">
-          <li><a href="#">Zalo</a></li>
-          <li><a href="#">Facebook</a></li>
-          <li><a href="#">TikTok</a></li>
-        </ul>
-      </div>
+<footer class="corp-footer" role="contentinfo">
+  <div class="container fgrid">
+    <div class="fcol">
+      <h4>Về chúng tôi</h4>
+      <p><strong>Công ty Cổ phần Việt Thịnh Vượng</strong></p>
+      <p>© <span id="y"></span> Vietforture.</p>
+      <a href="#">Điều khoản &amp; Điều kiện</a>
     </div>
-  </footer>
 
-  <!-- Modals: Tư vấn & Đăng ký chỗ ở (mẫu đẹp) -->
-  <div id="consultModal" class="modal" aria-hidden="true">
+    <div class="fcol">
+      <h4>Địa chỉ</h4>
+      <ul class="fkv">
+        <li><strong>Địa chỉ:</strong> (Điền địa chỉ)</li>
+        <li><strong>Mã số thuế:</strong> (Điền MST)</li>
+      </ul>
+    </div>
+
+    <div class="fcol">
+      <h4>Liên hệ</h4>
+      <ul class="fkv">
+        <li><strong>Số điện thoại:</strong> <a href="tel:0888679880">0888.679.880</a></li>
+        <li><strong>Email:</strong> <a href="mailto:contact@vietforture.com">contact@vietforture.com</a></li>
+        <li>(Để lại thông tin hộp thư)</li>
+      </ul>
+    </div>
+
+    <div class="fcol">
+      <h4>Mạng xã hội</h4>
+      <ul class="social">
+        <li><a href="#" rel="me">Facebook</a></li>
+        <li><a href="#" rel="me">Zalo</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+  <!-- Modals: Tư vấn & Đăng ký chỗ ở -->
+  <div id="consultModal" class="modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="consultTitle">
     <div class="modal-card">
-      <button class="close" data-close>&times;</button>
-      <h3>Yêu cầu tư vấn tín dụng</h3>
-      <form class="form-grid" onsubmit="event.preventDefault();alert('Đã gửi yêu cầu!');">
-        <label>Họ và tên<input required placeholder="Nguyễn Văn A"></label>
-        <label>Số điện thoại<input required type="tel" placeholder="09xx xxx xxx"></label>
-        <label>Email<input type="email" placeholder="email@domain.com"></label>
-        <label>Mục đích vay<select><option>Mua nhà</option><option>Mua ô tô</option><option>Vay tiêu dùng</option><option>Khác</option></select></label>
-        <label>Tài sản đảm bảo<select><option>Nhà/Đất</option><option>Ô tô</option><option>Sổ tiết kiệm</option><option>Khác</option></select></label>
-        <button class="btn alt">Gửi yêu cầu</button>
+      <button class="close" data-close aria-label="Đóng">&times;</button>
+      <h3 id="consultTitle">Yêu cầu tư vấn tín dụng</h3>
+      <form class="form-grid" novalidate>
+        <label>Họ và tên<input name="name" required placeholder="Nguyễn Văn A" autocomplete="name"></label>
+        <label>Số điện thoại<input name="phone" required type="tel" placeholder="09xx xxx xxx" inputmode="tel" autocomplete="tel"></label>
+        <label>Email<input name="email" type="email" placeholder="email@domain.com" autocomplete="email"></label>
+        <label>Mục đích vay<select name="purpose"><option>Mua nhà</option><option>Mua ô tô</option><option>Vay tiêu dùng</option><option>Khác</option></select></label>
+        <label>Tài sản đảm bảo<select name="collateral"><option>Nhà/Đất</option><option>Ô tô</option><option>Sổ tiết kiệm</option><option>Khác</option></select></label>
+        <button class="btn alt" type="submit">Gửi yêu cầu</button>
       </form>
     </div>
   </div>
 
-  <div id="dormModal" class="modal" aria-hidden="true">
+  <div id="dormModal" class="modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="dormTitle">
     <div class="modal-card">
-      <button class="close" data-close>&times;</button>
-      <h3>Đăng ký chỗ ở KTX</h3>
-      <form class="form-grid" onsubmit="event.preventDefault();alert('Đã gửi đăng ký!');">
-        <label>Họ và tên<input required placeholder="Trần Thị B"></label>
-        <label>Số điện thoại<input required type="tel" placeholder="09xx xxx xxx"></label>
-        <label>Khu vực<select><option>TP.HCM</option><option>Hà Nội</option><option>Đà Nẵng</option></select></label>
-        <label>Loại phòng<select><option>4 người</option><option>6 người</option><option>Khác</option></select></label>
-        <button class="btn alt">Đăng ký</button>
+      <button class="close" data-close aria-label="Đóng">&times;</button>
+      <h3 id="dormTitle">Đăng ký chỗ ở KTX</h3>
+      <form class="form-grid" novalidate>
+        <label>Họ và tên<input name="name" required placeholder="Trần Thị B" autocomplete="name"></label>
+        <label>Số điện thoại<input name="phone" required type="tel" placeholder="09xx xxx xxx" inputmode="tel" autocomplete="tel"></label>
+        <label>Khu vực<select name="city"><option>TP.HCM</option><option>Hà Nội</option><option>Đà Nẵng</option></select></label>
+        <label>Loại phòng<select name="room"><option>4 người</option><option>6 người</option><option>Khác</option></select></label>
+        <button class="btn alt" type="submit">Đăng ký</button>
       </form>
     </div>
   </div>
 
-  <script src="script.js"></script>
+  <noscript>
+    <div class="noscript">Trang web cần JavaScript để hoạt động đầy đủ. Vui lòng bật JavaScript.</div>
+  </noscript>
+
+  <script src="script.js" defer></script>
+
+  <!-- Structured data (Organization) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Công ty Cổ phần Việt Thịnh Vượng (Vietforture)",
+    "url": "https://vietforture.example/",
+    "logo": "https://vietforture.example/avatar.png",
+    "customerService": {
+      "@type": "ContactPoint",
+      "telephone": "+84-888-679-880",
+      "contactType": "customer service",
+      "areaServed": "VN",
+      "availableLanguage": ["vi", "en"]
+    }
+  }
+  </script>
 </body>
 </html>
