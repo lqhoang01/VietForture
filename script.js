@@ -1,14 +1,15 @@
-(function(){
-  // Year
-  document.getElementById('y').textContent = new Date().getFullYear();
+(() => {
+  'use strict';
 
-  // Header height sync (font dependent)
-  const header = document.querySelector('.site-header');
-  const setH = ()=> document.documentElement.style.setProperty('--header-h', (header.offsetHeight||80)+ 'px');
-  window.addEventListener('resize', setH); setH();
+  // Năm footer
+  const y = document.getElementById('y');
+  if (y) y.textContent = new Date().getFullYear();
 
-  // Tabs
-  const tabButtons = Array.from(document.querySelectorAll('.tab'));
+  // KHÔNG đồng bộ header height nữa -> giữ --header-h mặc định từ CSS
+  // (tránh layout nhảy khi Google Translate/toolbar xuất hiện)
+
+  // Tabs / Views
+  const tabs = Array.from(document.querySelectorAll('.tab'));
   const views = {
     gioithieu: document.getElementById('view-gioithieu'),
     dichvu: document.getElementById('view-dichvu'),
@@ -18,82 +19,84 @@
     kitucxa: document.getElementById('view-kitucxa')
   };
 
-  function show(el){ el?.classList.add('is-visible'); }
-  function hide(el){ el?.classList.remove('is-visible'); }
-
-  function runStagger(selector){
-    document.querySelectorAll(selector).forEach((el,i)=>{
-      el.classList.remove('show');
-      setTimeout(()=> el.classList.add('show'), 100*i);
+  function setTabState(name){
+    tabs.forEach(btn => {
+      const active = btn.dataset.nav === name;
+      btn.classList.toggle('is-active', active);
+      btn.setAttribute('aria-selected', active ? 'true' : 'false');
+      btn.setAttribute('tabindex', active ? '0' : '-1');
     });
   }
 
-  function animateHeadline(){
-    const h = document.getElementById('headline');
-    if (!h) return;
-    h.classList.remove('anim');
-    void h.offsetWidth;
-    h.classList.add('anim');
+  function show(name){
+    Object.entries(views).forEach(([k,el])=>{
+      if(!el) return;
+      const vis = (k===name);
+      el.classList.toggle('is-visible', vis);
+      el.toggleAttribute('hidden', !vis);
+    });
+    setTabState(['gioithieu','dichvu','tuyendung','tintuc'].includes(name) ? name : '');
   }
 
-
-  function activateTab(name){
-    tabButtons.forEach(b=> b.classList.toggle('is-active', b.dataset.nav===name));
-    Object.entries(views).forEach(([k,el])=> (k===name? el?.classList.add('is-visible') : el?.classList.remove('is-visible')));
-    if (name==='gioithieu') animateHeadline();
-    if (name==='tintuc') runStagger('#view-tintuc .item');
-    if (name==='tindung') runStagger('#view-tindung .teaser, #view-tindung .acc-item');
-    if (name==='kitucxa') runStagger('#view-kitucxa .teaser, #view-kitucxa .acc-item');
-    if (location.hash !== '#'+name) history.replaceState(null, '', '#'+name);
+  function navigate(name){
+    if (!views[name]) name = 'gioithieu';
+    if (location.hash !== `#${name}`) history.replaceState(null, '', `#${name}`);
+    show(name);
   }
 
-  // Brand click
-  document.getElementById('brandHome').addEventListener('click', (e)=>{ e.preventDefault(); activateTab('gioithieu'); });
+  // Brand & header tabs
+  const brand = document.getElementById('brandHome');
+  brand && brand.addEventListener('click', (e)=>{ e.preventDefault(); navigate('gioithieu'); });
+  tabs.forEach(btn => btn.addEventListener('click', () => navigate(btn.dataset.nav)));
 
-  // Header tabs click
-  tabButtons.forEach(btn=> btn.addEventListener('click', ()=> activateTab(btn.dataset.nav)));
-
-  // Any element with data-nav switches tab
+  // Các phần tử có data-nav (CTA…)
   document.querySelectorAll('[data-nav]').forEach(el=>{
-    if (!el.classList.contains('tab')) el.addEventListener('click', ()=> activateTab(el.dataset.nav));
+    if (!el.classList.contains('tab')) el.addEventListener('click', ()=> navigate(el.dataset.nav));
   });
 
-  // Keyboard shortcuts: 1..6
-  window.addEventListener('keydown', (e)=>{
-    if (['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)) return;
-    if (e.key==='1') activateTab('gioithieu');
-    if (e.key==='2') activateTab('dichvu');
-    if (e.key==='3') activateTab('tuyendung');
-    if (e.key==='4') activateTab('tintuc');
-    if (e.key==='5') activateTab('tindung');
-    if (e.key==='6') activateTab('kitucxa');
-  });
+  // Hash change + init
+  window.addEventListener('hashchange', () => navigate((location.hash || '#gioithieu').slice(1)));
+  navigate((location.hash || '#gioithieu').slice(1));
 
-  // Init
-  const initial = (location.hash||'#gioithieu').replace('#','');
-  activateTab(initial);
-  if (initial==='gioithieu') animateHeadline();
-
-  // Accordion toggle
+  // Accordion
   document.addEventListener('click', (e)=>{
-    if (e.target.classList.contains('acc-head')){
-      e.target.parentElement.classList.toggle('open');
-    }
+    const btn = e.target.closest('.acc-head');
+    if (!btn) return;
+    const item = btn.closest('.acc-item');
+    const content = item.querySelector('.acc-content');
+    const open = !item.classList.contains('open');
+    item.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', String(open));
+    content.toggleAttribute('hidden', !open);
   });
 
-  // Modals
-  function openModal(id){ const m=document.getElementById(id); if(!m) return; m.classList.add('show'); m.setAttribute('aria-hidden','false'); }
-  function closeModal(m){ m.classList.remove('show'); m.setAttribute('aria-hidden','true'); }
-
+  // Modals (giữ đơn giản)
+  function openModal(id){
+    const m = document.getElementById(id); if (!m) return;
+    m.classList.add('show'); m.setAttribute('aria-hidden','false');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(m){
+    if(!m) return;
+    m.classList.remove('show'); m.setAttribute('aria-hidden','true');
+    document.body.style.overflow = '';
+  }
   document.querySelectorAll('.js-open-consult').forEach(b=> b.addEventListener('click', ()=> openModal('consultModal')));
   document.querySelectorAll('.js-open-dorm').forEach(b=> b.addEventListener('click', ()=> openModal('dormModal')));
-
   document.querySelectorAll('.modal [data-close]').forEach(btn=> btn.addEventListener('click', ()=> closeModal(btn.closest('.modal'))));
   document.querySelectorAll('.modal').forEach(m=> m.addEventListener('click', (e)=>{ if(e.target===m) closeModal(m); }));
 
-  // Dragon blast when clicking logo
-  const logo = document.querySelector('.logo');
-  const dragonBg = document.getElementById('dragonBg');
-  function blast(){ if(!dragonBg) return; dragonBg.classList.remove('blast'); void dragonBg.offsetWidth; dragonBg.classList.add('blast'); }
-  logo?.addEventListener('click', blast);
+  // Forms
+  function hookForm(form){
+    if(!form) return;
+    form.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      if (form.checkValidity && !form.checkValidity()) { form.reportValidity?.(); return; }
+      alert('Đã gửi! Chúng tôi sẽ liên hệ sớm.');
+      const modal = form.closest('.modal'); if (modal) closeModal(modal);
+      form.reset();
+    });
+  }
+  hookForm(document.querySelector('#consultModal form'));
+  hookForm(document.querySelector('#dormModal form'));
 })();
