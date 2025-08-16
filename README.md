@@ -1,13 +1,13 @@
 # VietForture 🌐  
 
-> A company website project, developed from scratch to provide a scalable and modern digital presence.  
+> A company website project for **VietForture**, a business focusing on **credit services and dormitory leasing**.  
 > **Status:** 🚧 Work in progress (actively under development)  
 
 ---
 
 ## 🚀 Project Overview  
-VietForture is a corporate website designed to showcase services, build trust, and support business growth.  
-The project demonstrates my ability to handle **end-to-end development**, from frontend UI to backend integration.  
+VietForture is a business website designed to introduce services in **credit financing and dormitory leasing**.  
+The project demonstrates my ability to develop a full-featured website that supports both **business presentation** and **customer engagement**.  
 
 ---
 
@@ -20,20 +20,19 @@ The project demonstrates my ability to handle **end-to-end development**, from f
 ---
 
 ## ✨ Key Features (Planned & Implemented)  
-- ✅ Modern and responsive landing page  
-- ✅ SEO optimization & fast loading performance  
-- ✅ Dynamic content management  
-- ✅ Mobile-first design  
-- 🔄 Admin dashboard (coming soon)  
-- 🔄 Blog & news section (coming soon)  
-- 🔄 Authentication system (planned)  
+- ✅ Responsive homepage showcasing credit and dormitory services  
+- ✅ Contact form for customer inquiries  
+- ✅ SEO optimization & performance tuning  
+- 🔄 Service details pages (coming soon)  
+- 🔄 Admin dashboard for content management (planned)  
+- 🔄 Authentication & booking system for dormitory leasing (planned)  
 
 ---
 
 ## 🖼️ Screenshots  
 *(to be added once the main UI is stable)*  
 - Homepage preview  
-- Service details page  
+- Services page  
 - Admin panel  
 
 ---
@@ -44,3 +43,20 @@ Clone the repository:
 ```bash
 git clone https://github.com/lqhoang01/VietForture.git
 cd VietForture
+npm install
+npm run dev
+The app will be available at: http://localhost:3000
+
+🌐 Live Demo
+
+(coming soon – will update once deployed)
+
+👨‍💻 Author
+
+Le Quang Hoang
+
+Software Engineer | Web Development | Digital Marketing | Content Writing
+
+✉️ Email: lequanghoang1001@gmail.com
+
+📱 Phone: (+84) 0703026269
