@@ -1,98 +1,103 @@
-:root{
-  --logo-w:10cm;
-  --logo-h:3cm;
-  --header-pad:320px;  
-  --logo-crop:0;
-}
-*{box-sizing:border-box}
-body{margin:0;min-height:100vh;display:flex;flex-direction:column;font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial;color:var(--ink);background:var(--bg)}
-.container{max-width:1280px;margin:auto;padding:0 16px}
-.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vietforture – Dịch vụ tín dụng & ký túc xá</title>
+  <meta name="description" content="Vietforture: giải pháp tín dụng thế chấp và ký túc xá tiện nghi." />
+  <link rel="preload" href="SVN-Mightiest.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header" role="banner">
+    <div class="inner">
+      <a class="brand" id="brandHome" data-nav="gioithieu" href="#gioithieu" aria-label="Trang chủ">
+        <img class="logo-rect" src="avatar.png" alt="Vietforture" decoding="async" fetchpriority="high" />
+      </a>
+      <nav aria-label="Điều hướng tabs">
+        <ul class="tabs" role="tablist">
+          <li><button role="tab" class="tab is-active" id="tab-gioithieu" data-nav="gioithieu" aria-controls="view-gioithieu" aria-selected="true">Giới Thiệu</button></li>
+          <li><button role="tab" class="tab" id="tab-dichvu" data-nav="dichvu" aria-controls="view-dichvu" aria-selected="false">Dịch Vụ</button></li>
+          <li><button role="tab" class="tab" id="tab-tuyendung" data-nav="tuyendung" aria-controls="view-tuyendung" aria-selected="false">Tuyển Dụng</button></li>
+          <li><button role="tab" class="tab" id="tab-tintuc" data-nav="tintuc" aria-controls="view-tintuc" aria-selected="false">Tin Tức</button></li>
+        </ul>
+      </nav>
+      <div class="spacer"></div>
+    </div>
+  </header>
 
-.site-header{
-  padding-left:var(--header-pad);
-}
-.site-header .inner{
-  height:max(var(--header-h), calc(var(--logo-h) + 24px));
-}
-.brand{position:fixed;left:16px;top:12px;z-index:1001;line-height:0}
-.logo-rect{
-  display:block;width:var(--logo-w);height:var(--logo-h);object-fit:contain;
-  background:transparent;border-radius:0;box-shadow:none;image-rendering:auto;
-  clip-path:inset(var(--logo-crop));
-}
+  <main id="main" class="container" tabindex="-1">
+    <section id="view-gioithieu" class="view is-visible" role="tabpanel" aria-labelledby="tab-gioithieu">
+      <div class="panel hero">
+        <div class="hero-inner">
+          <h1 class="sr-only">Vietforture</h1>
+          <div class="vf-hero">
+            <div class="vf-wordmark" aria-label="VIETFORTURE">
+              <img id="dragonV" class="dragon-v" src="dragon-v.png" alt="" aria-hidden="true" />
+              <span class="word">IETFORTURE</span>
+            </div>
+          </div>
+          <p class="hero-sub">Giải pháp tài chính & chỗ ở minh bạch.</p>
+        </div>
+      </div>
+    </section>
 
-.tabs{display:flex;justify-content:center;align-items:center;gap:min(4vw,56px);list-style:none;margin:0;padding:0}
-.tab{appearance:none;border:1px solid #ffe1e1;background:#fff;color:var(--brand);padding:12px 18px;border-radius:14px;font-weight:800;cursor:pointer}
-.tab.is-active,[role="tab"][aria-selected="true"]{background:var(--brand);color:#fff;border-color:var(--brand)}
-.spacer{display:none}
+    <section id="view-dichvu" class="view" role="tabpanel" aria-labelledby="tab-dichvu">
+      <div class="panel">
+        <h2 class="view-title">Dịch Vụ</h2>
+        <div class="services" id="services">
+          <button class="svc-card fade-item" data-nav="tindung" aria-controls="view-tindung">
+            <span class="svc-ico" aria-hidden="true">💳</span>
+            <span class="svc-title">Tín Dụng</span>
+            <span class="svc-sub">Thế chấp minh bạch</span>
+          </button>
+          <button class="svc-card fade-item" data-nav="kitucxa" aria-controls="view-kitucxa">
+            <span class="svc-ico" aria-hidden="true">🏠</span>
+            <span class="svc-title">Ký Túc Xá</span>
+            <span class="svc-sub">An ninh – tiện nghi</span>
+          </button>
+        </div>
+        <div class="dots" aria-hidden="true"></div>
+      </div>
+    </section>
 
-main{flex:1;padding:24px 0}
-.panel{border-radius:22px;background:#fff;border:1px solid #f1f5f9;box-shadow:var(--shadow);padding:28px}
-.view{display:none}
-.view.is-visible{display:block}
-.view-title{margin:0 0 14px 0;color:var(--brand)}
+    <section id="view-tuyendung" class="view" role="tabpanel" aria-labelledby="tab-tuyendung">
+      <div class="panel">
+        <h2 class="view-title">Tuyển Dụng</h2>
+        <div class="jobs">
+          <article class="job-card"><h3>Chuyên viên Kinh doanh</h3><p>Hiểu sản phẩm tài chính cơ bản.</p><button class="btn alt">Ứng tuyển</button></article>
+          <article class="job-card"><h3>Thực tập sinh Marketing</h3><p>Năng động, tinh thần học hỏi.</p><button class="btn alt">Ứng tuyển</button></article>
+        </div>
+      </div>
+    </section>
 
-.hero{position:relative;overflow:hidden}
-.hero-inner{position:relative;min-height:calc(100vh - var(--header-h) - 24px);display:grid;place-items:center;text-align:center}
-.hero-sub{margin-top:8px;color:#475569}
+    <section id="view-tintuc" class="view" role="tabpanel" aria-labelledby="tab-tintuc">
+      <div class="panel">
+        <h2 class="view-title">Tin Tức</h2>
+        <div class="news list">
+          <a class="item" href="#">Mẹo tối ưu chi phí email doanh nghiệp</a>
+          <a class="item" href="#">Những điều cần biết trước khi thuê KTX</a>
+          <a class="item" href="#">Tín dụng an toàn cho sinh viên</a>
+        </div>
+      </div>
+    </section>
 
-/* Wordmark: rồng sát chữ IETFORTURE */
-.vf-wordmark{display:inline-flex;align-items:baseline;gap:0}
-.vf-wordmark .word{font-family:"SVN-Mightiest",system-ui,sans-serif;font-weight:900;letter-spacing:2px;font-size:var(--word-size);line-height:1;color:var(--brand);margin-left:var(--word-tight)}
-.dragon-v{height:calc(var(--word-size)*1.06);width:auto;opacity:0;transform:translateY(2px)}
-.dragon-v.show{animation:fadeIn .6s ease forwards}
-@keyframes fadeIn{from{opacity:0;transform:translateY(2px)}to{opacity:1;transform:none}}
+    <section id="view-tindung" class="view" role="tabpanel" aria-label="Tín Dụng">
+      <div class="panel"><h2 class="view-title">Tín Dụng (Thế chấp)</h2></div>
+    </section>
+    <section id="view-kitucxa" class="view" role="tabpanel" aria-label="Ký túc xá">
+      <div class="panel"><h2 class="view-title">Ký Túc Xá</h2></div>
+    </section>
+  </main>
 
-.services{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
-.svc-card{display:grid;gap:6px;align-content:center;justify-items:center;padding:18px;border:1px solid #f1f5f9;background:#fff;border-radius:16px;cursor:pointer;box-shadow:var(--shadow);transition:transform .15s ease}
-.svc-card:hover{transform:translateY(-2px)}
-.svc-ico{font-size:28px}
-.svc-title{font-weight:800;color:var(--brand)}
-.svc-sub{font-size:14px;color:#64748b}
-.fade-item{opacity:0;transform:translateY(8px)}
-.services.reveal .fade-item{animation:fadeIn .5s ease forwards}
-.services.reveal .fade-item:nth-child(2){animation-delay:.12s}
+  <footer class="corp-footer" role="contentinfo">
+    <div class="container fgrid">
+      <div class="fcol"><h4>Về chúng tôi</h4><p><strong>Công ty Cổ phần Việt Thịnh Vượng</strong></p></div>
+      <div class="fcol"><h4>Liên hệ</h4><ul class="fkv"><li>SĐT: <a href="tel:0888679880">0888.679.880</a></li><li>Email: <a href="mailto:contact@vietforture.vn">contact@vietforture.vn</a></li></ul></div>
+      <div class="fcol"><h4>Mạng xã hội</h4><ul class="social"><li><a href="#">Facebook</a></li><li><a href="#">Zalo</a></li></ul></div>
+    </div>
+  </footer>
 
-.dots{--c:#ffe1e1;background:radial-gradient(circle at 1px 1px,var(--c) 1px,transparent 1px) 0 0/12px 12px;opacity:.6;border-radius:12px;height:12px;margin-top:14px}
-
-.lead-form{display:grid;gap:18px}
-.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
-.field{display:grid;gap:8px}
-.field span{font-size:14px;color:#475569}
-.field input,.field select,.field textarea{width:100%;padding:12px 14px;border:1px solid #e2e8f0;border-radius:12px;font:inherit}
-.field-col{grid-column:1/-1}
-.form-actions{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
-.btn{appearance:none;border:none;background:var(--brand);color:#fff;padding:12px 18px;border-radius:14px;font-weight:800;cursor:pointer}
-.btn.alt{background:#0f172a}
-.contact-link{color:var(--brand);text-decoration:none}
-.contact-link:hover{text-decoration:underline}
-.jobs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
-.job-card{border:1px solid #f1f5f9;background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:18px;display:grid;gap:8px}
-
-.corp-footer{background:linear-gradient(180deg,#7a0c12,#5a0a0f);color:#fff;margin-top:auto}
-.corp-footer .fgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding:36px 16px}
-.corp-footer h4{text-transform:uppercase;letter-spacing:.6px;margin:0 0 10px 0;color:#ffd6db}
-.corp-footer a{color:#ffd6db}
-.corp-footer a:hover{color:#fff}
-.corp-footer .fkv,.corp-footer .social{list-style:none;margin:0;padding:0;display:grid;gap:8px}
-
-@media (max-width:900px){
-  .site-header{padding-left:0}
-  .brand{position:static}
-  .logo-rect{width:auto;height:56px}
-  .tabs{gap:16px}
-  .services{grid-template-columns:1fr}
-  .jobs{grid-template-columns:1fr}
-  .corp-footer .fgrid{grid-template-columns:1fr}
-}
-@media (prefers-reduced-motion:reduce){
-  .dragon-v.show{animation:none;opacity:1;transform:none}
-  .services.reveal .fade-item{animation:none;opacity:1;transform:none}
-}
-@media (max-width:900px){
-  :root{ --logo-w: 240px; --logo-h: 56px }
-  .site-header{ padding-left: 0 }
-  .brand{ position: static }
-  .site-header .inner{ height: 72px }
-}
+  <script src="script.js" defer></script>
+</body>
+</html>
