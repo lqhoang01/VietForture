@@ -82,3 +82,45 @@ main{flex:1;padding:24px 0}
   .dragon-v.show{animation:none;opacity:1;transform:none}
   .services.reveal .fade-item{animation:none;opacity:1;transform:none}
 }
+.vf-wordmark{
+  display:flex; align-items:center;
+  gap:clamp(8px,1.2vw,16px);
+}
+.vf-wordmark .word{
+  font-family:"SVN-Mightiest", system-ui, sans-serif;
+  font-weight:800;
+  font-size:clamp(40px,10vw,140px);
+  letter-spacing:-.02em; line-height:1;
+}
+.dragon3d-wrap{ width:clamp(56px,8vw,120px); aspect-ratio:1; position:relative }
+#dragon3d{ position:absolute; inset:0 }
+#dragon3d canvas{ width:100% !important; height:100% !important; display:block }
+.vf-wordmark{ display:flex; align-items:center; gap:clamp(8px,1.2vw,16px) }
+.vf-wordmark .word{
+  font-family:"SVN-Mightiest", system-ui, sans-serif;
+  font-weight:800; font-size:clamp(40px,10vw,140px);
+  letter-spacing:-.02em; line-height:1;
+}
+.dragon3d-wrap{ width:clamp(56px,8vw,120px); aspect-ratio:1; position:relative }
+#dragon3d{ position:absolute; inset:0 }
+#dragon3d canvas{ width:100% !important; height:100% !important; display:block }
+
+#dragonV.show{ animation: pop-in .6s cubic-bezier(.2,.9,.2,1) }
+@keyframes pop-in{
+  0%{ transform:scale(.9) rotate(-4deg); opacity:0 }
+  100%{ transform:none; opacity:1 }
+}
+.vf-wordmark{ display:flex; align-items:center; gap:clamp(8px,1.2vw,16px) }
+.vf-wordmark .word{
+  font-family:"SVN-Mightiest", system-ui, sans-serif;
+  font-weight:800; font-size:clamp(40px,10vw,140px);
+  letter-spacing:-.02em; line-height:1;
+}
+.dragon3d-wrap{ width:clamp(56px,8vw,120px); aspect-ratio:1; position:relative }
+#dragon3d{ position:absolute; inset:0 }
+#dragon3d canvas{ width:100% !important; height:100% !important; display:block }
+#dragonV.show{ animation: pop-in .6s cubic-bezier(.2,.9,.2,1) }
+@keyframes pop-in{
+  0%{ transform:scale(.9) rotate(-4deg); opacity:0 }
+  100%{ transform:none; opacity:1 }
+}
