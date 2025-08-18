@@ -9,7 +9,8 @@
     kitucxa:document.getElementById('view-kitucxa')
   };
   const servicesBox=document.getElementById('services');
-  const dragon=document.getElementById('dragonV');
+  // Hỗ trợ cả ảnh <img id="dragonV"> cũ lẫn wrapper 3D mới
+  const dragonEl = document.getElementById('dragonV') || document.querySelector('.dragon3d-wrap');
 
   function setTabState(name){
     tabs.forEach(b=>{
@@ -31,10 +32,11 @@
       void servicesBox.offsetWidth;
       servicesBox.classList.add('reveal');
     }
-    if(name==='gioithieu'&&dragon){
-      dragon.classList.remove('show');
-      void dragon.offsetWidth;
-      dragon.classList.add('show');
+    // Trigger hiệu ứng xuất hiện cho logo (ảnh cũ hoặc wrapper 3D)
+    if(name==='gioithieu'&&dragonEl){
+      dragonEl.classList.remove('show');
+      void dragonEl.offsetWidth;
+      dragonEl.classList.add('show');
     }
   }
   function navigate(name){
