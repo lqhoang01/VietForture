@@ -5,9 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Vietforture – Dịch vụ tín dụng & ký túc xá</title>
   <meta name="description" content="Vietforture: giải pháp tín dụng thế chấp và ký túc xá tiện nghi." />
-  <!-- Preload đúng định dạng font bạn có trong repo -->
   <link rel="preload" href="SVN-Mightiest.otf" as="font" type="font/otf" crossorigin>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=8" />
 </head>
 <body>
   <header class="site-header" role="banner">
@@ -34,7 +33,6 @@
           <h1 class="sr-only">Vietforture</h1>
           <div class="vf-hero">
             <div class="vf-wordmark" aria-label="VIETFORTURE">
-              <!-- RỒNG 3D đứng cạnh chữ -->
               <div class="dragon3d-wrap dragon-v" id="dragonV" aria-hidden="true">
                 <div id="dragon3d"></div>
               </div>
@@ -177,86 +175,7 @@
     </div>
   </footer>
 
-  <script src="script.js" defer></script>
-
-  <!-- Module 3D (extrude SVG, fallback PNG). Đặt dragon.svg & dragon-cutout.png cạnh index.html -->
-  <script type="module">
-    import * as THREE from 'https://unpkg.com/three@0.161.0/build/three.module.js';
-    import { SVGLoader } from 'https://unpkg.com/three@0.161.0/examples/jsm/loaders/SVGLoader.js';
-
-    const mount = document.getElementById('dragon3d');
-    if (mount) {
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(36, 1, 0.01, 100);
-      camera.position.set(0, 0.4, 6);
-
-      const renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true });
-      renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-      mount.appendChild(renderer.domElement);
-
-      scene.add(new THREE.AmbientLight(0xffffff, 0.55));
-      const key = new THREE.DirectionalLight(0xffffff, 0.9); key.position.set(4,5,5); scene.add(key);
-      const rim = new THREE.DirectionalLight(0xff5577, 0.8); rim.position.set(-3,1,-4); scene.add(rim);
-
-      const logo = new THREE.Group(); scene.add(logo);
-
-      const loader = new SVGLoader();
-      loader.load('dragon.svg', (data)=>{
-        const shapes=[]; for (const p of data.paths) for (const s of SVGLoader.createShapes(p)) shapes.push(s);
-        const geom = new THREE.ExtrudeGeometry(shapes,{
-          depth:0.38, bevelEnabled:true, bevelThickness:0.10, bevelSize:0.05, bevelSegments:8, curveSegments:28
-        });
-        geom.center();
-
-        const red = 0xef4444;
-        const mat = new THREE.MeshPhysicalMaterial({
-          color:red, metalness:0.35, roughness:0.35, clearcoat:0.6, clearcoatRoughness:0.25,
-          emissive:0x2b0000, emissiveIntensity:0.55
-        });
-        const mesh = new THREE.Mesh(geom, mat); mesh.castShadow=true; logo.add(mesh);
-        const glow = new THREE.Mesh(geom.clone(), new THREE.MeshBasicMaterial({
-          color:red, transparent:true, opacity:0.12, blending:THREE.AdditiveBlending, depthWrite:false
-        })); glow.scale.multiplyScalar(1.02); logo.add(glow);
-        ready();
-      }, undefined, ()=>{
-        new THREE.TextureLoader().load('dragon-cutout.png', tex=>{
-          const h=3.0, w=h*(tex.image.width/tex.image.height);
-          const m=new THREE.Mesh(new THREE.PlaneGeometry(w,h),
-            new THREE.MeshStandardMaterial({ map:tex, transparent:true, metalness:0.15, roughness:0.55 })
-          ); m.castShadow=true; logo.add(m); ready();
-        });
-      });
-
-      let spin=true, t=0; const tilt=new THREE.Vector2(0,0);
-      function ready(){
-        mount.addEventListener('pointermove', e=>{
-          const r=mount.getBoundingClientRect();
-          const x=((e.clientX-r.left)/r.width)*2-1, y=((e.clientY-r.top)/r.height)*2-1;
-          tilt.set(y*0.30, x*0.40);
-        });
-        mount.addEventListener('click', ()=>{ spin=!spin; });
-        animate();
-      }
-
-      const ro=new ResizeObserver(resize); ro.observe(mount);
-      function resize(){ const w=mount.clientWidth||200, h=mount.clientHeight||200;
-        renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix();
-      } resize();
-
-      const clock=new THREE.Clock();
-      function animate(){
-        requestAnimationFrame(animate);
-        const dt=Math.min(clock.getDelta(),0.033); t+=dt;
-        if(logo.children.length){
-          const L=(a,b,k)=>a+(b-a)*k;
-          logo.position.y=Math.sin(t*1.2)*0.18;
-          logo.rotation.x=L(logo.rotation.x, tilt.x, 0.08);
-          logo.rotation.y=L(logo.rotation.y, tilt.y + (spin? t*0.35:0), 0.06);
-          logo.rotation.z=Math.sin(t*2.0)*0.012;
-        }
-        renderer.render(scene, camera);
-      }
-    }
-  </script>
+  <script src="script.js?v=8" defer></script>
+  <script type="module" src="dragon3d.js?v=8"></script>
 </body>
 </html>
