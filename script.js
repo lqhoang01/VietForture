@@ -1,56 +1,210 @@
-(()=>{'use strict';
-  const tabs=[...document.querySelectorAll('.tab')];
-  const views={
-    gioithieu:document.getElementById('view-gioithieu'),
-    dichvu:document.getElementById('view-dichvu'),
-    tuyendung:document.getElementById('view-tuyendung'),
-    tintuc:document.getElementById('view-tintuc'),
-    tindung:document.getElementById('view-tindung'),
-    kitucxa:document.getElementById('view-kitucxa')
+/* VIETFORTURE — script.js (v16)
+   - Logo về trang chủ
+   - Router có hiệu ứng routeIn/routeOut
+   - About: cards load 1 lần rồi đứng yên; tilt + ripple
+   - Detail: countUp + reveal
+*/
+(function () {
+  const headerH = 120;
+
+  const VIEW_IDS = [
+    "view-gioithieu",
+    "view-about",
+    "view-dichvu",
+    "view-tuyendung",
+    "view-tintuc",
+    "view-tindung",
+    "view-kitucxa",
+  ];
+
+  const TAB_MAP = {
+    "tab-gioithieu": "view-about",
+    "tab-dichvu": "view-dichvu",
+    "tab-tuyendung": "view-tuyendung",
+    "tab-tintuc": "view-tintuc",
   };
-  const servicesBox=document.getElementById('services');
-  // Hỗ trợ cả ảnh <img id="dragonV"> cũ lẫn wrapper 3D mới
-  const dragonEl = document.getElementById('dragonV') || document.querySelector('.dragon3d-wrap');
 
-  function setTabState(name){
-    tabs.forEach(b=>{
-      const active=b.dataset.nav===name;
-      b.classList.toggle('is-active',active);
-      b.setAttribute('aria-selected',active?'true':'false');
+  const $  = (s, r=document) => r.querySelector(s);
+  const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+
+  let currentId = VIEW_IDS.find(id => $('#'+id)?.classList.contains('is-visible')) || "view-gioithieu";
+
+  function setActiveTabByView(viewId){
+    Object.entries(TAB_MAP).forEach(([tabId, vId])=>{
+      const tab = document.getElementById(tabId);
+      const active = vId === viewId || (vId === "view-dichvu" && (viewId === "view-tindung" || viewId === "view-kitucxa"));
+      if(tab){ tab.classList.toggle("is-active", active); tab.setAttribute("aria-selected", String(active)); }
     });
   }
-  function show(name){
-    Object.entries(views).forEach(([k,el])=>{
-      if(!el)return;
-      const vis=k===name;
-      el.classList.toggle('is-visible',vis);
-      el.toggleAttribute('hidden',!vis);
+
+  function scrollToMainTop(){
+    const main = $("#main");
+    if(!main) return;
+    const y = main.getBoundingClientRect().top + window.scrollY - (headerH + 8);
+    window.scrollTo({ top: y, behavior: "smooth" });
+  }
+
+  function showView(newId, {scroll=true} = {}){
+    if(newId === currentId) return;
+
+    const cur = $('#'+currentId);
+    const next = $('#'+newId);
+    if(!next) return;
+
+    // leave
+    if(cur){
+      cur.classList.add('leaving');
+      setTimeout(()=>{ cur.classList.remove('is-visible','leaving'); }, 200);
+    }
+
+    // enter
+    next.classList.add('is-visible','entering');
+    setTimeout(()=> next.classList.remove('entering'), 300);
+
+    currentId = newId;
+    setActiveTabByView(newId);
+
+    if(scroll){
+      if(newId === "view-gioithieu") window.scrollTo({ top: 0, behavior: "smooth" });
+      else scrollToMainTop();
+    }
+
+    if(newId === "view-about") setupAboutAnimations();
+    if(newId === "view-tindung" || newId === "view-kitucxa") setupDetailView('#'+newId);
+  }
+
+  // Tabs
+  Object.keys(TAB_MAP).forEach(tabId=>{
+    $('#'+tabId)?.addEventListener('click', (e)=>{ e.preventDefault(); showView(TAB_MAP[tabId]); });
+  });
+
+  // Dịch vụ -> subviews
+  $$(".svc-card[data-nav]").forEach(btn=>{
+    btn.addEventListener("click", ()=>{
+      const nav = btn.getAttribute("data-nav");
+      showView(nav === "tindung" ? "view-tindung" : "view-kitucxa");
     });
-    setTabState(['gioithieu','dichvu','tuyendung','tintuc'].includes(name)?name:'');
-    if(name==='dichvu'&&servicesBox){
-      servicesBox.classList.remove('reveal');
-      void servicesBox.offsetWidth;
-      servicesBox.classList.add('reveal');
+  });
+
+  // Hero -> Giới thiệu
+  $("#btn-show-about")?.addEventListener("click", ()=> showView("view-about"));
+
+  // Logo -> Trang chủ
+  $("#brandHome")?.addEventListener("click", (e)=>{ e.preventDefault(); showView("view-gioithieu"); });
+
+  // Reveal util
+  const ioReveal = new IntersectionObserver(
+    entries => entries.forEach(en => en.isIntersecting && en.target.classList.add("in")),
+    { rootMargin: "-10% 0px -10% 0px", threshold: 0.05 }
+  );
+  $$(".reveal").forEach(el => ioReveal.observe(el));
+
+  // ===== ABOUT =====
+  function setupAboutAnimations(){
+    const aboutPage = $("#view-about");
+    if(!aboutPage) return;
+
+    const cards = $$(".about-card", aboutPage);
+    cards.forEach((card, i)=> card.style.setProperty("--stagger", `${0.08 * i}s`));
+
+    // chạy card-rise 1 lần khi vào trang
+    if(!aboutPage._loadedObserver){
+      const io = new IntersectionObserver(entries=>{
+        entries.forEach(en=>{
+          if(en.isIntersecting){
+            aboutPage.classList.add("loaded");
+            io.disconnect();
+          }
+        });
+      }, {rootMargin:"-10% 0px", threshold:.2});
+      io.observe(aboutPage);
+      aboutPage._loadedObserver = true;
     }
-    // Trigger hiệu ứng xuất hiện cho logo (ảnh cũ hoặc wrapper 3D)
-    if(name==='gioithieu'&&dragonEl){
-      dragonEl.classList.remove('show');
-      void dragonEl.offsetWidth;
-      dragonEl.classList.add('show');
-    }
-  }
-  function navigate(name){
-    if(!views[name]) name='gioithieu';
-    if(location.hash!==`#${name}`) history.replaceState(null,'',`#${name}`);
-    show(name);
+
+    // bind tilt + ripple 1 lần
+    if(aboutPage._tiltBound) return;
+    aboutPage._tiltBound = true;
+
+    cards.forEach((card)=>{
+      let raf = null;
+      function onMove(e){
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width;
+        const y = (e.clientY - r.top)  / r.height;
+        const rx = (0.5 - y) * 10;
+        const ry = (x - 0.5) * 12;
+        if(raf) cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(()=>{
+          card.style.setProperty("--rx", rx.toFixed(2)+"deg");
+          card.style.setProperty("--ry", ry.toFixed(2)+"deg");
+        });
+        card.classList.add("is-hover");
+      }
+      function onLeave(){
+        card.classList.remove("is-hover");
+        card.style.setProperty("--rx","0deg");
+        card.style.setProperty("--ry","0deg");
+      }
+      function ripple(e){
+        const r = card.getBoundingClientRect();
+        const wave = document.createElement("span");
+        wave.className = "click-wave";
+        wave.style.left = (e.clientX - r.left) + "px";
+        wave.style.top  = (e.clientY - r.top)  + "px";
+        card.appendChild(wave);
+        wave.addEventListener("animationend", ()=> wave.remove());
+      }
+
+      card.addEventListener("pointermove", onMove);
+      card.addEventListener("pointerleave", onLeave);
+      card.addEventListener("click", ripple, {passive:true});
+    });
   }
 
-  document.getElementById('brandHome')?.addEventListener('click',e=>{e.preventDefault();navigate('gioithieu')});
-  tabs.forEach(btn=>btn.addEventListener('click',()=>navigate(btn.dataset.nav)));
-  document.querySelectorAll('[data-nav]').forEach(el=>{if(!el.classList.contains('tab')) el.addEventListener('click',()=>navigate(el.dataset.nav))});
-  window.addEventListener('hashchange',()=>navigate((location.hash||'#gioithieu').slice(1)));
-  navigate((location.hash||'#gioithieu').slice(1));
+  // ===== Detail views =====
+  function setupDetailView(rootSel){
+    const root = document.querySelector(rootSel);
+    if(!root) return;
 
-  document.getElementById('loanForm')?.addEventListener('submit',e=>{e.preventDefault();alert('Đã gửi yêu cầu tư vấn Tín Dụng. Chúng tôi sẽ liên hệ sớm nhất!')});
-  document.getElementById('dormForm')?.addEventListener('submit',e=>{e.preventDefault();alert('Đã gửi yêu cầu tư vấn Ký Túc Xá. Chúng tôi sẽ liên hệ sớm nhất!')});
+    const stats = $$(".stat-card", root);
+    const nums  = $$(".stat-num", root);
+
+    const ioS = new IntersectionObserver(ents=>{
+      ents.forEach(en=>{ if(en.isIntersecting) en.target.classList.add("show"); });
+    }, {threshold:.2});
+    stats.forEach(s=>ioS.observe(s));
+
+    const ioN = new IntersectionObserver(ents=>{
+      ents.forEach(en=>{
+        if(!en.isIntersecting) return;
+        const el = en.target;
+        if(el._counted) return;
+        el._counted = true;
+        const target = parseFloat(el.getAttribute("data-count")||"0");
+        const dur = 900;
+        const t0 = performance.now();
+        const step = (now)=>{
+          const p = Math.min(1, (now - t0)/dur);
+          const val = easeOutCubic(p) * target;
+          el.textContent = formatNum(val, target);
+          if(p<1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      });
+    }, {threshold:.6});
+    nums.forEach(n=>ioN.observe(n));
+
+    const steps = $$(".process-step", root);
+    const ioP = new IntersectionObserver(ents=>{
+      ents.forEach(en=>{ if(en.isIntersecting) en.target.classList.add("show"); });
+    }, {threshold:.2});
+    steps.forEach((st,i)=>{ st.style.transitionDelay = `${i*80}ms`; ioP.observe(st); });
+  }
+
+  function easeOutCubic(t){ return 1 - Math.pow(1 - t, 3); }
+  function formatNum(v, target){ return Number.isInteger(target) ? Math.round(v).toString() : (Math.round(v*10)/10).toString(); }
+
+  // Init
+  setActiveTabByView(currentId);
+  setupAboutAnimations();
 })();
