@@ -1,17 +1,9 @@
-/* VIETFORTURE — script.js (v16) */
+/* VIETFORTURE — script.js (v17, mobile-optimized) */
 (function () {
-  const headerH = 120;
-
   const VIEW_IDS = [
-    "view-gioithieu",
-    "view-about",
-    "view-dichvu",
-    "view-tuyendung",
-    "view-tintuc",
-    "view-tindung",
-    "view-kitucxa",
+    "view-gioithieu","view-about","view-dichvu","view-tuyendung",
+    "view-tintuc","view-tindung","view-kitucxa",
   ];
-
   const TAB_MAP = {
     "tab-gioithieu": "view-about",
     "tab-dichvu": "view-dichvu",
@@ -22,9 +14,16 @@
   const $  = (s, r=document) => r.querySelector(s);
   const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
 
+  const isCoarse = matchMedia("(pointer: coarse)").matches;
+
   let currentId =
     VIEW_IDS.find(id => $('#'+id)?.classList.contains('is-visible')) ||
     "view-gioithieu";
+
+  function headerH(){
+    const el = document.querySelector(".site-header .inner");
+    return el ? Math.round(el.getBoundingClientRect().height) : 120;
+  }
 
   function setActiveTabByView(viewId){
     Object.entries(TAB_MAP).forEach(([tabId, vId])=>{
@@ -41,13 +40,12 @@
   function scrollToMainTop(){
     const main = $("#main");
     if(!main) return;
-    const y = main.getBoundingClientRect().top + window.scrollY - (headerH + 8);
+    const y = main.getBoundingClientRect().top + window.scrollY - (headerH() + 8);
     window.scrollTo({ top: y, behavior: "smooth" });
   }
 
   function showView(newId, {scroll=true} = {}){
     if(newId === currentId) return;
-
     const cur = $('#'+currentId);
     const next = $('#'+newId);
     if(!next) return;
@@ -105,7 +103,7 @@
     const cards = $$(".about-card", aboutPage);
     cards.forEach((card, i)=> card.style.setProperty("--stagger", `${0.08 * i}s`));
 
-    // Chạy card-rise 1 lần khi vào trang
+    // Load-in 1 lần
     if(!aboutPage._loadedObserver){
       const io = new IntersectionObserver(entries=>{
         entries.forEach(en=>{
@@ -119,31 +117,36 @@
       aboutPage._loadedObserver = true;
     }
 
-    // Bind tilt + ripple 1 lần
+    // Tilt + ripple — tắt tilt trên màn hình cảm ứng để tiết kiệm tài nguyên
     if(aboutPage._tiltBound) return;
     aboutPage._tiltBound = true;
 
     cards.forEach((card)=>{
-      let raf = null;
-      function onMove(e){
-        const r = card.getBoundingClientRect();
-        const x = (e.clientX - r.left) / r.width;
-        const y = (e.clientY - r.top)  / r.height;
-        const rx = (0.5 - y) * 10;
-        const ry = (x - 0.5) * 12;
-        if(raf) cancelAnimationFrame(raf);
-        raf = requestAnimationFrame(()=>{
-          card.style.setProperty("--rx", rx.toFixed(2)+"deg");
-          card.style.setProperty("--ry", ry.toFixed(2)+"deg");
-        });
-        card.classList.add("is-hover");
+      if(!isCoarse){
+        let raf = null;
+        function onMove(e){
+          const r = card.getBoundingClientRect();
+          const x = (e.clientX - r.left) / r.width;
+          const y = (e.clientY - r.top)  / r.height;
+          const rx = (0.5 - y) * 10;
+          const ry = (x - 0.5) * 12;
+          if(raf) cancelAnimationFrame(raf);
+          raf = requestAnimationFrame(()=>{
+            card.style.setProperty("--rx", rx.toFixed(2)+"deg");
+            card.style.setProperty("--ry", ry.toFixed(2)+"deg");
+          });
+          card.classList.add("is-hover");
+        }
+        function onLeave(){
+          card.classList.remove("is-hover");
+          card.style.setProperty("--rx","0deg");
+          card.style.setProperty("--ry","0deg");
+        }
+        card.addEventListener("pointermove", onMove);
+        card.addEventListener("pointerleave", onLeave);
       }
-      function onLeave(){
-        card.classList.remove("is-hover");
-        card.style.setProperty("--rx","0deg");
-        card.style.setProperty("--ry","0deg");
-      }
-      function ripple(e){
+      // Ripple cho cả mobile
+      card.addEventListener("click", (e)=>{
         const r = card.getBoundingClientRect();
         const wave = document.createElement("span");
         wave.className = "click-wave";
@@ -151,11 +154,7 @@
         wave.style.top  = (e.clientY - r.top)  + "px";
         card.appendChild(wave);
         wave.addEventListener("animationend", ()=> wave.remove());
-      }
-
-      card.addEventListener("pointermove", onMove);
-      card.addEventListener("pointerleave", onLeave);
-      card.addEventListener("click", ripple, {passive:true});
+      }, {passive:true});
     });
   }
 
@@ -205,4 +204,7 @@
   // Init
   setActiveTabByView(currentId);
   setupAboutAnimations();
+
+  // Recalc scroll offset on resize/orientation change
+  addEventListener("resize", ()=>{ /* no-op, headerH() reads live height */ });
 })();
