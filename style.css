@@ -1,7 +1,4 @@
-:root{
-  --brand:#c1121f;--ink:#0f172a;--bg:#fff;--shadow:0 12px 36px rgba(2,6,23,.10);
-  --header-h:120px;--rose-25:#fff6f7;--rose-50:#fff1f2;--rose-100:#ffe4e6
-}
+:root{--brand:#c1121f;--ink:#0f172a;--bg:#fff;--shadow:0 12px 36px rgba(2,6,23,.10);--header-h:120px;--rose-25:#fff6f7;--rose-50:#fff1f2;--rose-100:#ffe4e6}
 *{box-sizing:border-box}
 html,body{height:100%}
 body{margin:0;min-height:100vh;display:flex;flex-direction:column;font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial;color:var(--ink);background:var(--bg)}
