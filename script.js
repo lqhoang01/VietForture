@@ -1,9 +1,4 @@
-/* VIETFORTURE — script.js (v16)
-   - Logo về trang chủ
-   - Router có hiệu ứng routeIn/routeOut
-   - About: cards load 1 lần rồi đứng yên; tilt + ripple
-   - Detail: countUp + reveal
-*/
+/* VIETFORTURE — script.js (v16) */
 (function () {
   const headerH = 120;
 
@@ -27,13 +22,19 @@
   const $  = (s, r=document) => r.querySelector(s);
   const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
 
-  let currentId = VIEW_IDS.find(id => $('#'+id)?.classList.contains('is-visible')) || "view-gioithieu";
+  let currentId =
+    VIEW_IDS.find(id => $('#'+id)?.classList.contains('is-visible')) ||
+    "view-gioithieu";
 
   function setActiveTabByView(viewId){
     Object.entries(TAB_MAP).forEach(([tabId, vId])=>{
       const tab = document.getElementById(tabId);
-      const active = vId === viewId || (vId === "view-dichvu" && (viewId === "view-tindung" || viewId === "view-kitucxa"));
-      if(tab){ tab.classList.toggle("is-active", active); tab.setAttribute("aria-selected", String(active)); }
+      const active = vId === viewId ||
+        (vId === "view-dichvu" && (viewId === "view-tindung" || viewId === "view-kitucxa"));
+      if(tab){
+        tab.classList.toggle("is-active", active);
+        tab.setAttribute("aria-selected", String(active));
+      }
     });
   }
 
@@ -51,13 +52,10 @@
     const next = $('#'+newId);
     if(!next) return;
 
-    // leave
     if(cur){
       cur.classList.add('leaving');
       setTimeout(()=>{ cur.classList.remove('is-visible','leaving'); }, 200);
     }
-
-    // enter
     next.classList.add('is-visible','entering');
     setTimeout(()=> next.classList.remove('entering'), 300);
 
@@ -107,7 +105,7 @@
     const cards = $$(".about-card", aboutPage);
     cards.forEach((card, i)=> card.style.setProperty("--stagger", `${0.08 * i}s`));
 
-    // chạy card-rise 1 lần khi vào trang
+    // Chạy card-rise 1 lần khi vào trang
     if(!aboutPage._loadedObserver){
       const io = new IntersectionObserver(entries=>{
         entries.forEach(en=>{
@@ -121,7 +119,7 @@
       aboutPage._loadedObserver = true;
     }
 
-    // bind tilt + ripple 1 lần
+    // Bind tilt + ripple 1 lần
     if(aboutPage._tiltBound) return;
     aboutPage._tiltBound = true;
 
