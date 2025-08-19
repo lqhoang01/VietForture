@@ -3,10 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#ffffff" />
   <title>Vietforture – Dịch vụ tín dụng & ký túc xá</title>
   <meta name="description" content="Vietforture: giải pháp tín dụng thế chấp và ký túc xá tiện nghi." />
   <link rel="preload" href="SVN-Mightiest.otf" as="font" type="font/otf" crossorigin>
-  <link rel="stylesheet" href="style.css?v=16" />
+  <link rel="stylesheet" href="style.css?v=17" />
 </head>
 <body>
   <header class="site-header" role="banner">
@@ -150,22 +151,18 @@
             <ul class="chip-row"><li class="chip">Hồ sơ gọn</li><li class="chip">Tư vấn miễn phí</li><li class="chip">Theo dõi online</li></ul>
           </div>
         </div>
-
         <div class="stat-row">
           <div class="stat-card"><div class="stat-num" data-count="98">0</div><div class="stat-label">% KH hài lòng</div></div>
           <div class="stat-card"><div class="stat-num" data-count="24">0</div><div class="stat-label">Giờ giải ngân*</div></div>
           <div class="stat-card"><div class="stat-num" data-count="300">0</div><div class="stat-label">Tỷ+ đã duyệt</div></div>
         </div>
-
         <ol class="process">
           <li class="process-step"><span class="step-dot"></span><b>Đăng ký</b> thông tin nhu cầu</li>
           <li class="process-step"><span class="step-dot"></span><b>Thẩm định</b> & báo phương án</li>
           <li class="process-step"><span class="step-dot"></span><b>Ký hợp đồng</b> minh bạch</li>
           <li class="process-step"><span class="step-dot"></span><b>Giải ngân</b> nhanh, theo dõi online</li>
         </ol>
-
         <div class="accent-bg"></div>
-
         <form class="lead-form" id="loanForm" action="#" method="post" novalidate>
           <div class="form-grid">
             <label class="field"><span>Họ và tên</span><input name="fullname" required placeholder="Nguyễn Văn A" /></label>
@@ -205,22 +202,18 @@
             <ul class="chip-row"><li class="chip">Giờ giấc linh hoạt</li><li class="chip">Wi-Fi tốc độ cao</li><li class="chip">Hỗ trợ 24/7</li></ul>
           </div>
         </div>
-
         <div class="stat-row">
           <div class="stat-card"><div class="stat-num" data-count="15">0</div><div class="stat-label">Cơ sở</div></div>
           <div class="stat-card"><div class="stat-num" data-count="1200">0</div><div class="stat-label">Giường</div></div>
           <div class="stat-card"><div class="stat-num" data-count="4.8">0</div><div class="stat-label">/5.0 đánh giá</div></div>
         </div>
-
         <ol class="process">
           <li class="process-step"><span class="step-dot"></span><b>Đăng ký</b> nhu cầu phòng</li>
           <li class="process-step"><span class="step-dot"></span><b>Tư vấn</b> vị trí & phòng phù hợp</li>
           <li class="process-step"><span class="step-dot"></span><b>Đặt cọc</b> & làm thủ tục</li>
           <li class="process-step"><span class="step-dot"></span><b>Nhận phòng</b> & hỗ trợ định kỳ</li>
         </ol>
-
         <div class="accent-bg"></div>
-
         <form class="lead-form" id="dormForm" action="#" method="post" novalidate>
           <div class="form-grid">
             <label class="field"><span>Họ và tên</span><input name="fullname" required placeholder="Nguyễn Văn A" /></label>
@@ -277,9 +270,7 @@
     </div>
   </footer>
 
-  <script src="script.js?v=16" defer></script>
-
-  <!-- Three.js -->
+  <script src="script.js?v=17" defer></script>
   <script src="https://unpkg.com/three@0.161.0/build/three.min.js"></script>
   <script src="https://unpkg.com/three@0.161.0/examples/js/loaders/SVGLoader.js"></script>
   <script>
@@ -292,19 +283,15 @@
     const renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
     mount.appendChild(renderer.domElement);
-
     scene.add(new THREE.AmbientLight(0xffffff,0.55));
     const key = new THREE.DirectionalLight(0xffffff,0.9); key.position.set(4,5,5); scene.add(key);
     const rim = new THREE.DirectionalLight(0xff5577,0.8); rim.position.set(-3,1,-4); scene.add(rim);
-
     const logo = new THREE.Group(); scene.add(logo);
     const ro = new ResizeObserver(resize); ro.observe(mount);
     function resize(){ const w=mount.clientWidth||200, h=mount.clientHeight||200; renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix(); }
     resize();
-
     const loader = new THREE.SVGLoader();
     loader.load('dragon.svg', onSVG, undefined, onSVGFallback);
-
     function onSVG(data){
       const shapes=[]; data.paths.forEach(p=>{ shapes.push(...THREE.SVGLoader.createShapes(p)); });
       const geom = new THREE.ExtrudeGeometry(shapes,{ depth:0.38, bevelEnabled:true, bevelThickness:0.10, bevelSize:0.05, bevelSegments:8, curveSegments:28 });
