@@ -17,8 +17,8 @@
   }
   function scrollTopMain(){
     const main=$("#main");if(!main)return;
-    const y=main.getBoundingClientRect().top+scrollY-(hH()+8);
-    scrollTo({top:y,behavior:"smooth"});
+    const y=main.getBoundingClientRect().top+window.scrollY-(hH()+8);
+    window.scrollTo({top:y,behavior:"smooth"});
   }
   function show(id,{scroll=true}={}){
     if(id===current)return;
@@ -26,7 +26,7 @@
     if(cur){cur.classList.add('leaving');setTimeout(()=>{cur.classList.remove('is-visible','leaving')},200)}
     nxt.classList.add('is-visible','entering');setTimeout(()=>nxt.classList.remove('entering'),300);
     current=id; setActive(id);
-    if(scroll){ if(id==="view-gioithieu") scrollTo({top:0,behavior:"smooth"}); else scrollTopMain() }
+    if(scroll){ if(id==="view-gioithieu") window.scrollTo({top:0,behavior:"smooth"}); else scrollTopMain() }
     if(id==="view-about") initAbout();
     if(id==="view-tindung"||id==="view-kitucxa") initDetail('#'+id);
   }
