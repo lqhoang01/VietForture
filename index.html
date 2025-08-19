@@ -6,65 +6,133 @@
   <title>Vietforture – Dịch vụ tín dụng & ký túc xá</title>
   <meta name="description" content="Vietforture: giải pháp tín dụng thế chấp và ký túc xá tiện nghi." />
   <link rel="preload" href="SVN-Mightiest.otf" as="font" type="font/otf" crossorigin>
-  <link rel="stylesheet" href="style.css?v=9" />
+  <link rel="stylesheet" href="style.css?v=16" />
 </head>
 <body>
   <header class="site-header" role="banner">
     <div class="inner">
-      <a class="brand" id="brandHome" data-nav="gioithieu" href="#gioithieu" aria-label="Trang chủ">
+      <!-- Logo: ghim góc trái, không đè nội dung -->
+      <a class="brand" id="brandHome" href="#" aria-label="Trang chủ">
         <img class="logo-rect" src="avatar.png" alt="Vietforture" decoding="async" fetchpriority="high" />
       </a>
-      <nav aria-label="Điều hướng tabs">
+
+      <!-- Nav căn giữa -->
+      <nav aria-label="Điều hướng tabs" class="main-nav">
         <ul class="tabs" role="tablist">
-          <li><button role="tab" class="tab is-active" id="tab-gioithieu" data-nav="gioithieu" aria-controls="view-gioithieu" aria-selected="true">Giới Thiệu</button></li>
-          <li><button role="tab" class="tab" id="tab-dichvu" data-nav="dichvu" aria-controls="view-dichvu" aria-selected="false">Dịch Vụ</button></li>
-          <li><button role="tab" class="tab" id="tab-tuyendung" data-nav="tuyendung" aria-controls="view-tuyendung" aria-selected="false">Tuyển Dụng</button></li>
-          <li><button role="tab" class="tab" id="tab-tintuc" data-nav="tintuc" aria-controls="view-tintuc" aria-selected="false">Tin Tức</button></li>
+          <li><button role="tab" class="tab" id="tab-gioithieu" aria-controls="view-about" aria-selected="false">Giới Thiệu</button></li>
+          <li><button role="tab" class="tab" id="tab-dichvu" aria-controls="view-dichvu" aria-selected="false">Dịch Vụ</button></li>
+          <li><button role="tab" class="tab" id="tab-tuyendung" aria-controls="view-tuyendung" aria-selected="false">Tuyển Dụng</button></li>
+          <li><button role="tab" class="tab" id="tab-tintuc" aria-controls="view-tintuc" aria-selected="false">Tin Tức</button></li>
         </ul>
       </nav>
-      <div class="spacer"></div>
     </div>
   </header>
 
   <main id="main" class="container" tabindex="-1">
-    <section id="view-gioithieu" class="view is-visible" role="tabpanel" aria-labelledby="tab-gioithieu">
+    <!-- ===== TRANG CHỦ / HERO ===== -->
+    <section id="view-gioithieu" class="view is-visible" role="tabpanel">
+      <div class="vf-watermark" aria-hidden="true">VIETFORTURE</div>
       <div class="panel hero">
         <div class="hero-inner">
           <h1 class="sr-only">Vietforture</h1>
+
+          <!-- Wordmark căn giữa tuyệt đối -->
           <div class="vf-hero">
             <div class="vf-wordmark" aria-label="VIETFORTURE">
-              <div class="dragon3d-wrap dragon-v" id="dragonV" aria-hidden="true">
+              <div class="dragon3d-wrap" id="dragonV" aria-hidden="true">
                 <div id="dragon3d"></div>
               </div>
               <span class="word">VIETFORTURE</span>
             </div>
           </div>
+
           <p class="hero-sub">Giải pháp tài chính & chỗ ở minh bạch.</p>
+
+          <div class="hero-cta">
+            <button id="btn-show-about" class="btn tiny" type="button" aria-controls="view-about">Giới thiệu ▼</button>
+          </div>
         </div>
       </div>
     </section>
 
+    <!-- ===== GIỚI THIỆU (FULL PAGE) ===== -->
+    <section id="view-about" class="view about-page about-rose" role="tabpanel" aria-labelledby="about-title">
+      <div class="about-wrap container">
+        <h2 id="about-title" class="about-title reveal a1">GIỚI THIỆU</h2>
+        <p class="about-lead reveal a2">
+          <strong>Công ty Cổ phần Việt Thịnh Vượng (VietForture JSC)</strong> hoạt động trong hai mảng chính:
+          <u>lưu trú</u> và <u>dịch vụ tín dụng</u>. Mục tiêu: minh bạch – nhanh – hiệu quả.
+        </p>
+
+        <div class="about-cards" id="aboutCards">
+          <article class="about-card reveal a3" data-tilt data-idx="0">
+            <span class="card-badge">HOME</span>
+            <h3 class="about-card__title">VietForture Home</h3>
+            <p class="about-card__text">
+            <b> VietForture Home chuyên cung cấp dịch vụ lưu trú 
+chất lượng cao như ký túc xá sinh viên và 
+căn hộ dịch vụ. Chúng tôi hướng đến việc tạo ra 
+không gian sống tiện nghi, an toàn và thân thiện, 
+giúp người trẻ an tâm học tập và làm việc trong 
+môi trường kết nối và văn minh.</b>.
+            </p>
+          </article>
+          <article class="about-card reveal a3" data-tilt data-idx="1">
+            <span class="card-badge">CREDIT</span>
+            <h3 class="about-card__title">VietForture Credit</h3>
+            <p class="about-card__text">
+              <b>VietForture Credit hoạt động trong lĩnh vực 
+dịch vụ tín dụng cá nhân và doanh nghiệp, 
+cung cấp các giải pháp tài chính linh hoạt, minh bạch 
+và phù hợp với nhu cầu thực tế, giúp khách hàng
+tiếp cận nguồn vốn nhanh chóng và vượt qua 
+giai đoạn khó khăn.
+            </p>
+          </article>
+        </div>
+
+        <section class="slogan reveal a5" aria-label="Slogan VietForture">
+          <div class="slogan-inner">
+            <div class="slogan-line">
+              VietForture – Không gian sống hiện đại, nền tảng tài chính vững vàng.
+            </div>
+            <div class="slogan-sub">
+              Chúng tôi không chỉ cung cấp chỗ ở, chúng tôi đồng hành cùng bạn trên hành trình phát triển.
+            </div>
+          </div>
+          <div class="slogan-swipe" aria-hidden="true"></div>
+          <div class="slogan-particles" aria-hidden="true">
+            <span class="p"></span><span class="p"></span><span class="p"></span><span class="p"></span>
+            <span class="p"></span><span class="p"></span><span class="p"></span><span class="p"></span>
+            <span class="p"></span><span class="p"></span><span class="p"></span><span class="p"></span>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <!-- ===== DỊCH VỤ ===== -->
     <section id="view-dichvu" class="view" role="tabpanel" aria-labelledby="tab-dichvu">
-      <div class="panel">
+      <div class="panel panel-standalone">
         <h2 class="view-title">Dịch Vụ</h2>
+        <p class="view-sub">Chọn mảng bạn quan tâm:</p>
         <div class="services" id="services">
-          <button class="svc-card fade-item" data-nav="tindung" aria-controls="view-tindung">
+          <button class="svc-card" data-nav="tindung" aria-controls="view-tindung">
             <span class="svc-ico" aria-hidden="true">💳</span>
             <span class="svc-title">Tín Dụng</span>
             <span class="svc-sub">Thế chấp minh bạch</span>
           </button>
-          <button class="svc-card fade-item" data-nav="kitucxa" aria-controls="view-kitucxa">
+          <button class="svc-card" data-nav="kitucxa" aria-controls="view-kitucxa">
             <span class="svc-ico" aria-hidden="true">🏠</span>
             <span class="svc-title">Ký Túc Xá</span>
             <span class="svc-sub">An ninh – tiện nghi</span>
           </button>
         </div>
-        <div class="dots" aria-hidden="true"></div>
       </div>
     </section>
 
+    <!-- ===== TUYỂN DỤNG ===== -->
     <section id="view-tuyendung" class="view" role="tabpanel" aria-labelledby="tab-tuyendung">
-      <div class="panel">
+      <div class="panel panel-standalone">
         <h2 class="view-title">Tuyển Dụng</h2>
         <div class="jobs">
           <article class="job-card"><h3>Chuyên viên Kinh doanh</h3><p>Hiểu sản phẩm tài chính cơ bản.</p><button class="btn alt">Ứng tuyển</button></article>
@@ -73,8 +141,9 @@
       </div>
     </section>
 
+    <!-- ===== TIN TỨC ===== -->
     <section id="view-tintuc" class="view" role="tabpanel" aria-labelledby="tab-tintuc">
-      <div class="panel">
+      <div class="panel panel-standalone">
         <h2 class="view-title">Tin Tức</h2>
         <div class="news list">
           <a class="item" href="#">Mẹo tối ưu chi phí email doanh nghiệp</a>
@@ -84,9 +153,35 @@
       </div>
     </section>
 
+    <!-- ===== SUB-PAGES ===== -->
     <section id="view-tindung" class="view" role="tabpanel" aria-label="Tín Dụng">
-      <div class="panel">
-        <h2 class="view-title">Tín Dụng (Thế chấp)</h2>
+      <div class="panel panel-standalone detail">
+        <div class="detail-hero credit">
+          <div class="detail-ico">💳</div>
+          <div>
+            <h2 class="detail-title">Tín Dụng (Thế chấp)</h2>
+            <p class="detail-sub">Minh bạch · Giải ngân nhanh · Lãi suất cạnh tranh</p>
+            <ul class="chip-row">
+              <li class="chip">Hồ sơ gọn</li><li class="chip">Tư vấn miễn phí</li><li class="chip">Theo dõi online</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="stat-row">
+          <div class="stat-card"><div class="stat-num" data-count="98">0</div><div class="stat-label">% KH hài lòng</div></div>
+          <div class="stat-card"><div class="stat-num" data-count="24">0</div><div class="stat-label">Giờ giải ngân*</div></div>
+          <div class="stat-card"><div class="stat-num" data-count="300">0</div><div class="stat-label">Tỷ+ đã duyệt</div></div>
+        </div>
+
+        <ol class="process">
+          <li class="process-step"><span class="step-dot"></span><b>Đăng ký</b> thông tin nhu cầu</li>
+          <li class="process-step"><span class="step-dot"></span><b>Thẩm định</b> & báo phương án</li>
+          <li class="process-step"><span class="step-dot"></span><b>Ký hợp đồng</b> minh bạch</li>
+          <li class="process-step"><span class="step-dot"></span><b>Giải ngân</b> nhanh, theo dõi online</li>
+        </ol>
+
+        <div class="accent-bg"></div>
+
         <form class="lead-form" id="loanForm" action="#" method="post" novalidate>
           <div class="form-grid">
             <label class="field"><span>Họ và tên</span><input name="fullname" required placeholder="Nguyễn Văn A" /></label>
@@ -117,8 +212,33 @@
     </section>
 
     <section id="view-kitucxa" class="view" role="tabpanel" aria-label="Ký túc xá">
-      <div class="panel">
-        <h2 class="view-title">Ký Túc Xá</h2>
+      <div class="panel panel-standalone detail">
+        <div class="detail-hero dorm">
+          <div class="detail-ico">🏠</div>
+          <div>
+            <h2 class="detail-title">Ký Túc Xá</h2>
+            <p class="detail-sub">An ninh · Tiện nghi · Vị trí thuận tiện</p>
+            <ul class="chip-row">
+              <li class="chip">Giờ giấc linh hoạt</li><li class="chip">Wi-Fi tốc độ cao</li><li class="chip">Hỗ trợ 24/7</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="stat-row">
+          <div class="stat-card"><div class="stat-num" data-count="15">0</div><div class="stat-label">Cơ sở</div></div>
+          <div class="stat-card"><div class="stat-num" data-count="1200">0</div><div class="stat-label">Giường</div></div>
+          <div class="stat-card"><div class="stat-num" data-count="4.8">0</div><div class="stat-label">/5.0 đánh giá</div></div>
+        </div>
+
+        <ol class="process">
+          <li class="process-step"><span class="step-dot"></span><b>Đăng ký</b> nhu cầu phòng</li>
+          <li class="process-step"><span class="step-dot"></span><b>Tư vấn</b> vị trí & phòng phù hợp</li>
+          <li class="process-step"><span class="step-dot"></span><b>Đặt cọc</b> & làm thủ tục</li>
+          <li class="process-step"><span class="step-dot"></span><b>Nhận phòng</b> & hỗ trợ định kỳ</li>
+        </ol>
+
+        <div class="accent-bg"></div>
+
         <form class="lead-form" id="dormForm" action="#" method="post" novalidate>
           <div class="form-grid">
             <label class="field"><span>Họ và tên</span><input name="fullname" required placeholder="Nguyễn Văn A" /></label>
@@ -154,14 +274,14 @@
       <div class="fcol">
         <h4>Về chúng tôi</h4>
         <p><strong>Công ty Cổ phần Việt Thịnh Vượng</strong></p>
-        <p>Địa chỉ: (Điền địa chỉ)</p>
-        <p>Mã số Thuế: (Điền MST)</p>
+        <p>Địa chỉ: KDC Nhơn Đức, Xã Hiệp Phước, Hồ Chí Minh</p>
+        <p>Mã số Thuế: 0319086562</p>
       </div>
       <div class="fcol">
         <h4>Liên hệ</h4>
         <ul class="fkv">
-          <li>Số điện thoại: <a href="tel:0888679880">0888.679.880</a></li>
-          <li>Email: <a href="mailto:contact@vietforture.vn">contact@vietforture.vn</a></li>
+          <li>Số điện thoại: <a href="tel:028 37822239">028 37822239</a></li>
+          <li>Email: <a href="mailto:vietforture@gmail.com">vietforture@gmail.com</a></li>
           <li>Hộp thư: (Điền thông tin hộp thư)</li>
         </ul>
       </div>
@@ -175,8 +295,9 @@
     </div>
   </footer>
 
-  <script src="script.js?v=9" defer></script>
-  <!-- No‑module fallback: dùng THREE global thay vì ESM imports -->
+  <script src="script.js?v=16" defer></script>
+
+  <!-- Three.js -->
   <script src="https://unpkg.com/three@0.161.0/build/three.min.js"></script>
   <script src="https://unpkg.com/three@0.161.0/examples/js/loaders/SVGLoader.js"></script>
   <script>
@@ -211,40 +332,17 @@
       const mesh = new THREE.Mesh(geom, mat); mesh.castShadow=true; logo.add(mesh);
       const glow = new THREE.Mesh(geom.clone(), new THREE.MeshBasicMaterial({ color:red, transparent:true, opacity:0.12, blending:THREE.AdditiveBlending, depthWrite:false }));
       glow.scale.multiplyScalar(1.02); logo.add(glow);
-      start();
+      animate();
     }
     function onSVGFallback(){
       new THREE.TextureLoader().load('dragon-cutout.png', tex=>{
         const h=3.0, w=h*(tex.image.width/tex.image.height);
         const m=new THREE.Mesh(new THREE.PlaneGeometry(w,h), new THREE.MeshStandardMaterial({ map:tex, transparent:true, metalness:0.15, roughness:0.55 }));
-        m.castShadow=true; logo.add(m); start();
+        m.castShadow=true; logo.add(m); animate();
       });
     }
-
-    let spin=true, t=0; const tilt=new THREE.Vector2(0,0);
-    function start(){
-      mount.addEventListener('pointermove', e=>{
-        const r=mount.getBoundingClientRect();
-        const x=((e.clientX-r.left)/r.width)*2-1, y=((e.clientY-r.top)/r.height)*2-1;
-        tilt.set(y*0.30, x*0.40);
-      });
-      mount.addEventListener('click', ()=>{ spin=!spin; });
-      animate();
-    }
-
-    const clock=new THREE.Clock();
-    function animate(){
-      requestAnimationFrame(animate);
-      const dt=Math.min(clock.getDelta(),0.033); t+=dt;
-      if(logo.children.length){
-        const L=(a,b,k)=>a+(b-a)*k;
-        logo.position.y=Math.sin(t*1.2)*0.18;
-        logo.rotation.x=L(logo.rotation.x, tilt.x, 0.08);
-        logo.rotation.y=L(logo.rotation.y, tilt.y + (spin? t*0.35:0), 0.06);
-        logo.rotation.z=Math.sin(t*2.0)*0.012;
-      }
-      renderer.render(scene, camera);
-    }
+    const clock=new THREE.Clock(); let t=0;
+    function animate(){ requestAnimationFrame(animate); t+=Math.min(clock.getDelta(),0.033); logo.rotation.y=t*0.35; renderer.render(scene,camera); }
   })();
   </script>
 </body>
