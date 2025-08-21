@@ -1,101 +1,122 @@
-(function(){
-  const VIEWS=["view-gioithieu","view-about","view-dichvu","view-tuyendung","view-tintuc","view-tindung","view-kitucxa"];
-  const MAP={"tab-gioithieu":"view-about","tab-dichvu":"view-dichvu","tab-tuyendung":"view-tuyendung","tab-tintuc":"view-tintuc"};
-  const $=(s,r=document)=>r.querySelector(s);
-  const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
-  const coarse=matchMedia("(pointer: coarse)").matches;
+(function () {
+  const views = {
+    home: document.getElementById('view-home'),
+    about: document.getElementById('view-about'),
+    dichvu: document.getElementById('view-dichvu'),
+    tuyendung: document.getElementById('view-tuyendung'),
+    tintuc: document.getElementById('view-tintuc'),
+    tindung: document.getElementById('view-tindung'),
+    kitucxa: document.getElementById('view-kitucxa'),
+  };
 
-  let current=VIEWS.find(id=>$('#'+id)?.classList.contains('is-visible'))||"view-gioithieu";
+  const fontsReady = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
+  const after2Frames = (fn)=>requestAnimationFrame(()=>requestAnimationFrame(fn));
 
-  function hH(){const el=$(".site-header .inner");return el?Math.round(el.getBoundingClientRect().height):120}
-  function setActive(viewId){
-    Object.entries(MAP).forEach(([tabId,vId])=>{
-      const t=$('#'+tabId);
-      const a=vId===viewId||(vId==="view-dichvu"&&(viewId==="view-tindung"||viewId==="view-kitucxa"));
-      if(t){t.classList.toggle("is-active",a);t.setAttribute("aria-selected",String(a))}
+  function setTab(id){
+    document.querySelectorAll('.tab').forEach(t=>{
+      t.setAttribute('aria-selected','false');t.classList.remove('is-active');
     });
-  }
-  function scrollTopMain(){
-    const main=$("#main");if(!main)return;
-    const y=main.getBoundingClientRect().top+window.scrollY-(hH()+8);
-    window.scrollTo({top:y,behavior:"smooth"});
-  }
-  function show(id,{scroll=true}={}){
-    if(id===current)return;
-    const cur=$('#'+current), nxt=$('#'+id); if(!nxt)return;
-    if(cur){cur.classList.add('leaving');setTimeout(()=>{cur.classList.remove('is-visible','leaving')},200)}
-    nxt.classList.add('is-visible','entering');setTimeout(()=>nxt.classList.remove('entering'),300);
-    current=id; setActive(id);
-    if(scroll){ if(id==="view-gioithieu") window.scrollTo({top:0,behavior:"smooth"}); else scrollTopMain() }
-    if(id==="view-about") initAbout();
-    if(id==="view-tindung"||id==="view-kitucxa") initDetail('#'+id);
-  }
-
-  Object.keys(MAP).forEach(id=>$('#'+id)?.addEventListener('click',e=>{e.preventDefault();show(MAP[id])}));
-  $$(".svc-card[data-nav]").forEach(b=>b.addEventListener("click",()=>{show(b.dataset.nav==="tindung"?"view-tindung":"view-kitucxa")}));
-  $("#btn-show-about")?.addEventListener("click",()=>show("view-about"));
-  $("#brandHome")?.addEventListener("click",e=>{e.preventDefault();show("view-gioithieu")});
-
-  const ioReveal=new IntersectionObserver(es=>es.forEach(en=>en.isIntersecting&&en.target.classList.add("in")),{rootMargin:"-10% 0px -10% 0px",threshold:.05});
-  $$(".reveal").forEach(el=>ioReveal.observe(el));
-
-  function initAbout(){
-    const page=$("#view-about"); if(!page) return;
-    const cards=$$(".about-card",page);
-    cards.forEach((c,i)=>c.style.setProperty("--stagger",`${.08*i}s`));
-    if(!page._loaded){
-      const io=new IntersectionObserver(es=>{es.forEach(en=>{if(en.isIntersecting){page.classList.add("loaded");io.disconnect()}})},{rootMargin:"-10% 0px",threshold:.2});
-      io.observe(page); page._loaded=true;
+    const map={home:'home',gioithieu:'about',dichvu:'dichvu',tuyendung:'tuyendung',tintuc:'tintuc'};
+    for(const [k,v] of Object.entries(map)){
+      if(v===id){ const btn=document.getElementById('tab-'+k); btn?.setAttribute('aria-selected','true'); btn?.classList.add('is-active'); }
     }
-    if(page._tilt) return; page._tilt=true;
-    cards.forEach(c=>{
-      if(!coarse){
-        let raf=null;
-        function move(e){
-          const r=c.getBoundingClientRect();
-          const x=(e.clientX-r.left)/r.width, y=(e.clientY-r.top)/r.height;
-          const rx=(.5-y)*10, ry=(x-.5)*12;
-          if(raf) cancelAnimationFrame(raf);
-          raf=requestAnimationFrame(()=>{c.style.setProperty("--rx",rx.toFixed(2)+"deg");c.style.setProperty("--ry",ry.toFixed(2)+"deg")});
-          c.classList.add("is-hover");
-        }
-        function leave(){c.classList.remove("is-hover");c.style.setProperty("--rx","0deg");c.style.setProperty("--ry","0deg")}
-        c.addEventListener("pointermove",move); c.addEventListener("pointerleave",leave);
-      }
-      c.addEventListener("click",e=>{
-        const r=c.getBoundingClientRect(), w=document.createElement("span");
-        w.className="click-wave"; w.style.left=(e.clientX-r.left)+"px"; w.style.top=(e.clientY-r.top)+"px";
-        c.appendChild(w); w.addEventListener("animationend",()=>w.remove());
-      },{passive:true});
+  }
+
+  function show(id) {
+    Object.values(views).forEach(v => v && v.classList.remove('is-visible'));
+    (views[id] || views.home).classList.add('is-visible');
+    setTab(id);
+    if (id === 'about') { setupAbout(); fontsReady.then(()=>after2Frames(calcStageHeight)); }
+    else { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+  }
+
+  document.getElementById('brandHome')?.addEventListener('click', (e) => { e.preventDefault(); show('home'); });
+  document.getElementById('tab-home')?.addEventListener('click', () => show('home'));
+  document.getElementById('tab-gioithieu')?.addEventListener('click', () => show('about'));
+  document.getElementById('tab-dichvu')?.addEventListener('click', () => show('dichvu'));
+  document.getElementById('tab-tuyendung')?.addEventListener('click', () => show('tuyendung'));
+  document.getElementById('tab-tintuc')?.addEventListener('click', () => show('tintuc'));
+  document.getElementById('btn-show-about')?.addEventListener('click', () => show('about'));
+  document.querySelectorAll('.svc-card[data-nav]').forEach(b => b.addEventListener('click', () => show(b.dataset.nav)));
+
+  function setupAbout() {
+    const stage = document.getElementById('aboutStage'); if (!stage || stage.dataset.bound) return;
+    stage.dataset.bound = '1';
+
+    const slides = [...stage.querySelectorAll('.slide')];
+    const dots = [...document.querySelectorAll('#stageDots .dot')];
+    if (!slides.length) return;
+
+    let i = Math.max(0, slides.findIndex(s => s.classList.contains('is-active')));
+    slides.forEach((s,idx)=>s.classList.toggle('is-active', idx===i));
+    dots.forEach((d,idx)=>d.classList.toggle('is-active', idx===i));
+
+    function set(n) {
+      const y = window.scrollY;
+      i = (n + slides.length) % slides.length;
+      slides.forEach(s => s.classList.remove('is-active'));
+      slides[i].classList.add('is-active');
+      dots.forEach(d => d.classList.remove('is-active'));
+      dots[i]?.classList.add('is-active');
+      calcStageHeight();
+      window.scrollTo({ top: y });
+    }
+
+    document.getElementById('abPrev')?.addEventListener('click', (e) => { e.preventDefault(); set(i - 1); });
+    document.getElementById('abNext')?.addEventListener('click', (e) => { e.preventDefault(); set(i + 1); });
+    dots.forEach((d, idx) => d.addEventListener('click', (e) => { e.preventDefault(); set(idx); }));
+
+    fontsReady.then(()=>after2Frames(calcStageHeight));
+    window.addEventListener('resize', debounce(calcStageHeight, 120));
+  }
+
+  function calcStageHeight(){
+    const root = document.documentElement;
+    const stage = document.getElementById('aboutStage'); if (!stage) return;
+    const slides = [...stage.querySelectorAll('.slide')]; if(!slides.length) return;
+
+    const headerH = parseInt(getComputedStyle(root).getPropertyValue('--header-h')) || 92;
+    const sloganH = parseInt(getComputedStyle(root).getPropertyValue('--slogan-h')) || 100;
+
+    let maxH = 0;
+    slides.forEach(s=>{
+      const wasHidden = getComputedStyle(s).display === 'none';
+      if (wasHidden){ s.style.display='block'; s.style.position='absolute'; s.style.visibility='hidden'; s.style.inset='0'; }
+      const h = s.offsetHeight;
+      if (h>maxH) maxH = h;
+      if (wasHidden){ s.style.display=''; s.style.position=''; s.style.visibility=''; s.style.inset=''; }
     });
+
+    const viewH = window.innerHeight - headerH;
+    const target = Math.min(maxH + sloganH + 8, viewH + 24);
+    stage.style.minHeight = target + 'px';
+    stage.style.height = target + 'px';
   }
 
-  function initDetail(sel){
-    const root=$(sel); if(!root) return;
-    const stats=$$(".stat-card",root), nums=$$(".stat-num",root), steps=$$(".process-step",root);
+  function debounce(fn, t=100){ let to; return (...args)=>{ clearTimeout(to); to=setTimeout(()=>fn(...args), t); }; }
 
-    const ioS=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting) en.target.classList.add("show")}),{threshold:.2});
-    stats.forEach(s=>ioS.observe(s));
+  const io = new IntersectionObserver((ents) => {
+    ents.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); } });
+  }, { threshold: .16, rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('.reveal,.info-box,.core-card,.kpi-card,.news-card,.svc-card,.job-item').forEach(el => io.observe(el));
 
-    const ioN=new IntersectionObserver(es=>{
-      es.forEach(en=>{
-        if(!en.isIntersecting) return;
-        const el=en.target; if(el._c) return; el._c=true;
-        const target=parseFloat(el.getAttribute("data-count")||"0"), dur=900, t0=performance.now();
-        const step=now=>{
-          const p=Math.min(1,(now-t0)/dur), v=(1-Math.pow(1-p,3))*target;
-          el.textContent=Number.isInteger(target)?Math.round(v):Math.round(v*10)/10;
-          if(p<1) requestAnimationFrame(step);
-        };
-        requestAnimationFrame(step);
-      });
-    },{threshold:.6});
-    nums.forEach(n=>ioN.observe(n));
+  const statIO = new IntersectionObserver((ents) => {
+    ents.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target; const to = parseFloat(el.dataset.count || '0');
+      let cur = 0; const step = Math.max(1, Math.ceil(to / 40));
+      const t = setInterval(() => {
+        cur += step;
+        if (cur >= to) { cur = to; clearInterval(t); }
+        el.textContent = String(cur % 1 ? cur.toFixed(1) : cur);
+      }, 24);
+      statIO.unobserve(el);
+    });
+  }, { threshold: .4 });
+  document.querySelectorAll('.kpi-num,.stat-num').forEach(el => statIO.observe(el));
 
-    const ioP=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting) en.target.classList.add("show")}),{threshold:.2});
-    steps.forEach((st,i)=>{st.style.transitionDelay=`${i*80}ms`;ioP.observe(st)});
+  if (views.about?.classList.contains('is-visible')) {
+    setupAbout();
+    fontsReady.then(()=>after2Frames(calcStageHeight));
   }
-
-  setActive(current);
-  initAbout();
 })();
