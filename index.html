@@ -5,18 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>VietForture – Dịch vụ tín dụng & ký túc xá</title>
   <meta name="description" content="VietForture: giải pháp tín dụng thế chấp và ký túc xá tiện nghi." />
-  <meta name="theme-color" content="#c1121f" />
   <link rel="preload" href="SVN-Mightiest.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="icon" href="favicon.ico">
+  <link rel="icon" href="/favicon.ico">
   <link rel="stylesheet" href="style.css" />
-  <noscript>
-    <style>.view{display:block !important;opacity:1 !important;transform:none !important}.tab{pointer-events:none;opacity:.6}</style>
-  </noscript>
+  <noscript><style>.view{display:block!important;opacity:1!important}.tab{pointer-events:none;opacity:.5}</style></noscript>
 </head>
 <body>
-  <!-- HEADER -->
   <header class="site-header" role="banner">
-    <div class="inner">
+    <div class="inner container">
       <a class="brand" id="brandHome" href="#" aria-label="Trang chủ">
         <img class="logo-rect" src="avatar.png" alt="VietForture" decoding="async" fetchpriority="high" />
       </a>
@@ -32,14 +28,16 @@
     </div>
   </header>
 
-  <!-- MAIN -->
-  <main id="main" tabindex="-1">
+  <main id="main" class="container" tabindex="-1">
     <!-- HOME -->
     <section id="view-home" class="view is-visible" role="tabpanel" aria-label="Trang chủ">
-      <div class="hero">
-        <!-- Watermark full-screen, loop -->
-        <div class="wm-giant" aria-hidden="true"><span>VIETFORTURE</span></div>
-
+      <div class="hero hero-bleed">
+        <div class="wm-giant" aria-hidden="true">
+          <div class="wm-track">
+            <span>VIETFORTURE</span><span>VIETFORTURE</span><span>VIETFORTURE</span>
+            <span>VIETFORTURE</span><span>VIETFORTURE</span><span>VIETFORTURE</span>
+          </div>
+        </div>
         <div class="hero-inner">
           <div class="vf-hero">
             <div class="vf-wordmark">
@@ -47,157 +45,172 @@
               <div class="greet">XIN CHÀO</div>
             </div>
           </div>
+          <button id="btn-show-about" class="cta-down ghost subtle" type="button" aria-controls="view-about" aria-label="Đến Giới thiệu">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
         </div>
-
-        <!-- Nút kéo xuống (ghost) gần footer -->
-        <button id="btn-show-about" class="cta-down" type="button" aria-controls="view-about" aria-label="Xuống">
-          <span class="chev"></span>
-        </button>
       </div>
     </section>
 
     <!-- ABOUT -->
     <section id="view-about" class="view about-page" role="tabpanel" aria-labelledby="about-title">
-      <div class="about-wrap">
+      <div class="about-wrap container">
         <div class="about-stage" id="aboutStage">
-          <!-- Slide 1 -->
-          <section class="slide is-active" id="slide-1">
-            <div class="panel-card">
-              <h2 id="about-title" class="about-title">GIỚI THIỆU</h2>
-              <div class="about-grid">
-                <div class="lead">
-                  <p><strong>Công ty Cổ phần Việt Thịnh Vượng (VietForture JSC)</strong> là doanh nghiệp đa dịch vụ tiên phong, hoạt động trong hai lĩnh vực chính: lưu trú và dịch vụ tín dụng. Với tầm nhìn dài hạn và sứ mệnh phục vụ cộng đồng, VietForture khẳng định vị thế bằng các dịch vụ <b>chất lượng cao</b>, <b>đáng tin cậy</b>.</p>
-                  <p>Định hướng <b>phát triển bền vững</b>, lấy <b>khách hàng làm trung tâm</b>, xây dựng hệ sinh thái dịch vụ hiện đại – thiết thực, đồng hành cùng khách hàng vượt qua thách thức.</p>
-                </div>
 
-                <div class="kv-box">
-                  <div>
-                    <h3 class="h3">🏠 VietForture Home – Giải pháp lưu trú toàn diện</h3>
-                    <ul class="tick">
-                      <li><b>Cơ sở vật chất hiện đại</b>, đủ tiện nghi.</li>
-                      <li><b>An ninh 24/7</b>, an toàn tuyệt đối.</li>
-                      <li><b>Cộng đồng thân thiện</b>, kết nối – văn minh.</li>
-                      <li><b>Vị trí thuận lợi</b>, kết nối trung tâm.</li>
-                      <li><b>Hỗ trợ toàn diện</b> từ quản lý đến bảo trì.</li>
-                    </ul>
-                  </div>
-                  <aside class="kv-aside">
-                    Định hướng: tạo không gian sống tiện nghi – an toàn – truyền cảm hứng cho người trẻ học tập & làm việc.
-                  </aside>
-                </div>
-
-                <div class="kv-box">
-                  <div>
-                    <h3 class="h3">💳 VietForture Credit – Đối tác tài chính đáng tin cậy</h3>
-                    <ul class="tick">
-                      <li>Cho vay cá nhân lãi suất cạnh tranh.</li>
-                      <li>Tín dụng doanh nghiệp linh hoạt.</li>
-                      <li>Tư vấn tài chính chuyên nghiệp.</li>
-                      <li>Thẩm định <b>nhanh</b> & <b>minh bạch</b>.</li>
-                      <li>Ưu đãi cho khách hàng thân thiết.</li>
-                    </ul>
-                  </div>
-                  <aside class="kv-aside">
-                    Mục tiêu: giải pháp vốn <b>linh hoạt</b>, <b>minh bạch</b>, đúng nhu cầu – giúp khách hàng vượt giai đoạn khó khăn.
-                  </aside>
-                </div>
+          <!-- SLIDE 1: GIỚI THIỆU -->
+          <section class="slide is-active" data-enter="rise">
+            <div class="panel-card boxed tight">
+              <div class="box-head">
+                <h2 id="about-title" class="about-title">GIỚI THIỆU</h2>
               </div>
-            </div>
-          </section>
 
-          <!-- Slide 2 -->
-          <section class="slide" id="slide-2">
-            <div class="panel-card">
-              <h2 class="about-title">TẦM NHÌN</h2>
+              <p class="lead-strong">Công ty Cổ phần Việt Thịnh Vượng (VietForture JSC) là doanh nghiệp đa dịch vụ tiên phong, hoạt động trong hai lĩnh vực chính: <b>lưu trú</b> và <b>dịch vụ tín dụng</b>. Với tầm nhìn dài hạn và sứ mệnh phục vụ cộng đồng, VietForture khẳng định vị thế bằng chất lượng và sự tin cậy.</p>
+              <p>Định hướng <b>phát triển bền vững</b> và <b>lấy khách hàng làm trung tâm</b>, VietForture xây dựng hệ sinh thái dịch vụ hiện đại, thiết thực, phù hợp nhu cầu ngày nay; đồng hành cùng khách hàng vượt qua thách thức để phát triển.</p>
 
-              <div class="kv-box">
-                <div>
-                  <p class="lead"><b>Dẫn đầu xu hướng – Kiến tạo tương lai.</b> VietForture định vị mình là hệ sinh thái dịch vụ tích hợp, nơi mỗi giải pháp tối ưu hoá giá trị cho khách hàng và đặt ra chuẩn mực mới trong ngành.</p>
-                  <div class="vision-grid">
-                    <div class="vision-item">
-                      <h4>Quy mô & Thị phần</h4>
-                      <ul class="tick">
-                        <li>Mạng lưới phủ toàn quốc.</li>
-                        <li>Top 3 lưu trú cho sinh viên & người trẻ.</li>
-                        <li>Đối tác tín dụng tin cậy cho SME & cá nhân.</li>
-                      </ul>
-                    </div>
-                    <div class="vision-item">
-                      <h4>Chất lượng dịch vụ</h4>
-                      <ul class="tick">
-                        <li>Chuẩn quản trị ISO 9001.</li>
-                        <li>Chuyển đổi số toàn diện.</li>
-                        <li>Trải nghiệm liền mạch Home ↔ Credit.</li>
-                      </ul>
-                    </div>
-                    <div class="vision-item">
-                      <h4>Tác động xã hội</h4>
-                      <ul class="tick">
-                        <li>5.000+ việc làm trực/gián tiếp.</li>
-                        <li>100.000+ sinh viên/giới trẻ được hỗ trợ chỗ ở.</li>
-                        <li>50.000+ cá nhân & 10.000 DN tiếp cận vốn.</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                <aside class="kv-aside">
-                  Mục tiêu dài hạn: trở thành biểu tượng <b>tin cậy – chất lượng</b>, doanh nghiệp mang lại <b>giá trị bền vững</b> cho cộng đồng.
-                </aside>
-              </div>
-            </div>
-          </section>
-
-          <!-- Slide 3 -->
-          <section class="slide" id="slide-3">
-            <div class="panel-card">
-              <h2 class="about-title">SỨ MỆNH & GIÁ TRỊ CỐT LÕI</h2>
-
-              <div class="mission-grid">
-                <div>
-                  <h3 class="h3">Sứ mệnh</h3>
+              <h3 class="section-cap ribbon">CÁC LĨNH VỰC HOẠT ĐỘNG CHÍNH</h3>
+              <div class="grid-2">
+                <div class="info-box reveal">
+                  <h3 class="tagline big">🏠 VietForture Home – Giải pháp lưu trú toàn diện</h3>
+                  <p>Chuyên cung cấp ký túc xá sinh viên và căn hộ dịch vụ, hiểu rõ nhu cầu từng nhóm khách hàng.</p>
                   <ul class="tick">
-                    <li><b>Nâng cao chất lượng cuộc sống</b>: dịch vụ lưu trú an toàn – thân thiện.</li>
-                    <li><b>Hỗ trợ tài chính hiệu quả</b>: vốn dễ tiếp cận, quy trình đơn giản.</li>
-                    <li><b>Phát triển cộng đồng</b>: môi trường sống văn minh, gắn kết.</li>
-                    <li><b>Đóng góp xã hội</b>: tham gia hoạt động vì cộng đồng.</li>
+                    <li><b>Cơ sở vật chất hiện đại</b>, đầy đủ tiện nghi</li>
+                    <li><b>An ninh 24/7</b>, an toàn tuyệt đối</li>
+                    <li><b>Không gian thân thiện</b>, khuyến khích tinh thần cộng đồng</li>
+                    <li><b>Vị trí thuận lợi</b>, kết nối trung tâm</li>
+                    <li><b>Hỗ trợ toàn diện</b> từ quản lý đến bảo trì</li>
+                  </ul>
+                  <div class="note">Không gian sống tiện nghi – an tâm học tập & làm việc.</div>
+                  <p>Chúng tôi hướng tới môi trường sống văn minh, nơi mỗi cá nhân phát triển và kết nối bền vững.</p>
+                </div>
+
+                <div class="info-box reveal">
+                  <h3 class="tagline big">💳 VietForture Credit – Đối tác tài chính đáng tin cậy</h3>
+                  <p>Dịch vụ tín dụng cá nhân/doanh nghiệp với giải pháp tối ưu, minh bạch và kịp thời.</p>
+                  <ul class="tick">
+                    <li>Cho vay cá nhân <b>lãi suất cạnh tranh</b></li>
+                    <li>Tín dụng doanh nghiệp <b>linh hoạt</b></li>
+                    <li>Tư vấn tài chính <b>chuyên nghiệp</b></li>
+                    <li>Thẩm định <b>nhanh chóng – minh bạch</b></li>
+                    <li>Ưu đãi cho <b>khách hàng thân thiết</b></li>
+                  </ul>
+                  <div class="note">Tiếp cận vốn nhanh – biến khó khăn thành cơ hội.</div>
+                  <p>Đội ngũ chuyên gia giàu kinh nghiệm sẵn sàng đồng hành trong mọi quyết định quan trọng.</p>
+                </div>
+              </div>
+
+              <div class="kpi-row reveal">
+                <div class="kpi-card"><div class="kpi-num" data-count="120">0</div><div class="kpi-sub">Dự án vận hành</div></div>
+                <div class="kpi-card"><div class="kpi-num" data-count="98">0</div><div class="kpi-sub">% KH hài lòng</div></div>
+                <div class="kpi-card"><div class="kpi-num" data-count="24">0</div><div class="kpi-sub">Giờ giải ngân*</div></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- SLIDE 2: TẦM NHÌN -->
+          <section class="slide" data-enter="tilt">
+            <div class="panel-card boxed tight">
+              <div class="box-head">
+                <h2 class="about-title">TẦM NHÌN</h2>
+              </div>
+
+              <div class="info-box reveal">
+                <h3 class="tagline big">Dẫn đầu xu hướng – Kiến tạo tương lai</h3>
+                <p>VietForture hướng tới vị thế <b>tiên phong</b> và <b>dẫn đầu</b> trong lưu trú & tín dụng, kết hợp <b>công nghệ tiên tiến</b> với <b>am hiểu con người</b>. Chúng tôi xây dựng <b>hệ sinh thái dịch vụ toàn diện</b>, tối ưu hóa giá trị cho khách hàng và định hình chuẩn mực mới của ngành.</p>
+                <p>Đích đến là trở thành <b>biểu tượng tin cậy & chất lượng</b>, một đối tác đồng hành dài hạn; mọi quyết định đều hướng tới <b>giá trị bền vững</b> cho khách hàng, cộng đồng và xã hội.</p>
+              </div>
+
+              <div class="info-box reveal">
+                <h3 class="tagline">Góp phần xây dựng xã hội thịnh vượng</h3>
+                <p>Tầm nhìn của VietForture vượt lên trên mục tiêu kinh doanh: chúng tôi mong muốn tạo tác động xã hội tích cực, đặc biệt là <b>sinh viên</b> và <b>người trẻ</b> có cơ hội tiếp cận <b>không gian sống chất lượng</b> và <b>nguồn vốn cần thiết</b> để phát triển.</p>
+                <ul class="tick">
+                  <li><b>Không còn lo chỗ ở</b> – chuẩn hóa mô hình lưu trú văn minh</li>
+                  <li><b>Không “đói vốn” khởi nghiệp/học tập</b> – giải pháp tín dụng phù hợp</li>
+                  <li><b>Đồng hành dài hạn</b> – hỗ trợ từ bước đầu đến khi thành công</li>
+                </ul>
+              </div>
+
+              <div class="vision-split">
+                <div class="info-box mini reveal">
+                  <h4>Quy mô & thị phần</h4>
+                  <ul class="tick">
+                    <li>Mạng lưới <b>toàn quốc</b></li>
+                    <li>TOP 3 lưu trú cho <b>sinh viên & người trẻ</b></li>
+                    <li>Đối tác tín dụng tin cậy cho <b>cá nhân & SME</b></li>
+                  </ul>
+                </div>
+                <div class="info-box mini reveal">
+                  <h4>Chất lượng dịch vụ</h4>
+                  <ul class="tick">
+                    <li>Chuẩn vàng <b>ISO 9001</b></li>
+                    <li>Trải nghiệm số <b>end-to-end</b></li>
+                    <li>Hệ sinh thái tích hợp <b>lưu trú ↔ tài chính</b></li>
+                  </ul>
+                </div>
+                <div class="info-box mini reveal">
+                  <h4>Tác động xã hội</h4>
+                  <ul class="tick">
+                    <li>Tạo việc làm <b>5.000+</b></li>
+                    <li>Hỗ trợ <b>100.000+</b> sinh viên/người trẻ</li>
+                    <li>Cấp vốn <b>50.000+</b> cá nhân & <b>10.000</b> DN</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- SLIDE 3: SỨ MỆNH & GIÁ TRỊ CỐT LÕI -->
+          <section class="slide" data-enter="fadeup">
+            <div class="panel-card boxed tight">
+              <div class="box-head">
+                <h2 class="about-title">SỨ MỆNH & GIÁ TRỊ CỐT LÕI</h2>
+              </div>
+
+              <div class="grid-2">
+                <div class="info-box reveal">
+                  <h3 class="section-cap ribbon">Sứ mệnh</h3>
+                  <ul class="tick">
+                    <li><b>Nâng cao chất lượng cuộc sống</b>: lưu trú chất lượng, an toàn, thân thiện</li>
+                    <li><b>Hỗ trợ tài chính hiệu quả</b>: vốn dễ tiếp cận, quy trình đơn giản</li>
+                    <li><b>Phát triển cộng đồng</b>: kết nối, hỗ trợ, bền vững</li>
+                    <li><b>Đóng góp xã hội</b>: chủ động vì cộng đồng & đất nước</li>
                   </ul>
                 </div>
 
-                <div>
-                  <h3 class="h3">Giá trị cốt lõi</h3>
-                  <div class="core-row">
-                    <span class="core-pill"><b>Tận tâm</b></span>
-                    <span class="core-pill"><b>Minh bạch</b></span>
-                    <span class="core-pill"><b>Tiên phong</b></span>
-                    <span class="core-pill"><b>Gắn kết</b></span>
-                    <span class="core-pill"><b>Bền vững</b></span>
-                  </div>
-                  <div class="kv-aside mt8">
-                    Cam kết tiếp tục đầu tư – mở rộng – nâng chất lượng, khẳng định vị thế và đóng góp tích cực cho xã hội.
+                <div class="info-box reveal">
+                  <h3 class="kcore-title">Giá trị cốt lõi</h3>
+                  <div class="core-grid">
+                    <div class="core-card reveal"><b>Tận tâm</b><p>Đồng hành – lắng nghe – ưu tiên lợi ích khách hàng.</p></div>
+                    <div class="core-card reveal"><b>Minh bạch</b><p>Rõ ràng điều khoản & quy trình, xây dựng niềm tin.</p></div>
+                    <div class="core-card reveal"><b>Tiên phong</b><p>Đổi mới sáng tạo, ứng dụng công nghệ hiện đại.</p></div>
+                    <div class="core-card reveal"><b>Gắn kết</b><p>Nuôi dưỡng cộng đồng văn minh, hỗ trợ lẫn nhau.</p></div>
+                    <div class="core-card reveal"><b>Bền vững</b><p>Tạo giá trị dài hạn cho khách hàng & xã hội.</p></div>
                   </div>
                 </div>
               </div>
 
-              <p class="cta-line">Hãy cùng VietForture xây dựng một tương lai thịnh vượng và bền vững!</p>
+              <div class="pledge reveal">
+                <div class="pledge-title">Cam kết & triển vọng</div>
+                <p>VietForture JSC tiếp tục đầu tư mở rộng, nâng chuẩn dịch vụ. Với đội ngũ tận tâm và sự tin tưởng của khách hàng, chúng tôi sẽ khẳng định vị thế và đóng góp tích cực cho xã hội.</p>
+                <div class="mini-cta">Hãy cùng VietForture xây dựng một tương lai thịnh vượng và bền vững!</div>
+              </div>
             </div>
           </section>
 
-          <!-- Fixed edge nav -->
+          <!-- CONTROLS + DOTS + SLOGAN -->
           <button class="edge-nav prev" id="abPrev" aria-label="Trước"></button>
           <button class="edge-nav next" id="abNext" aria-label="Tiếp"></button>
 
-          <!-- Dots -->
           <div class="stage-dots" id="stageDots" role="tablist" aria-label="About slides">
-            <button class="dot is-active" aria-label="Slide 1"></button>
-            <button class="dot" aria-label="Slide 2"></button>
-            <button class="dot" aria-label="Slide 3"></button>
+            <button class="dot is-active" aria-label="Intro"></button>
+            <button class="dot" aria-label="Tầm nhìn"></button>
+            <button class="dot" aria-label="Sứ mệnh & Giá trị"></button>
           </div>
 
-          <!-- Slogan (sticky) -->
           <section class="slogan-fixed" aria-label="Slogan VietForture">
-            <div class="slogan-card">
+            <div class="slogan-card strong">
               <div class="spark"></div>
-              <div class="slogan-line">VietForture – Không gian sống hiện đại, nền tảng tài chính vững vàng.</div>
+              <div class="slogan-line moving">VietForture – Không gian sống hiện đại, nền tảng tài chính vững vàng.</div>
+              <div class="slogan-underline"></div>
               <div class="slogan-sub">Chúng tôi không chỉ cung cấp chỗ ở, chúng tôi đồng hành cùng bạn trên hành trình phát triển.</div>
             </div>
           </section>
@@ -210,16 +223,8 @@
       <div class="panel-flat">
         <h2 class="view-title">Dịch Vụ</h2>
         <div class="services">
-          <button class="svc-card" data-nav="tindung" aria-controls="view-tindung">
-            <span class="svc-ico" aria-hidden="true">💳</span>
-            <span class="svc-title">Tín Dụng</span>
-            <span class="svc-sub">Minh bạch – nhanh chóng</span>
-          </button>
-          <button class="svc-card" data-nav="kitucxa" aria-controls="view-kitucxa">
-            <span class="svc-ico" aria-hidden="true">🏠</span>
-            <span class="svc-title">Ký Túc Xá</span>
-            <span class="svc-sub">An ninh – tiện nghi</span>
-          </button>
+          <button class="svc-card" data-nav="tindung"><span class="svc-ico">💳</span><span class="svc-title">Tín Dụng</span><span class="svc-sub">Minh bạch – nhanh chóng</span></button>
+          <button class="svc-card" data-nav="kitucxa"><span class="svc-ico">🏠</span><span class="svc-title">Ký Túc Xá</span><span class="svc-sub">An ninh – tiện nghi</span></button>
         </div>
       </div>
     </section>
@@ -229,17 +234,17 @@
       <div class="panel-flat">
         <h2 class="view-title">Tuyển Dụng</h2>
         <div class="grid4">
-          <article class="job-item"><h3>Nhân Sự (HR)</h3><p>Quản trị nhân sự, C&B.</p><button class="btn">Nộp hồ sơ</button></article>
-          <article class="job-item"><h3>IT</h3><p>Web / Infra / Automation.</p><button class="btn">Nộp hồ sơ</button></article>
-          <article class="job-item"><h3>Marketing</h3><p>Digital & Branding.</p><button class="btn">Nộp hồ sơ</button></article>
-          <article class="job-item"><h3>Kế Toán</h3><p>Báo cáo – kiểm soát.</p><button class="btn">Nộp hồ sơ</button></article>
+          <article class="job-item"><h3>Nhân Sự (HR)</h3><p>Quản trị nhân sự, C&amp;B.</p><button class="btn" data-role="HR">Nộp hồ sơ</button></article>
+          <article class="job-item"><h3>IT</h3><p>Web/Infra/Automation.</p><button class="btn" data-role="IT">Nộp hồ sơ</button></article>
+          <article class="job-item"><h3>Marketing</h3><p>Digital &amp; Branding.</p><button class="btn" data-role="Marketing">Nộp hồ sơ</button></article>
+          <article class="job-item"><h3>Kế Toán</h3><p>Báo cáo – kiểm soát.</p><button class="btn" data-role="Kế Toán">Nộp hồ sơ</button></article>
         </div>
       </div>
     </section>
 
     <!-- NEWS -->
     <section id="view-tintuc" class="view" role="tabpanel" aria-labelledby="tab-tintuc">
-      <div class="panel-flat">
+      <div class="panel-flat news-wrap">
         <h2 class="view-title">Tin Tức</h2>
         <div class="news-grid">
           <a class="news-card" href="#"><h3>Mẹo tối ưu chi phí email doanh nghiệp</h3><p>Tổng hợp cách chọn gói hợp lý.</p></a>
@@ -252,7 +257,7 @@
     <!-- CREDIT -->
     <section id="view-tindung" class="view" role="tabpanel" aria-label="Tín Dụng">
       <div class="detail">
-        <div class="detail-hero">
+        <div class="detail-hero credit">
           <div class="detail-ico">💳</div>
           <div>
             <h2 class="detail-title">Tín Dụng (Thế chấp)</h2>
@@ -277,7 +282,7 @@
     <!-- DORM -->
     <section id="view-kitucxa" class="view" role="tabpanel" aria-label="Ký túc xá">
       <div class="detail">
-        <div class="detail-hero">
+        <div class="detail-hero dorm">
           <div class="detail-ico">🏠</div>
           <div>
             <h2 class="detail-title">Ký Túc Xá</h2>
@@ -300,9 +305,8 @@
     </section>
   </main>
 
-  <!-- FOOTER -->
   <footer class="corp-footer" role="contentinfo" itemscope itemtype="https://schema.org/Organization">
-    <div class="fgrid">
+    <div class="container fgrid">
       <div class="fcol">
         <h4>Về chúng tôi</h4>
         <p itemprop="name"><strong>Công ty Cổ phần Việt Thịnh Vượng</strong></p>
