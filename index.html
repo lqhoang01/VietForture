@@ -18,9 +18,11 @@
         <a class="brand" id="brandHome" href="#" aria-label="Trang chủ">
           <img class="logo-rect" src="avatar.png" alt="VietForture" decoding="async" fetchpriority="high" />
         </a>
+        <!-- Burger -->
+        <button class="nav-toggle" id="navToggle" aria-label="Mở menu" aria-expanded="false"><span></span></button>
       </div>
       <nav aria-label="Điều hướng tabs" class="main-nav">
-        <ul class="tabs" role="tablist">
+        <ul class="tabs" id="tabs" role="tablist">
           <li><button role="tab" class="tab" id="tab-home" aria-controls="view-home" aria-selected="true">Trang chủ</button></li>
           <li><button role="tab" class="tab" id="tab-gioithieu" aria-controls="view-about" aria-selected="false">Giới Thiệu</button></li>
           <li><button role="tab" class="tab" id="tab-dichvu" aria-controls="view-dichvu" aria-selected="false">Dịch Vụ</button></li>
@@ -44,29 +46,29 @@
         <div class="hero-inner">
           <div class="vf-hero">
             <div class="vf-wordmark">
-              <span class="word">VIETFORTURE</span>
-              <div class="greet">XIN CHÀO</div>
+              <span class="word animate-in a-fadeUp" style="--a-delay:0ms">VIETFORTURE</span>
+              <div class="greet animate-in a-fadeUp" style="--a-delay:120ms">XIN CHÀO</div>
             </div>
           </div>
-          <button id="btn-show-about" class="cta-down ghost subtle" type="button" aria-controls="view-about" aria-label="Đến Giới thiệu">
+          <button id="btn-show-about" class="cta-down ghost subtle animate-in a-pop" style="--a-delay:300ms" type="button" aria-controls="view-about" aria-label="Đến Giới thiệu">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
         </div>
       </div>
     </section>
 
-    <!-- ABOUT (giữ cấu trúc hiện có) -->
+    <!-- ABOUT -->
     <section id="view-about" class="view about-page" role="tabpanel" aria-labelledby="about-title">
       <div class="about-wrap container">
         <div class="about-stage" id="aboutStage">
           <!-- SLIDE 1 -->
           <section class="slide is-active" data-enter="rise">
-            <div class="panel-card boxed tight">
+            <div class="panel-card boxed tight animate-in a-fadeIn">
               <div class="box-head"><h2 id="about-title" class="about-title">GIỚI THIỆU</h2></div>
               <p class="lead-strong">VietForture JSC hoạt động trong hai mảng: <b>lưu trú</b> và <b>tín dụng</b>. Định hướng <b>khách hàng là trung tâm</b> và <b>phát triển bền vững</b>.</p>
               <h3 class="section-cap ribbon">LĨNH VỰC CHÍNH</h3>
               <div class="grid-2 grid-desktop-3">
-                <div class="info-box reveal">
+                <div class="info-box reveal animate-in a-rise" style="--a-delay:0ms">
                   <h3 class="tagline big">🏠 VietForture Home</h3>
                   <p>Ký túc xá & căn hộ dịch vụ hiện đại.</p>
                   <ul class="tick">
@@ -75,7 +77,7 @@
                     <li><b>Vị trí</b> kết nối</li>
                   </ul>
                 </div>
-                <div class="info-box reveal">
+                <div class="info-box reveal animate-in a-rise" style="--a-delay:120ms">
                   <h3 class="tagline big">💳 VietForture Credit</h3>
                   <p>Giải pháp vay thế chấp minh bạch, nhanh chóng.</p>
                   <ul class="tick">
@@ -84,7 +86,7 @@
                     <li><b>Hợp đồng</b> rõ ràng</li>
                   </ul>
                 </div>
-                <div class="info-box reveal only-desktop">
+                <div class="info-box reveal only-desktop animate-in a-rise" style="--a-delay:240ms">
                   <h3 class="tagline big">⭐ Giá trị cốt lõi</h3>
                   <ul class="tick">
                     <li><b>Tận tâm</b> – vì khách hàng</li>
@@ -94,37 +96,39 @@
                 </div>
               </div>
               <div class="kpi-row reveal only-desktop">
-                <div class="kpi-card"><div class="kpi-num" data-count="120">0</div><div class="kpi-sub">Dự án</div></div>
-                <div class="kpi-card"><div class="kpi-num" data-count="98">0</div><div class="kpi-sub">% hài lòng</div></div>
-                <div class="kpi-card"><div class="kpi-num" data-count="24">0</div><div class="kpi-sub">Giờ giải ngân*</div></div>
+                <div class="kpi-card animate-in a-pop" style="--a-delay:0ms"><div class="kpi-num" data-count="120">0</div><div class="kpi-sub">Dự án</div></div>
+                <div class="kpi-card animate-in a-pop" style="--a-delay:120ms"><div class="kpi-num" data-count="98">0</div><div class="kpi-sub">% hài lòng</div></div>
+                <div class="kpi-card animate-in a-pop" style="--a-delay:240ms"><div class="kpi-num" data-count="24">0</div><div class="kpi-sub">Giờ giải ngân*</div></div>
               </div>
             </div>
           </section>
+
           <!-- SLIDE 2 -->
           <section class="slide" data-enter="tilt">
-            <div class="panel-card boxed tight">
+            <div class="panel-card boxed tight animate-in a-fadeIn">
               <div class="box-head"><h2 class="about-title">TẦM NHÌN</h2></div>
-              <div class="info-box reveal"><h3 class="tagline big">Dẫn đầu xu hướng – Kiến tạo tương lai</h3><p>Xây dựng hệ sinh thái lưu trú ↔ tài chính, tối ưu trải nghiệm số end-to-end.</p></div>
-              <div class="info-box reveal"><h3 class="tagline">Tác động xã hội</h3>
+              <div class="info-box reveal animate-in a-rise"><h3 class="tagline big">Dẫn đầu xu hướng – Kiến tạo tương lai</h3><p>Xây dựng hệ sinh thái lưu trú ↔ tài chính, tối ưu trải nghiệm số end-to-end.</p></div>
+              <div class="info-box reveal animate-in a-rise" style="--a-delay:120ms"><h3 class="tagline">Tác động xã hội</h3>
                 <ul class="tick"><li>Chuẩn hoá không gian sống</li><li>Hỗ trợ vốn phù hợp</li><li>Đồng hành dài hạn</li></ul>
               </div>
             </div>
           </section>
+
           <!-- SLIDE 3 -->
           <section class="slide" data-enter="fadeup">
-            <div class="panel-card boxed tight">
+            <div class="panel-card boxed tight animate-in a-fadeIn">
               <div class="box-head"><h2 class="about-title">SỨ MỆNH & GIÁ TRỊ</h2></div>
               <div class="grid-2">
-                <div class="info-box reveal">
+                <div class="info-box reveal animate-in a-rise">
                   <h3 class="section-cap ribbon">Sứ mệnh</h3>
                   <ul class="tick"><li>Nâng cao chất lượng sống</li><li>Hỗ trợ tài chính hiệu quả</li><li>Kết nối cộng đồng</li></ul>
                 </div>
-                <div class="info-box reveal">
+                <div class="info-box reveal animate-in a-rise" style="--a-delay:120ms">
                   <h3 class="kcore-title">Giá trị</h3>
                   <div class="core-grid">
-                    <div class="core-card reveal"><b>Tận tâm</b><p>Ưu tiên lợi ích KH</p></div>
-                    <div class="core-card reveal"><b>Minh bạch</b><p>Quy trình rõ ràng</p></div>
-                    <div class="core-card reveal"><b>Tiên phong</b><p>Công nghệ</p></div>
+                    <div class="core-card reveal animate-in a-pop"><b>Tận tâm</b><p>Ưu tiên lợi ích KH</p></div>
+                    <div class="core-card reveal animate-in a-pop" style="--a-delay:120ms"><b>Minh bạch</b><p>Quy trình rõ ràng</p></div>
+                    <div class="core-card reveal animate-in a-pop" style="--a-delay:240ms"><b>Tiên phong</b><p>Công nghệ</p></div>
                   </div>
                 </div>
               </div>
@@ -141,7 +145,7 @@
           </div>
 
           <section class="slogan-fixed" aria-label="Slogan VietForture">
-            <div class="slogan-card strong">
+            <div class="slogan-card strong animate-in a-fadeIn">
               <div class="spark"></div>
               <div class="slogan-line moving">VietForture – Không gian sống hiện đại, nền tảng tài chính vững vàng.</div>
               <div class="slogan-underline"></div>
@@ -157,8 +161,8 @@
       <div class="panel-flat">
         <h2 class="view-title">Dịch Vụ</h2>
         <div class="services">
-          <button class="svc-card" data-nav="tindung"><span class="svc-ico">💳</span><span class="svc-title">Tín Dụng</span><span class="svc-sub">Minh bạch – nhanh</span></button>
-          <button class="svc-card" data-nav="kitucxa"><span class="svc-ico">🏠</span><span class="svc-title">Lưu Trú</span><span class="svc-sub">An ninh – tiện nghi</span></button>
+          <button class="svc-card animate-in a-rise" data-nav="tindung"><span class="svc-ico">💳</span><span class="svc-title">Tín Dụng</span><span class="svc-sub">Minh bạch – nhanh</span></button>
+          <button class="svc-card animate-in a-rise" style="--a-delay:120ms" data-nav="kitucxa"><span class="svc-ico">🏠</span><span class="svc-title">Lưu Trú</span><span class="svc-sub">An ninh – tiện nghi</span></button>
         </div>
       </div>
     </section>
@@ -168,10 +172,10 @@
       <div class="panel-flat">
         <h2 class="view-title">Tuyển Dụng</h2>
         <div class="grid4">
-          <article class="job-item"><h3>Nhân Sự (HR)</h3><p>Quản trị nhân sự, C&amp;B.</p><button class="btn" data-role="HR">Nộp hồ sơ</button></article>
-          <article class="job-item"><h3>IT</h3><p>Web/Infra/Automation.</p><button class="btn" data-role="IT">Nộp hồ sơ</button></article>
-          <article class="job-item"><h3>Marketing</h3><p>Digital &amp; Branding.</p><button class="btn" data-role="Marketing">Nộp hồ sơ</button></article>
-          <article class="job-item"><h3>Kế Toán</h3><p>Báo cáo – kiểm soát.</p><button class="btn" data-role="Kế Toán">Nộp hồ sơ</button></article>
+          <article class="job-item animate-in a-rise"><h3>Nhân Sự (HR)</h3><p>Quản trị nhân sự, C&amp;B.</p><button class="btn" data-role="HR">Nộp hồ sơ</button></article>
+          <article class="job-item animate-in a-rise" style="--a-delay:120ms"><h3>IT</h3><p>Web/Infra/Automation.</p><button class="btn" data-role="IT">Nộp hồ sơ</button></article>
+          <article class="job-item animate-in a-rise" style="--a-delay:240ms"><h3>Marketing</h3><p>Digital &amp; Branding.</p><button class="btn" data-role="Marketing">Nộp hồ sơ</button></article>
+          <article class="job-item animate-in a-rise" style="--a-delay:360ms"><h3>Kế Toán</h3><p>Báo cáo – kiểm soát.</p><button class="btn" data-role="Kế Toán">Nộp hồ sơ</button></article>
         </div>
       </div>
     </section>
@@ -181,18 +185,18 @@
       <div class="panel-flat news-wrap">
         <h2 class="view-title">Tin Tức</h2>
         <div class="news-grid">
-          <a class="news-card" href="#"><h3>Mẹo tối ưu chi phí email doanh nghiệp</h3><p>Tổng hợp cách chọn gói hợp lý.</p></a>
-          <a class="news-card" href="#"><h3>Những điều cần biết trước khi thuê KTX</h3><p>Checklist cho tân sinh viên.</p></a>
-          <a class="news-card" href="#"><h3>Tín dụng an toàn cho sinh viên</h3><p>Nguyên tắc 3 không – 3 có.</p></a>
+          <a class="news-card animate-in a-fadeIn" href="#"><h3>Mẹo tối ưu chi phí email doanh nghiệp</h3><p>Tổng hợp cách chọn gói hợp lý.</p></a>
+          <a class="news-card animate-in a-fadeIn" style="--a-delay:120ms" href="#"><h3>Những điều cần biết trước khi thuê KTX</h3><p>Checklist cho tân sinh viên.</p></a>
+          <a class="news-card animate-in a-fadeIn" style="--a-delay:240ms" href="#"><h3>Tín dụng an toàn cho sinh viên</h3><p>Nguyên tắc 3 không – 3 có.</p></a>
         </div>
       </div>
     </section>
 
     <!-- CREDIT -->
     <section id="view-tindung" class="view" role="tabpanel" aria-label="VIETFORTURE CREDIT">
-      <div class="ui-hero ui-hero--credit">
+      <div class="ui-hero ui-hero--credit animate-in a-zoomBg">
         <div class="ui-hero__inner container">
-          <div class="ui-hero__body">
+          <div class="ui-hero__body animate-in a-fadeUp">
             <h1 class="ui-hero__title">VIETFORTURE CREDIT</h1>
             <p class="ui-hero__subtitle">Giải pháp tín dụng toàn diện · Minh bạch · Nhanh chóng</p>
             <div class="ui-hero__cta">
@@ -205,22 +209,46 @@
       </div>
 
       <div id="creditDetail" class="ui-section container">
-        <h2 class="ui-h2">Danh mục sản phẩm</h2>
+        <h2 class="ui-h2">Sản phẩm tín dụng</h2>
+
         <div class="ui-grid">
-          <article class="ui-textcard">
-            <h3>Vay tiêu dùng cá nhân</h3>
-            <p>Giải pháp linh hoạt cho chi tiêu: học tập, y tế, du lịch. Thủ tục gọn – giải ngân nhanh – lãi suất cạnh tranh.</p>
-            <div class="ui-badges"><span class="ui-badge">Thủ tục nhanh</span><span class="ui-badge">Lãi suất ưu đãi</span><span class="ui-badge">Giải ngân 24–48h</span></div>
+          <article class="ui-textcard animate-in a-rise">
+            <h3>Vay tiêu dùng tín chấp (Cá nhân)</h3>
+            <p>Thời gian vay linh hoạt 6–60 tháng. Thanh toán tiện lợi qua nhiều kênh. Gói dành cho: lương, CBCCVC, phụ nữ, BHNT, lịch sử vay tốt, chủ kinh doanh, CCCD.</p>
+            <div class="ui-badges"><span class="ui-badge">Lãi suất cạnh tranh</span><span class="ui-badge">Giải ngân nhanh</span><span class="ui-badge">Đối tác: SHBFinance · LOTTE Finance · FE Credit</span></div>
           </article>
-          <figure class="ui-photo"><img src="images/credit-consumer@800x600-center.jpg" alt="Vay tiêu dùng"></figure>
+          <figure class="ui-photo animate-in a-fadeIn"><img src="images/credit-consumer@800x600-center.jpg" alt="Vay tiêu dùng"></figure>
         </div>
 
         <div class="ui-grid ui-grid--rev">
-          <figure class="ui-photo"><img src="images/credit-mortgage@800x600-right.jpg" alt="Vay thế chấp"></figure>
-          <article class="ui-textcard">
-            <h3>Vay thế chấp (cá nhân & doanh nghiệp)</h3>
-            <p>Hạn mức cao cho kinh doanh/đầu tư/mua nhà. Điều khoản rõ ràng – tư vấn chuyên nghiệp – quy trình minh bạch.</p>
-            <div class="ui-badges"><span class="ui-badge">Minh bạch</span><span class="ui-badge">Hạn mức cao</span><span class="ui-badge">Tư vấn chuyên sâu</span></div>
+          <figure class="ui-photo animate-in a-fadeIn"><img src="images/credit-mortgage@800x600-right.jpg" alt="Vay thế chấp"></figure>
+          <article class="ui-textcard animate-in a-rise">
+            <h3>Vay thế chấp tài sản (Cá nhân)</h3>
+            <ul>
+              <li><b>Vay mua/ xây sửa nhà</b>: đến 85% TSBĐ, kỳ hạn đến 35 năm, linh hoạt chứng minh thu nhập.</li>
+              <li><b>Vay mua ô tô</b>: duyệt trong ~4h, tối đa 80% giá trị xe, kỳ hạn đến 72 tháng.</li>
+            </ul>
+            <div class="ui-badges"><span class="ui-badge">Phương thức trả nợ linh hoạt</span><span class="ui-badge">Điều khoản rõ ràng</span></div>
+          </article>
+        </div>
+
+        <div class="ui-grid">
+          <article class="ui-textcard animate-in a-rise">
+            <h3>Tín chấp doanh nghiệp</h3>
+            <ul>
+              <li>Tăng vốn lưu động, đầu tư mở rộng, xử lý thiếu hụt tạm thời.</li>
+              <li>Dựa trên <b>báo cáo tài chính</b>, không cần TSBĐ; hạn mức tối đa tới 100 tỷ; hỗ trợ toàn quốc.</li>
+            </ul>
+            <div class="ui-badges"><span class="ui-badge">Không TSBĐ</span><span class="ui-badge">Hạn mức cao</span></div>
+          </article>
+          <figure class="ui-photo animate-in a-fadeIn"><img src="images/credit-biz@800x600-center.jpg" alt="Vay doanh nghiệp tín chấp"></figure>
+        </div>
+
+        <div class="ui-grid ui-grid--rev">
+          <figure class="ui-photo animate-in a-fadeIn"><img src="images/credit-asset@800x600-right.jpg" alt="Vay DN thế chấp"></figure>
+          <article class="ui-textcard animate-in a-rise">
+            <h3>Thế chấp doanh nghiệp</h3>
+            <p>Các mục: mua ô tô, bổ sung vốn lưu động, mua BĐS. Tỷ lệ vay tới 85% giá trị tài sản, phương thức trả nợ linh hoạt, cấp hạn mức DN.</p>
           </article>
         </div>
       </div>
@@ -263,13 +291,12 @@
 
     <!-- LƯU TRÚ -->
     <section id="view-kitucxa" class="view" role="tabpanel" aria-label="Lưu trú VietForture">
-      <div class="ui-hero ui-hero--stay">
+      <div class="ui-hero ui-hero--stay animate-in a-zoomBg">
         <div class="ui-hero__inner container">
-          <div class="ui-hero__body">
+          <div class="ui-hero__body animate-in a-fadeUp">
             <h1 class="ui-hero__title">VIETFORTURE HOME</h1>
             <p class="ui-hero__subtitle">Căn hộ dịch vụ & Phòng 2 giường tầng · Gần ĐH Mở, ĐH TN&MT, ĐH SP TDTT</p>
             <div class="ui-hero__cta">
-              <!-- Đã đổi nút theo yêu cầu -->
               <button class="btn ghost" id="openStayForm">Đăng ký nhận phòng</button>
             </div>
           </div>
@@ -280,17 +307,17 @@
       <div class="ui-section container">
         <h2 class="ui-h2">Không gian dành cho bạn</h2>
         <div class="ui-grid">
-          <article class="ui-textcard">
+          <article class="ui-textcard animate-in a-rise">
             <h3>Căn hộ dịch vụ</h3>
             <p>Riêng tư – đủ tiện nghi: máy lạnh, bàn học, bếp/VS riêng (tuỳ căn). Phù hợp sinh viên & người đi làm.</p>
             <div class="ui-badges"><span class="ui-badge">Riêng tư</span><span class="ui-badge">Tiện nghi</span><span class="ui-badge">Bảo trì định kỳ</span></div>
           </article>
-          <figure class="ui-photo"><img src="images/stay-apt@800x600-center.jpg" alt="Căn hộ dịch vụ"></figure>
+          <figure class="ui-photo animate-in a-fadeIn"><img src="images/stay-apt@800x600-center.jpg" alt="Căn hộ dịch vụ"></figure>
         </div>
 
         <div class="ui-grid ui-grid--rev">
-          <figure class="ui-photo"><img src="images/stay-bunk@800x600-top.jpg" alt="Phòng 2 giường tầng"></figure>
-          <article class="ui-textcard">
+          <figure class="ui-photo animate-in a-fadeIn"><img src="images/stay-bunk@800x600-top.jpg" alt="Phòng 2 giường tầng"></figure>
+          <article class="ui-textcard animate-in a-rise">
             <h3>Phòng 2 giường tầng</h3>
             <p>Tối ưu chi phí, kết nối cộng đồng. Có bàn học, kệ sách, tủ đồ riêng. Wi-Fi nhanh, khu tự học yên tĩnh.</p>
             <div class="ui-badges"><span class="ui-badge">Tiết kiệm</span><span class="ui-badge">Thân thiện</span><span class="ui-badge">Đủ tiện ích</span></div>
@@ -298,9 +325,9 @@
         </div>
 
         <div class="ui-gallery">
-          <img src="images/stay-g1@1200x900-center.jpg" alt="Gallery 1">
-          <img src="images/stay-g2@1200x900-center.jpg" alt="Gallery 2">
-          <img src="images/stay-g3@1200x900-center.jpg" alt="Gallery 3">
+          <img class="animate-in a-fadeIn" src="images/stay-g1@1200x900-center.jpg" alt="Gallery 1">
+          <img class="animate-in a-fadeIn" style="--a-delay:120ms" src="images/stay-g2@1200x900-center.jpg" alt="Gallery 2">
+          <img class="animate-in a-fadeIn" style="--a-delay:240ms" src="images/stay-g3@1200x900-center.jpg" alt="Gallery 3">
         </div>
       </div>
 
