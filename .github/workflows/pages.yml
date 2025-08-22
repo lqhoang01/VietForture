@@ -1,8 +1,8 @@
-name: Deploy static site to Pages
+name: pages-build-deployment
 
 on:
   push:
-    branches: ["main"]
+    branches: [ main ]   # nếu nhánh chính của bạn KHÔNG phải main, sửa lại cho đúng
   workflow_dispatch:
 
 permissions:
@@ -20,19 +20,17 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .   # trang tĩnh ở root repo
+          path: ./        # build site từ thư mục gốc; nếu bạn dùng /docs thì đổi thành ./docs
 
   deploy:
     needs: build
-    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
