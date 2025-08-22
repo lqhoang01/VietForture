@@ -24,7 +24,7 @@ body{margin:0;min-height:100vh;display:flex;flex-direction:column;font-family:sy
 }
 .site-header.header--scrolled::before{opacity:1;background:rgba(255,255,255,.72);box-shadow:0 10px 30px rgba(15,23,42,.08)}
 #brandHome{display:inline-flex;align-items:center}
-.logo-rect{width:268px;height:auto;object-fit:contain}
+.logo-rect{width:100%;max-width:140px;height:auto;object-fit:contain}
 .brand-row{width:100%;display:flex;align-items:center;gap:10px;justify-content:space-between;padding:6px 0}
 @media (min-width:921px){ .brand-row{justify-content:flex-start} }
 
@@ -178,7 +178,47 @@ main{flex:1;padding:18px 0}
 .fb::before{content:"";width:20px;height:20px;background:#fff;mask:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="black" d="M22 12a10 10 0 1 0-11.563 9.874v-6.987H7.898v-2.887h2.54V9.413c0-2.506 1.493-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.242 0-1.63.77-1.63 1.56v1.87h2.773l-.443 2.887h-2.33v6.987A10 10 0 0 0 22 12Z"/></svg>') no-repeat center/contain}
 .fb .label{position:absolute;bottom:-16px;left:50%;transform:translateX(-50%);font-size:11px;opacity:.9;color:#ffd6db;white-space:nowrap}
 
-/* Responsive */
+/* Always limit logo width */
+.logo-rect {
+  width: 100%;
+  max-width: 140px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Prevent horizontal scroll on hero-bleed */
+.hero-bleed {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+/* Responsive fixes */
+@media (max-width: 640px) {
+  .logo-rect {
+    max-width: 100px;
+    height: 48px;
+  }
+  .edge-nav {
+    width: 38px;
+    height: 38px;
+  }
+  .grid4,
+  .kpi-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 400px) {
+  .site-header .inner {
+    padding: 0 4px;
+  }
+  .logo-rect {
+    max-width: 90px;
+    height: 48px;
+  }
+}
+
 @media (max-width:1200px){ .grid4{grid-template-columns:repeat(2,1fr)} .news-grid{grid-template-columns:repeat(2,1fr)} }
 @media (max-width:920px){
   .grid-2{grid-template-columns:1fr}
@@ -192,12 +232,4 @@ main{flex:1;padding:18px 0}
   .services{grid-template-columns:1fr}
   :root{ --wm-size:64vw; --wm-speed:12s; --slogan-h:112px; }
   .ui-hero__img{height:300px}
-}
-@media (max-width:640px){
-  .site-header .inner{height:76px}
-  .logo-rect{height:62px; max-width:160px; width:100%;}
-  .hero{min-height:calc(100dvh - 76px)}
-  .news-grid{grid-template-columns:1fr}
-  .corp-footer .fgrid{grid-template-columns:1fr}
-  .tabs{white-space:nowrap}
 }
