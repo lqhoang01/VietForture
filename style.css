@@ -233,3 +233,60 @@ main{flex:1;padding:16px 0}
 @media (max-width:480px){
   .edge-nav{width:40px;height:40px}
 }
+/* =========================
+   DESKTOP RE-DESIGN (>= 1024px)
+   ========================= */
+@media (min-width: 1024px){
+
+  /* Header quay lại 1 hàng gọn – logo trái, tabs giữa */
+  .site-header .inner{
+    min-height: var(--header-h);
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    padding: 0 16px;
+  }
+  .brand-row{padding:0; position:relative; width:100%;}
+  #brandHome{position:absolute; left:8px; top:50%; transform:translateY(-50%);}
+  .logo-rect{height:auto; width:268px; max-width:none;}
+  .main-nav{display:flex; align-items:center; justify-content:center; width:100%;}
+  .tabs{gap:24px; padding:0;}
+  .tab{padding:12px 24px; font-size:16px}
+
+  /* Hero cân đối, watermark tinh tế hơn, chữ lớn hơn */
+  .hero{min-height:calc(100dvh - var(--header-h));}
+  :root{ --wm-size:48vw; --wm-opacity:.07; --wm-speed:70s; }
+  .vf-hero .word{font-size:clamp(92px,9vw,180px); letter-spacing:-.03em}
+  .greet{font-size:clamp(16px,1.6vw,22px); letter-spacing:.18em}
+
+  /* About: 2 cột rõ ràng, dòng chữ thoáng */
+  .lead-strong{line-height:1.7; font-size:18px}
+  .grid-2{grid-template-columns:1fr 1fr; gap:18px}
+  .core-grid{grid-template-columns:repeat(3,1fr)}
+  .kpi-row{display:grid}       /* Desktop: hiện KPI */
+  .stat-row{display:grid}      /* Desktop: hiện số liệu nếu có */
+
+  /* Nút điều hướng slide lớn, dễ bấm */
+  .edge-nav{width:58px; height:58px}
+
+  /* Dịch vụ/Jobs/News: lưới rộng thoáng */
+  .services{grid-template-columns:repeat(2,1fr); gap:18px}
+  .grid4{grid-template-columns:repeat(4,1fr)}
+  .news-grid{grid-template-columns:repeat(3,1fr)}
+
+  /* Form desktop: 2 cột rõ, control lớn hơn vừa mắt */
+  .fgrid{grid-template-columns:1fr 1fr; gap:16px}
+  .fi input,.fi select,.fi textarea{font-size:15px}
+
+  /* Footer cân đều 3 cột */
+  .corp-footer .fgrid{grid-template-columns:repeat(3,1fr)}
+}
+
+/* Siêu rộng (>= 1400px): mở spacing và hero to thêm */
+@media (min-width: 1400px){
+  .container{max-width:1320px}
+  .vf-hero .word{font-size:clamp(110px,8.2vw,200px)}
+  .tabs{gap:28px}
+}
+
