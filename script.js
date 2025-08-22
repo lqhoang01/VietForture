@@ -13,7 +13,6 @@
   const after2Frames = (fn)=>requestAnimationFrame(()=>requestAnimationFrame(fn));
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* Tabs state + mapping subview -> parent tab */
   function setTab(id){
     const parentOf = { tindung: 'dichvu', kitucxa: 'dichvu' };
     const normalized = parentOf[id] || id;
@@ -47,7 +46,7 @@
     }
   }
 
-  // Brand + tabs
+  // brand + tabs
   document.getElementById('brandHome')?.addEventListener('click', (e) => { e.preventDefault(); show('home'); });
   document.getElementById('tab-home')?.addEventListener('click', () => show('home'));
   document.getElementById('tab-gioithieu')?.addEventListener('click', () => show('about'));
@@ -85,7 +84,7 @@
     document.getElementById('abNext')?.addEventListener('click', (e) => { e.preventDefault(); set(i + 1); });
     dots.forEach((d, idx) => d.addEventListener('click', (e) => { e.preventDefault(); set(idx); }));
 
-    // Keyboard support
+    // Keyboard
     stage.tabIndex = 0;
     stage.addEventListener('keydown', (e)=>{
       if (e.key === 'ArrowLeft') { e.preventDefault(); set(i-1); }
@@ -126,13 +125,13 @@
 
   function debounce(fn, t=100){ let to; return (...args)=>{ clearTimeout(to); to=setTimeout(()=>fn(...args), t); }; }
 
-  /* Reveal on scroll */
+  /* Reveal */
   const io = new IntersectionObserver((ents) => {
     ents.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); } });
   }, { threshold: .16, rootMargin: '0px 0px -8% 0px' });
   document.querySelectorAll('.reveal,.info-box,.core-card,.kpi-card,.news-card,.svc-card,.job-item').forEach(el => io.observe(el));
 
-  /* Counter – bỏ animate nếu prefers-reduced-motion hoặc đã ẩn trên mobile */
+  /* Counter (desktop mới hiện KPI) */
   const statIO = new IntersectionObserver((ents) => {
     ents.forEach(e => {
       if (!e.isIntersecting) return;
@@ -155,13 +154,15 @@
   window.addEventListener('DOMContentLoaded', () => {
     const id = (location.hash || '#home').slice(1);
     show(id, {push:false});
+    setupCurrencyMask();
+    populateCities();
   });
   window.addEventListener('hashchange', () => {
     const id = (location.hash || '#home').slice(1);
     show(id, {push:false});
   });
 
-  /* FORMS – demo submit */
+  /* FORM handlers */
   const creditForm = document.getElementById('creditForm');
   creditForm?.addEventListener('submit', (e)=>{
     e.preventDefault();
@@ -169,9 +170,10 @@
     if (!creditForm.checkValidity()){
       msg.textContent = 'Vui lòng điền đầy đủ thông tin bắt buộc.'; msg.className='form-msg err'; return;
     }
-    const fd = new FormData(creditForm);
+    // Giá trị thô của amount (không dấu chấm)
+    const amountRaw = document.getElementById('amount')?.dataset.raw || '';
+    // TODO: gửi amountRaw + các field khác lên backend khi sẵn sàng
     msg.textContent = 'Đã nhận đăng ký. Chúng tôi sẽ liên hệ sớm!'; msg.className='form-msg ok';
-    // TODO: tích hợp API backend khi có
     creditForm.reset();
   });
 
@@ -185,5 +187,45 @@
     msg.textContent = 'Đã ghi nhận nhu cầu KTX. Chúng tôi sẽ liên hệ tư vấn!'; msg.className='form-msg ok';
     dormForm.reset();
   });
+
+  /* === Extras === */
+
+  // Mask tiền VND
+  function setupCurrencyMask(){
+    const el = document.getElementById('amount');
+    if (!el) return;
+    const nf = new Intl.NumberFormat('vi-VN');
+    const unformat = (s) => s.replace(/[^\d]/g,'');
+
+    function formatNow(){
+      const raw = unformat(el.value);
+      el.dataset.raw = raw; // giữ giá trị thô để submit
+      el.value = raw ? nf.format(parseInt(raw,10)) : '';
+    }
+
+    el.addEventListener('input', () => {
+      const start = el.selectionStart;
+      formatNow();
+      el.setSelectionRange(el.value.length, el.value.length); // caret cuối cho đơn giản
+    });
+    el.addEventListener('blur', formatNow);
+  }
+
+  // Dropdown Thành phố mở rộng
+  function populateCities(){
+    const sel = document.getElementById('citySelect');
+    if (!sel) return;
+    const cities = [
+      'TP. Hồ Chí Minh','Hà Nội','Đà Nẵng','Cần Thơ','Hải Phòng','Bình Dương','Đồng Nai',
+      'Bà Rịa - Vũng Tàu','Long An','Tiền Giang','An Giang','Kiên Giang','Cà Mau','Bạc Liêu',
+      'Vĩnh Long','Trà Vinh','Sóc Trăng','Tây Ninh','Bình Phước','Bình Thuận','Khánh Hòa',
+      'Lâm Đồng','Đắk Lắk','Gia Lai','Nghệ An','Thanh Hóa','Thừa Thiên Huế','Quảng Ninh'
+    ];
+    cities.forEach(name=>{
+      const opt = document.createElement('option');
+      opt.textContent = name; opt.value = name;
+      sel.appendChild(opt);
+    });
+  }
 
 })();
