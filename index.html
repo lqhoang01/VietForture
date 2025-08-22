@@ -394,3 +394,29 @@
   <script src="script.js" defer></script>
 </body>
 </html>
+<script>
+  // Initialize tabs
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const selectedTab = tab.getAttribute('aria-controls');
+      document.querySelectorAll('.view').forEach(view => {
+        view.classList.toggle('is-visible', view.id === selectedTab);
+      });
+      document.querySelectorAll('.tab').forEach(t => {
+        t.setAttribute('aria-selected', t.id === tab.id);
+      });
+    });
+  });
+
+  // Toggle burger menu
+  const navToggle = document.getElementById('navToggle');
+  navToggle.addEventListener('click', () => {
+    const expanded = navToggle.getAttribute('aria-expanded') === 'true';
+    navToggle.setAttribute('aria-expanded', !expanded);
+    document.querySelector('.main-nav').classList.toggle('is-open', !expanded);
+  });
+
+  // Show about section on hero button click
+  document.getElementById('btn-show-about').addEventListener('click', () => {
+    document.getElementById('view-about').scrollIntoView({ behavior: 'smooth' });
+  });
