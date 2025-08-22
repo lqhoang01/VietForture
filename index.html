@@ -3,23 +3,22 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>VietForture – Dịch vụ tín dụng & ký túc xá</title>
-  <meta name="description" content="VietForture: giải pháp tín dụng thế chấp và ký túc xá tiện nghi." />
+  <title>VietForture – Tín dụng & Lưu trú</title>
+  <meta name="description" content="VietForture: giải pháp tín dụng minh bạch và lưu trú tiện nghi." />
   <link rel="preload" href="SVN-Mightiest.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="icon" href="favicon.ico">
   <link rel="stylesheet" href="style.css" />
-  <noscript><style>.view{display:block!important;opacity:1!important}.tab{pointer-events:none;opacity:.5}</style></noscript>
+  <noscript><style>.view{display:block!important;opacity:1!important}</style></noscript>
 </head>
 <body>
+  <!-- Header -->
   <header class="site-header" role="banner">
     <div class="inner container">
-      <!-- Hàng logo riêng trên mobile; desktop đưa về trái bằng CSS -->
       <div class="brand-row">
         <a class="brand" id="brandHome" href="#" aria-label="Trang chủ">
           <img class="logo-rect" src="avatar.png" alt="VietForture" decoding="async" fetchpriority="high" />
         </a>
       </div>
-      <!-- Tabs -->
       <nav aria-label="Điều hướng tabs" class="main-nav">
         <ul class="tabs" role="tablist">
           <li><button role="tab" class="tab" id="tab-home" aria-controls="view-home" aria-selected="true">Trang chủ</button></li>
@@ -56,19 +55,15 @@
       </div>
     </section>
 
-    <!-- ABOUT -->
+    <!-- ABOUT (giữ cấu trúc hiện có) -->
     <section id="view-about" class="view about-page" role="tabpanel" aria-labelledby="about-title">
       <div class="about-wrap container">
         <div class="about-stage" id="aboutStage">
           <!-- SLIDE 1 -->
           <section class="slide is-active" data-enter="rise">
             <div class="panel-card boxed tight">
-              <div class="box-head">
-                <h2 id="about-title" class="about-title">GIỚI THIỆU</h2>
-              </div>
-
-              <p class="lead-strong">Công ty Cổ phần Việt Thịnh Vượng (VietForture JSC) hoạt động trong hai mảng: <b>lưu trú</b> và <b>tín dụng</b>. Định hướng <b>khách hàng là trung tâm</b> và <b>phát triển bền vững</b>.</p>
-
+              <div class="box-head"><h2 id="about-title" class="about-title">GIỚI THIỆU</h2></div>
+              <p class="lead-strong">VietForture JSC hoạt động trong hai mảng: <b>lưu trú</b> và <b>tín dụng</b>. Định hướng <b>khách hàng là trung tâm</b> và <b>phát triển bền vững</b>.</p>
               <h3 class="section-cap ribbon">LĨNH VỰC CHÍNH</h3>
               <div class="grid-2 grid-desktop-3">
                 <div class="info-box reveal">
@@ -79,7 +74,6 @@
                     <li><b>An ninh</b> 24/7</li>
                     <li><b>Vị trí</b> kết nối</li>
                   </ul>
-                  <div class="note">Không gian sống văn minh – an tâm học tập.</div>
                 </div>
                 <div class="info-box reveal">
                   <h3 class="tagline big">💳 VietForture Credit</h3>
@@ -89,7 +83,6 @@
                     <li><b>Thẩm định</b> nhanh</li>
                     <li><b>Hợp đồng</b> rõ ràng</li>
                   </ul>
-                  <div class="note">Tiếp cận vốn nhanh – nắm bắt cơ hội.</div>
                 </div>
                 <div class="info-box reveal only-desktop">
                   <h3 class="tagline big">⭐ Giá trị cốt lõi</h3>
@@ -100,8 +93,6 @@
                   </ul>
                 </div>
               </div>
-
-              <!-- KPI (desktop mới thấy) -->
               <div class="kpi-row reveal only-desktop">
                 <div class="kpi-card"><div class="kpi-num" data-count="120">0</div><div class="kpi-sub">Dự án</div></div>
                 <div class="kpi-card"><div class="kpi-num" data-count="98">0</div><div class="kpi-sub">% hài lòng</div></div>
@@ -109,26 +100,16 @@
               </div>
             </div>
           </section>
-
           <!-- SLIDE 2 -->
           <section class="slide" data-enter="tilt">
             <div class="panel-card boxed tight">
               <div class="box-head"><h2 class="about-title">TẦM NHÌN</h2></div>
-              <div class="info-box reveal">
-                <h3 class="tagline big">Dẫn đầu xu hướng – Kiến tạo tương lai</h3>
-                <p>Xây dựng hệ sinh thái lưu trú ↔ tài chính, tối ưu trải nghiệm số end-to-end.</p>
-              </div>
-              <div class="info-box reveal">
-                <h3 class="tagline">Tác động xã hội</h3>
-                <ul class="tick">
-                  <li>Chuẩn hoá không gian sống văn minh</li>
-                  <li>Hỗ trợ vốn phù hợp cho học tập/khởi nghiệp</li>
-                  <li>Đồng hành dài hạn</li>
-                </ul>
+              <div class="info-box reveal"><h3 class="tagline big">Dẫn đầu xu hướng – Kiến tạo tương lai</h3><p>Xây dựng hệ sinh thái lưu trú ↔ tài chính, tối ưu trải nghiệm số end-to-end.</p></div>
+              <div class="info-box reveal"><h3 class="tagline">Tác động xã hội</h3>
+                <ul class="tick"><li>Chuẩn hoá không gian sống</li><li>Hỗ trợ vốn phù hợp</li><li>Đồng hành dài hạn</li></ul>
               </div>
             </div>
           </section>
-
           <!-- SLIDE 3 -->
           <section class="slide" data-enter="fadeup">
             <div class="panel-card boxed tight">
@@ -136,11 +117,7 @@
               <div class="grid-2">
                 <div class="info-box reveal">
                   <h3 class="section-cap ribbon">Sứ mệnh</h3>
-                  <ul class="tick">
-                    <li>Nâng cao chất lượng sống</li>
-                    <li>Hỗ trợ tài chính hiệu quả</li>
-                    <li>Kết nối cộng đồng bền vững</li>
-                  </ul>
+                  <ul class="tick"><li>Nâng cao chất lượng sống</li><li>Hỗ trợ tài chính hiệu quả</li><li>Kết nối cộng đồng</li></ul>
                 </div>
                 <div class="info-box reveal">
                   <h3 class="kcore-title">Giá trị</h3>
@@ -154,7 +131,6 @@
             </div>
           </section>
 
-          <!-- Controls -->
           <button class="edge-nav prev" id="abPrev" aria-label="Trước"></button>
           <button class="edge-nav next" id="abNext" aria-label="Tiếp"></button>
 
@@ -182,7 +158,7 @@
         <h2 class="view-title">Dịch Vụ</h2>
         <div class="services">
           <button class="svc-card" data-nav="tindung"><span class="svc-ico">💳</span><span class="svc-title">Tín Dụng</span><span class="svc-sub">Minh bạch – nhanh</span></button>
-          <button class="svc-card" data-nav="kitucxa"><span class="svc-ico">🏠</span><span class="svc-title">Ký Túc Xá</span><span class="svc-sub">An ninh – tiện nghi</span></button>
+          <button class="svc-card" data-nav="kitucxa"><span class="svc-ico">🏠</span><span class="svc-title">Lưu Trú</span><span class="svc-sub">An ninh – tiện nghi</span></button>
         </div>
       </div>
     </section>
@@ -212,131 +188,157 @@
       </div>
     </section>
 
-    <!-- CREDIT (Thế chấp) -->
-    <section id="view-tindung" class="view" role="tabpanel" aria-label="Tín Dụng">
-      <div class="detail">
-        <div class="detail-hero credit">
-          <div class="detail-ico">💳</div>
-          <div>
-            <h2 class="detail-title">Đăng ký vay thế chấp</h2>
-            <p class="detail-sub">Minh bạch · Giải ngân nhanh · Lãi suất cạnh tranh</p>
+    <!-- CREDIT -->
+    <section id="view-tindung" class="view" role="tabpanel" aria-label="VIETFORTURE CREDIT">
+      <div class="ui-hero ui-hero--credit">
+        <div class="ui-hero__inner container">
+          <div class="ui-hero__body">
+            <h1 class="ui-hero__title">VIETFORTURE CREDIT</h1>
+            <p class="ui-hero__subtitle">Giải pháp tín dụng toàn diện · Minh bạch · Nhanh chóng</p>
+            <div class="ui-hero__cta">
+              <button class="btn primary" onclick="document.getElementById('creditDetail').scrollIntoView({behavior:'smooth'})">Khám phá</button>
+              <button class="btn ghost" id="openCreditForm">Đăng ký vay</button>
+            </div>
           </div>
         </div>
+        <img class="ui-hero__img pos-center" src="images/credit-hero@1600x600-center.jpg" alt="VietForture Credit hero">
+      </div>
 
-        <!-- Giới thiệu quy trình -->
-        <div class="credit-how">
-          <h3>Cách VietForture Credit vận hành</h3>
-          <ol>
-            <li><b>Đăng ký nhu cầu</b> – để lại thông tin cơ bản.</li>
-            <li><b>Thẩm định & tư vấn</b> – đề xuất gói vay phù hợp.</li>
-            <li><b>Ký hợp đồng minh bạch</b> – điều khoản rõ ràng.</li>
-            <li><b>Giải ngân nhanh</b> – theo dõi tiến độ online.</li>
-          </ol>
-          <p class="small">*Tài sản thế chấp hợp lệ: sổ đỏ/sổ hồng, ô tô, tài sản khác…</p>
+      <div id="creditDetail" class="ui-section container">
+        <h2 class="ui-h2">Danh mục sản phẩm</h2>
+        <div class="ui-grid">
+          <article class="ui-textcard">
+            <h3>Vay tiêu dùng cá nhân</h3>
+            <p>Giải pháp linh hoạt cho chi tiêu: học tập, y tế, du lịch. Thủ tục gọn – giải ngân nhanh – lãi suất cạnh tranh.</p>
+            <div class="ui-badges"><span class="ui-badge">Thủ tục nhanh</span><span class="ui-badge">Lãi suất ưu đãi</span><span class="ui-badge">Giải ngân 24–48h</span></div>
+          </article>
+          <figure class="ui-photo"><img src="images/credit-consumer@800x600-center.jpg" alt="Vay tiêu dùng"></figure>
         </div>
 
-        <!-- FORM TÍN DỤNG -->
-        <form class="credit-form" id="creditForm" novalidate>
-          <div class="fgrid">
-            <label class="fi">
-              <span>Họ và tên *</span>
-              <input type="text" name="fullname" required autocomplete="name" placeholder="Nguyễn Văn A">
-            </label>
-            <label class="fi">
-              <span>Số điện thoại *</span>
-              <input type="tel" name="phone" required inputmode="tel" pattern="[0-9\s+()-]{8,}" placeholder="09xxxxxxxx">
-            </label>
-            <label class="fi">
-              <span>Thành phố *</span>
-              <select name="city" id="citySelect" required>
-                <option value="">-- Chọn --</option>
-              </select>
-            </label>
-            <label class="fi">
-              <span>Tài sản thế chấp *</span>
-              <select name="collateral" required>
-                <option value="">-- Chọn --</option>
-                <option>Sổ đỏ / Sổ hồng</option>
-                <option>Ô tô</option>
-                <option>Tài sản khác</option>
-              </select>
-            </label>
-            <label class="fi">
-              <span>Khoản vay dự kiến (VND) *</span>
-              <input type="text" id="amount" name="amount" required inputmode="numeric" placeholder="VD: 300.000.000">
-            </label>
-            <label class="fi">
-              <span>Mục đích vay</span>
-              <textarea name="purpose" rows="3" placeholder="Mua nhà, đầu tư, kinh doanh..."></textarea>
-            </label>
+        <div class="ui-grid ui-grid--rev">
+          <figure class="ui-photo"><img src="images/credit-mortgage@800x600-right.jpg" alt="Vay thế chấp"></figure>
+          <article class="ui-textcard">
+            <h3>Vay thế chấp (cá nhân & doanh nghiệp)</h3>
+            <p>Hạn mức cao cho kinh doanh/đầu tư/mua nhà. Điều khoản rõ ràng – tư vấn chuyên nghiệp – quy trình minh bạch.</p>
+            <div class="ui-badges"><span class="ui-badge">Minh bạch</span><span class="ui-badge">Hạn mức cao</span><span class="ui-badge">Tư vấn chuyên sâu</span></div>
+          </article>
+        </div>
+      </div>
+
+      <!-- MODAL: Đăng ký vay -->
+      <div class="modal" id="creditModal" aria-hidden="true" role="dialog" aria-labelledby="creditTitle">
+        <div class="modal-card">
+          <div class="modal-head">
+            <h3 id="creditTitle" class="modal-title">Đăng ký vay vốn — VIETFORTURE CREDIT</h3>
+            <button class="btn secondary" id="closeCreditForm">Đóng</button>
           </div>
-          <label class="agree">
-            <input type="checkbox" name="agree" required>
-            <span>Tôi đồng ý để VietForture liên hệ tư vấn theo thông tin đã cung cấp.</span>
-          </label>
-          <button class="btn primary" type="submit">Gửi đăng ký</button>
-          <div class="form-msg" id="creditMsg" role="status" aria-live="polite"></div>
-        </form>
+          <form id="creditForm">
+            <div class="modal-body">
+              <div class="form-grid">
+                <div><label class="label" for="cr_name">Họ và tên *</label><input class="input" id="cr_name" required></div>
+                <div><label class="label" for="cr_phone">Số điện thoại *</label><input class="input" id="cr_phone" inputmode="tel" required></div>
+                <div><label class="label" for="cr_email">Email</label><input class="input" id="cr_email" type="email"></div>
+                <div><label class="label" for="cr_city">Thành phố</label><input class="input" id="cr_city"></div>
+                <div><label class="label" for="cr_amount">Số tiền cần vay *</label><input class="input" id="cr_amount" required placeholder="100,000,000"></div>
+                <div><label class="label" for="cr_purpose">Mục đích vay *</label>
+                  <select class="select" id="cr_purpose" required>
+                    <option value="">Chọn mục đích</option>
+                    <option value="cons">Tiêu dùng cá nhân</option>
+                    <option value="asset">Mua nhà/xe (thế chấp)</option>
+                    <option value="biz">Kinh doanh</option>
+                  </select>
+                </div>
+                <div><label class="label" for="cr_term">Thời hạn (tháng)</label><input class="input" id="cr_term" placeholder="12"></div>
+                <div class="full"><label class="label" for="cr_note">Ghi chú</label><textarea class="textarea" id="cr_note"></textarea></div>
+              </div>
+            </div>
+            <div class="modal-foot">
+              <button type="button" class="btn secondary" id="cancelCreditForm">Hủy</button>
+              <button class="btn primary" type="submit">Gửi về email</button>
+            </div>
+          </form>
+        </div>
       </div>
     </section>
 
-    <!-- DORM -->
-    <section id="view-kitucxa" class="view" role="tabpanel" aria-label="Ký túc xá">
-      <div class="detail">
-        <div class="detail-hero dorm">
-          <div class="detail-ico">🏠</div>
-          <div>
-            <h2 class="detail-title">Ký Túc Xá VietForture</h2>
-            <p class="detail-sub">An ninh · Tiện nghi · Vị trí thuận tiện</p>
+    <!-- LƯU TRÚ -->
+    <section id="view-kitucxa" class="view" role="tabpanel" aria-label="Lưu trú VietForture">
+      <div class="ui-hero ui-hero--stay">
+        <div class="ui-hero__inner container">
+          <div class="ui-hero__body">
+            <h1 class="ui-hero__title">VIETFORTURE HOME</h1>
+            <p class="ui-hero__subtitle">Căn hộ dịch vụ & Phòng 2 giường tầng · Gần ĐH Mở, ĐH TN&MT, ĐH SP TDTT</p>
+            <div class="ui-hero__cta">
+              <!-- Đã đổi nút theo yêu cầu -->
+              <button class="btn ghost" id="openStayForm">Đăng ký nhận phòng</button>
+            </div>
           </div>
         </div>
+        <img class="ui-hero__img pos-center" src="images/stay-hero@1600x600-center.jpg" alt="Lưu trú VietForture hero">
+      </div>
 
-        <div class="dorm-intro">
-          <h3>Không gian sống riêng dành cho bạn</h3>
-          <ul class="tick">
-            <li><b>Phòng sạch – tiện nghi</b> (máy lạnh, tủ, giường tầng)</li>
-            <li><b>Wi-Fi nhanh</b> & khu học tập yên tĩnh</li>
-            <li><b>An ninh 24/7</b> – ra vào vân tay</li>
-            <li><b>Vị trí kết nối</b> – gần trường, trạm bus</li>
-          </ul>
-          <p>Môi trường văn minh, hỗ trợ tối đa cho học tập & công việc.</p>
+      <div class="ui-section container">
+        <h2 class="ui-h2">Không gian dành cho bạn</h2>
+        <div class="ui-grid">
+          <article class="ui-textcard">
+            <h3>Căn hộ dịch vụ</h3>
+            <p>Riêng tư – đủ tiện nghi: máy lạnh, bàn học, bếp/VS riêng (tuỳ căn). Phù hợp sinh viên & người đi làm.</p>
+            <div class="ui-badges"><span class="ui-badge">Riêng tư</span><span class="ui-badge">Tiện nghi</span><span class="ui-badge">Bảo trì định kỳ</span></div>
+          </article>
+          <figure class="ui-photo"><img src="images/stay-apt@800x600-center.jpg" alt="Căn hộ dịch vụ"></figure>
         </div>
 
-        <form class="dorm-form" id="dormForm" novalidate>
-          <div class="fgrid">
-            <label class="fi">
-              <span>Họ và tên *</span>
-              <input type="text" name="fullname" required autocomplete="name">
-            </label>
-            <label class="fi">
-              <span>Số điện thoại *</span>
-              <input type="tel" name="phone" required inputmode="tel" pattern="[0-9\s+()-]{8,}">
-            </label>
-            <label class="fi">
-              <span>Khu vực mong muốn</span>
-              <input type="text" name="area" placeholder="Quận/TP...">
-            </label>
-            <label class="fi">
-              <span>Loại phòng</span>
-              <select name="room">
-                <option>Phòng 4</option>
-                <option>Phòng 6</option>
-                <option>Phòng 8</option>
-                <option>Khác</option>
-              </select>
-            </label>
-            <label class="fi">
-              <span>Thời điểm nhận phòng</span>
-              <input type="month" name="movein">
-            </label>
+        <div class="ui-grid ui-grid--rev">
+          <figure class="ui-photo"><img src="images/stay-bunk@800x600-top.jpg" alt="Phòng 2 giường tầng"></figure>
+          <article class="ui-textcard">
+            <h3>Phòng 2 giường tầng</h3>
+            <p>Tối ưu chi phí, kết nối cộng đồng. Có bàn học, kệ sách, tủ đồ riêng. Wi-Fi nhanh, khu tự học yên tĩnh.</p>
+            <div class="ui-badges"><span class="ui-badge">Tiết kiệm</span><span class="ui-badge">Thân thiện</span><span class="ui-badge">Đủ tiện ích</span></div>
+          </article>
+        </div>
+
+        <div class="ui-gallery">
+          <img src="images/stay-g1@1200x900-center.jpg" alt="Gallery 1">
+          <img src="images/stay-g2@1200x900-center.jpg" alt="Gallery 2">
+          <img src="images/stay-g3@1200x900-center.jpg" alt="Gallery 3">
+        </div>
+      </div>
+
+      <!-- MODAL: Đăng ký nhận phòng -->
+      <div class="modal" id="stayModal" aria-hidden="true" role="dialog" aria-labelledby="stayTitle">
+        <div class="modal-card">
+          <div class="modal-head">
+            <h3 id="stayTitle" class="modal-title">Đăng ký nhận phòng — VIETFORTURE HOME</h3>
+            <button class="btn secondary" id="closeStayForm">Đóng</button>
           </div>
-          <button class="btn primary" type="submit">Gửi nhu cầu</button>
-          <div class="form-msg" id="dormMsg" role="status" aria-live="polite"></div>
-        </form>
+          <form id="stayForm">
+            <div class="modal-body">
+              <div class="form-grid">
+                <div><label class="label" for="st_name">Họ và tên *</label><input class="input" id="st_name" required></div>
+                <div><label class="label" for="st_phone">Số điện thoại *</label><input class="input" id="st_phone" inputmode="tel" required></div>
+                <div><label class="label" for="st_email">Email</label><input class="input" id="st_email" type="email"></div>
+                <div><label class="label" for="st_city">Thành phố</label><input class="input" id="st_city" placeholder="TP. Hồ Chí Minh"></div>
+                <div><label class="label" for="st_type">Loại lưu trú *</label>
+                  <select class="select" id="st_type" required>
+                    <option value="">Chọn loại</option>
+                    <option>Căn hộ dịch vụ</option>
+                    <option>Phòng 2 giường tầng</option>
+                  </select>
+                </div>
+                <div class="full"><label class="label" for="st_note">Ghi chú</label><textarea class="textarea" id="st_note"></textarea></div>
+              </div>
+            </div>
+            <div class="modal-foot">
+              <button type="button" class="btn secondary" id="cancelStayForm">Hủy</button>
+              <button class="btn primary" type="submit">Gửi về email</button>
+            </div>
+          </form>
+        </div>
       </div>
     </section>
   </main>
 
+  <!-- FOOTER -->
   <footer class="corp-footer" role="contentinfo" itemscope itemtype="https://schema.org/Organization">
     <div class="container fgrid">
       <div class="fcol">
