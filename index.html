@@ -18,18 +18,31 @@
         <a class="brand" id="brandHome" href="#" aria-label="Trang chủ">
           <img class="logo-rect" src="avatar.png" alt="VietForture" decoding="async" fetchpriority="high" />
         </a>
-        <!-- Burger -->
+        <!-- Mobile primary -->
+        <div class="mobile-primary">
+          <button role="tab" class="tab mob" id="tab-home" aria-controls="view-home" aria-selected="true">Trang chủ</button>
+          <button role="tab" class="tab mob" id="tab-gioithieu" aria-controls="view-about" aria-selected="false">Giới Thiệu</button>
+        </div>
         <button class="nav-toggle" id="navToggle" aria-label="Mở menu" aria-expanded="false"><span></span></button>
       </div>
+
+      <!-- Desktop tabs -->
       <nav aria-label="Điều hướng tabs" class="main-nav">
         <ul class="tabs" id="tabs" role="tablist">
-          <li><button role="tab" class="tab" id="tab-home" aria-controls="view-home" aria-selected="true">Trang chủ</button></li>
-          <li><button role="tab" class="tab" id="tab-gioithieu" aria-controls="view-about" aria-selected="false">Giới Thiệu</button></li>
-          <li><button role="tab" class="tab" id="tab-dichvu" aria-controls="view-dichvu" aria-selected="false">Dịch Vụ</button></li>
-          <li><button role="tab" class="tab" id="tab-tuyendung" aria-controls="view-tuyendung" aria-selected="false">Tuyển Dụng</button></li>
-          <li><button role="tab" class="tab" id="tab-tintuc" aria-controls="view-tintuc" aria-selected="false">Tin Tức</button></li>
+          <li><button role="tab" class="tab desk" id="tab-home-d" aria-controls="view-home" aria-selected="true">Trang chủ</button></li>
+          <li><button role="tab" class="tab desk" id="tab-gioithieu-d" aria-controls="view-about" aria-selected="false">Giới Thiệu</button></li>
+          <li><button role="tab" class="tab desk" id="tab-dichvu" aria-controls="view-dichvu" aria-selected="false">Dịch Vụ</button></li>
+          <li><button role="tab" class="tab desk" id="tab-tuyendung" aria-controls="view-tuyendung" aria-selected="false">Tuyển Dụng</button></li>
+          <li><button role="tab" class="tab desk" id="tab-tintuc" aria-controls="view-tintuc" aria-selected="false">Tin Tức</button></li>
         </ul>
       </nav>
+
+      <!-- Burger dropdown (mobile) -->
+      <div id="morePanel" class="more-panel" aria-hidden="true">
+        <button class="menu-link" data-nav="dichvu">Dịch Vụ</button>
+        <button class="menu-link" data-nav="tuyendung">Tuyển Dụng</button>
+        <button class="menu-link" data-nav="tintuc">Tin Tức</button>
+      </div>
     </div>
   </header>
 
@@ -161,193 +174,151 @@
       <div class="panel-flat">
         <h2 class="view-title">Dịch Vụ</h2>
         <div class="services">
-          <button class="svc-card animate-in a-rise" data-nav="tindung"><span class="svc-ico">💳</span><span class="svc-title">Tín Dụng</span><span class="svc-sub">Minh bạch – nhanh</span></button>
-          <button class="svc-card animate-in a-rise" style="--a-delay:120ms" data-nav="kitucxa"><span class="svc-ico">🏠</span><span class="svc-title">Lưu Trú</span><span class="svc-sub">An ninh – tiện nghi</span></button>
+          <button class="svc-card animate-in a-rise" data-nav="tindung">
+            <span class="svc-ico">💳</span>
+            <span class="svc-title">Tín Dụng</span>
+            <span class="svc-sub">Minh bạch – nhanh</span>
+          </button>
+          <button class="svc-card animate-in a-rise" style="--a-delay:120ms" data-nav="kitucxa">
+            <span class="svc-ico">🏠</span>
+            <span class="svc-title">Lưu Trú</span>
+            <span class="svc-sub">An ninh – tiện nghi</span>
+          </button>
         </div>
+
+        <!-- (ĐÃ XOÁ) Stripe đăng ký ở Dịch vụ theo yêu cầu -->
       </div>
     </section>
 
-    <!-- TUYỂN DỤNG -->
+    <!-- JOBS -->
     <section id="view-tuyendung" class="view" role="tabpanel" aria-labelledby="tab-tuyendung">
       <div class="panel-flat">
-        <h2 class="view-title">Chi tiết tuyển dụng</h2>
-        <div class="jobs-list">
+        <h2 class="view-title">Tuyển Dụng</h2>
+        <p class="jobs-intro">Chúng tôi tìm đồng đội cho nhiều vị trí. Mỗi thẻ có <b>Thông tin</b> & <b>Ứng tuyển</b>.</p>
 
-          <!-- 1 -->
-          <article class="job-card animate-in a-rise">
-            <button class="job-head" aria-expanded="false">
-              <h3>Trưởng phòng Nhân sự – TP.HCM</h3><span class="job-toggle">+</span>
-            </button>
+        <div class="jobs-grid">
+          <article class="job-card">
+            <div class="job-ico">👔</div>
             <div class="job-body">
-              <h4>Mô tả công việc</h4>
-              <ul>
-                <li>Xây dựng & triển khai chiến lược nhân sự toàn diện</li>
-                <li>Quản lý đội ngũ, tuân thủ pháp luật và nội quy</li>
-                <li>Tư vấn Ban Giám đốc về nhân sự & tổ chức</li>
-              </ul>
-              <h4>Yêu cầu</h4>
-              <ul>
-                <li>Tốt nghiệp ĐH Nhân sự/Luật/Kinh tế</li>
-                <li>Tối thiểu 5 năm kinh nghiệm (2 năm quản lý)</li>
-                <li>Kỹ năng lãnh đạo, giao tiếp, xử lý xung đột</li>
-              </ul>
+              <h3>Trưởng phòng Nhân sự – TP.HCM</h3>
+              <ul class="job-bullets"><li>Xây dựng chiến lược nhân sự tổng thể.</li><li>Quản lý đội ngũ HR, tuân thủ pháp luật.</li><li>Tư vấn BGĐ về tổ chức & nhân sự.</li></ul>
+              <div class="job-acts">
+                <button class="btn secondary job-info" data-template="job1">Thông tin</button>
+                <button class="btn primary job-apply" data-title="Trưởng phòng Nhân sự – TP.HCM">Ứng tuyển</button>
+              </div>
             </div>
           </article>
 
-          <!-- 2 -->
-          <article class="job-card animate-in a-rise" style="--a-delay:80ms">
-            <button class="job-head"><h3>Nhân viên Kế toán – TP.HCM</h3><span class="job-toggle">+</span></button>
+          <article class="job-card">
+            <div class="job-ico">📊</div>
             <div class="job-body">
-              <h4>Mô tả công việc</h4>
-              <ul>
-                <li>Thu chi, công nợ, báo cáo tài chính định kỳ</li>
-                <li>Kiểm tra chứng từ, hạch toán & lưu trữ hồ sơ</li>
-                <li>Phối hợp phòng ban đảm bảo minh bạch</li>
-              </ul>
-              <h4>Yêu cầu</h4>
-              <ul>
-                <li>Tốt nghiệp Kế toán/Kiểm toán/Tài chính</li>
-                <li>≥1 năm kinh nghiệm; ưu tiên biết MISA/FAST</li>
-                <li>Tỉ mỉ, trung thực, trách nhiệm cao</li>
-              </ul>
+              <h3>Nhân viên Kế toán – TP.HCM</h3>
+              <ul class="job-bullets"><li>Thu chi, công nợ, báo cáo định kỳ.</li><li>Kiểm tra chứng từ, hạch toán chính xác.</li><li>Phối hợp đảm bảo minh bạch.</li></ul>
+              <div class="job-acts">
+                <button class="btn secondary job-info" data-template="job2">Thông tin</button>
+                <button class="btn primary job-apply" data-title="Nhân viên Kế toán – TP.HCM">Ứng tuyển</button>
+              </div>
             </div>
           </article>
 
-          <!-- 3 -->
-          <article class="job-card animate-in a-rise" style="--a-delay:120ms">
-            <button class="job-head"><h3>Giám đốc miền – Tín chấp tiêu dùng (Đà Nẵng, HCM, Cần Thơ)</h3><span class="job-toggle">+</span></button>
+          <article class="job-card">
+            <div class="job-ico">🧭</div>
             <div class="job-body">
-              <h4>Mô tả công việc</h4>
-              <ul>
-                <li>Quản lý hoạt động kinh doanh tại khu vực</li>
-                <li>Chiến lược thị trường, mở rộng mạng lưới</li>
-                <li>Tuyển dụng, đào tạo & quản lý đội ngũ</li>
-              </ul>
-              <h4>Yêu cầu</h4>
-              <ul>
-                <li>ĐH Tài chính/Quản trị kinh doanh (ưu tiên)</li>
-                <li>≥5 năm tài chính tiêu dùng; ≥2 năm quản lý khu vực</li>
-                <li>Kỹ năng lãnh đạo, phân tích thị trường</li>
-              </ul>
+              <h3>Giám đốc miền – Tín chấp tiêu dùng (ĐN/HCM/CT)</h3>
+              <ul class="job-bullets"><li>Quản lý kinh doanh khu vực.</li><li>Chiến lược mở rộng thị trường.</li><li>Tuyển & đào tạo đội ngũ.</li></ul>
+              <div class="job-acts">
+                <button class="btn secondary job-info" data-template="job3">Thông tin</button>
+                <button class="btn primary job-apply" data-title="Giám đốc miền – Tín chấp tiêu dùng">Ứng tuyển</button>
+              </div>
             </div>
           </article>
 
-          <!-- 4 -->
-          <article class="job-card animate-in a-rise" style="--a-delay:160ms">
-            <button class="job-head"><h3>Giám sát – Tín chấp tiêu dùng (Đà Nẵng, HCM, Cần Thơ)</h3><span class="job-toggle">+</span></button>
+          <article class="job-card">
+            <div class="job-ico">🛰️</div>
             <div class="job-body">
-              <h4>Mô tả công việc</h4>
-              <ul>
-                <li>Giám sát nhóm kinh doanh tại khu vực</li>
-                <li>Đảm bảo doanh số & chất lượng hồ sơ</li>
-                <li>Hỗ trợ tuyển dụng, đào tạo & phát triển</li>
-              </ul>
-              <h4>Yêu cầu</h4>
-              <ul>
-                <li>Kinh nghiệm giám sát/trưởng nhóm tài chính/bảo hiểm</li>
-                <li>Kỹ năng quản lý nhóm & xử lý tình huống</li>
-              </ul>
+              <h3>Giám sát – Tín chấp tiêu dùng (ĐN/HCM/CT)</h3>
+              <ul class="job-bullets"><li>Giám sát nhóm kinh doanh.</li><li>Đảm bảo chỉ tiêu & chất lượng hồ sơ.</li><li>Hỗ trợ tuyển/đào tạo.</li></ul>
+              <div class="job-acts">
+                <button class="btn secondary job-info" data-template="job4">Thông tin</button>
+                <button class="btn primary job-apply" data-title="Giám sát – Tín chấp tiêu dùng">Ứng tuyển</button>
+              </div>
             </div>
           </article>
 
-          <!-- 5 -->
-          <article class="job-card animate-in a-rise" style="--a-delay:200ms">
-            <button class="job-head"><h3>Teamleader – Tín chấp tiêu dùng (Toàn quốc)</h3><span class="job-toggle">+</span></button>
+          <article class="job-card">
+            <div class="job-ico">🧑‍🤝‍🧑</div>
             <div class="job-body">
-              <h4>Mô tả công việc</h4>
-              <ul>
-                <li>Quản lý nhóm 5–15 NVKD</li>
-                <li>Hướng dẫn, thúc đẩy đạt chỉ tiêu</li>
-                <li>Báo cáo kết quả & đề xuất cải tiến</li>
-              </ul>
-              <h4>Yêu cầu</h4>
-              <ul>
-                <li>Đã quản lý nhóm kinh doanh (ưu tiên tài chính)</li>
-                <li>Kỹ năng giao tiếp, truyền cảm hứng</li>
-              </ul>
+              <h3>Teamleader – Tín chấp tiêu dùng (Toàn quốc)</h3>
+              <ul class="job-bullets"><li>Quản lý 5–15 NVKD.</li><li>Huấn luyện & thúc đẩy KPI.</li><li>Báo cáo & cải tiến.</li></ul>
+              <div class="job-acts">
+                <button class="btn secondary job-info" data-template="job5">Thông tin</button>
+                <button class="btn primary job-apply" data-title="Teamleader – Tín chấp tiêu dùng">Ứng tuyển</button>
+              </div>
             </div>
           </article>
 
-          <!-- 6 -->
-          <article class="job-card animate-in a-rise" style="--a-delay:240ms">
-            <button class="job-head"><h3>Nhân viên Direct Sales – Tín chấp (Toàn quốc)</h3><span class="job-toggle">+</span></button>
+          <article class="job-card">
+            <div class="job-ico">📞</div>
             <div class="job-body">
-              <h4>Mô tả công việc</h4>
-              <ul>
-                <li>Tìm kiếm & tư vấn KH vay tín chấp</li>
-                <li>Hỗ trợ hồ sơ & theo dõi giải ngân</li>
-                <li>CSKH sau vay, xây dựng mối quan hệ</li>
-              </ul>
-              <h4>Yêu cầu</h4>
-              <ul>
-                <li>Không yêu cầu kinh nghiệm – được đào tạo</li>
-                <li>Đam mê kinh doanh, giao tiếp tốt, kiên trì</li>
-              </ul>
+              <h3>Nhân viên Direct Sales – Tín chấp (Toàn quốc)</h3>
+              <ul class="job-bullets"><li>Tìm kiếm & tư vấn khách vay.</li><li>Hướng dẫn hồ sơ, theo dõi giải ngân.</li><li>CSKH sau vay.</li></ul>
+              <div class="job-acts">
+                <button class="btn secondary job-info" data-template="job6">Thông tin</button>
+                <button class="btn primary job-apply" data-title="Nhân viên Direct Sales – Tín chấp">Ứng tuyển</button>
+              </div>
             </div>
           </article>
 
-          <!-- 7 -->
-          <article class="job-card animate-in a-rise" style="--a-delay:280ms">
-            <button class="job-head"><h3>Nhân viên Hỗ trợ Kinh doanh – TP.HCM</h3><span class="job-toggle">+</span></button>
+          <article class="job-card">
+            <div class="job-ico">🧮</div>
             <div class="job-body">
-              <h4>Mô tả công việc</h4>
-              <ul>
-                <li>Tổng hợp dữ liệu, phân tích hiệu quả</li>
-                <li>Hỗ trợ vận hành & phối hợp đội ngũ</li>
-                <li>Báo cáo định kỳ & cải tiến quy trình</li>
-              </ul>
-              <h4>Yêu cầu</h4>
-              <ul>
-                <li>Tốt nghiệp Kinh tế/Quản trị…</li>
-                <li>Thành thạo Excel, tư duy logic</li>
-                <li>Cẩn thận, làm việc nhóm</li>
-              </ul>
+              <h3>Nhân viên Hỗ trợ Kinh doanh – TP.HCM</h3>
+              <ul class="job-bullets"><li>Tổng hợp dữ liệu, phân tích hiệu quả.</li><li>Hỗ trợ vận hành & phối hợp.</li><li>Báo cáo định kỳ.</li></ul>
+              <div class="job-acts">
+                <button class="btn secondary job-info" data-template="job7">Thông tin</button>
+                <button class="btn primary job-apply" data-title="Nhân viên Hỗ trợ Kinh doanh – TP.HCM">Ứng tuyển</button>
+              </div>
             </div>
           </article>
 
-          <!-- 8 -->
-          <article class="job-card animate-in a-rise" style="--a-delay:320ms">
-            <button class="job-head"><h3>CTV Tín dụng – Thế chấp cá nhân & DN (Toàn quốc)</h3><span class="job-toggle">+</span></button>
+          <article class="job-card">
+            <div class="job-ico">🏦</div>
             <div class="job-body">
-              <h4>Mô tả công việc</h4>
-              <ul>
-                <li>Giới thiệu KH vay thế chấp: nhà đất, ô tô, TS DN</li>
-                <li>Hỗ trợ chuẩn bị hồ sơ, kết nối thẩm định</li>
-              </ul>
-              <h4>Yêu cầu</h4>
-              <ul>
-                <li>Có network KH tài chính / môi giới</li>
-                <li>Kỹ năng giao tiếp, tư vấn, chăm sóc KH</li>
-              </ul>
+              <h3>CTV Tín dụng – Thế chấp (Toàn quốc)</h3>
+              <ul class="job-bullets"><li>Giới thiệu khách vay thế chấp.</li><li>Hỗ trợ hồ sơ, kết nối thẩm định.</li><li>Linh hoạt thời gian.</li></ul>
+              <div class="job-acts">
+                <button class="btn secondary job-info" data-template="job8">Thông tin</button>
+                <button class="btn primary job-apply" data-title="CTV Tín dụng – Thế chấp">Ứng tuyển</button>
+              </div>
             </div>
           </article>
 
-          <!-- 9 -->
-          <article class="job-card animate-in a-rise" style="--a-delay:360ms">
-            <button class="job-head"><h3>CTV Đăng tin online tại nhà</h3><span class="job-toggle">+</span></button>
+          <article class="job-card">
+            <div class="job-ico">🖊️</div>
             <div class="job-body">
-              <h4>Mô tả công việc</h4>
-              <ul>
-                <li>Đăng tin KTX & căn hộ lên Facebook, Zalo, website…</li>
-                <li>Nội dung có sẵn, copy & chỉnh nhẹ theo hướng dẫn</li>
-                <li>Không cần gọi điện/tư vấn – chỉ cần chăm chỉ đăng tin</li>
-              </ul>
-              <h4>Yêu cầu</h4>
-              <ul>
-                <li>Điện thoại/PC có internet; biết dùng MXH cơ bản</li>
-                <li>Siêng năng, trách nhiệm, tự chủ thời gian</li>
-              </ul>
-              <h4>Quyền lợi</h4>
-              <ul>
-                <li><b>Thưởng 500K</b> khi giới thiệu KH thuê thành công</li>
-                <li>Thời gian linh hoạt – làm tại nhà</li>
-                <li>Được cung cấp nội dung/hình ảnh/công cụ</li>
-              </ul>
+              <h3>CTV Đăng tin Online tại nhà</h3>
+              <ul class="job-bullets"><li>Đăng tin KTX/căn hộ lên MXH.</li><li>Nội dung có sẵn, chỉnh sửa nhẹ.</li><li>Linh hoạt thời gian, thưởng theo hiệu quả.</li></ul>
+              <div class="job-acts">
+                <button class="btn secondary job-info" data-template="job9">Thông tin</button>
+                <button class="btn primary job-apply" data-title="CTV Đăng tin Online">Ứng tuyển</button>
+              </div>
             </div>
           </article>
-
         </div>
       </div>
+
+      <!-- Templates chi tiết job (ẩn) -->
+      <section class="sr-only">
+        <template id="job1"><h3>Trưởng phòng Nhân sự – TP.HCM</h3><h4>Mô tả công việc</h4><ul><li>Xây dựng và triển khai chiến lược nhân sự toàn diện: tuyển dụng, đào tạo, phát triển, đánh giá hiệu suất, văn hóa.</li><li>Quản lý đội ngũ nhân sự, đảm bảo tuân thủ pháp luật & nội quy.</li><li>Tư vấn BGĐ về các vấn đề nhân sự & tổ chức.</li></ul><h4>Yêu cầu</h4><ul><li>ĐH chuyên ngành Nhân sự/Luật/Kinh tế hoặc tương đương.</li><li>≥5 năm kinh nghiệm nhân sự, ≥2 năm quản lý.</li><li>Kỹ năng lãnh đạo, giao tiếp, xử lý xung đột, ra quyết định.</li></ul></template>
+        <template id="job2"><h3>Nhân viên Kế toán – TP.HCM</h3><h4>Mô tả</h4><ul><li>Thực hiện thu chi, công nợ, BCTC định kỳ.</li><li>Kiểm tra chứng từ, hạch toán & lưu trữ hồ sơ.</li><li>Phối hợp phòng ban đảm bảo minh bạch & hiệu quả tài chính.</li></ul><h4>Yêu cầu</h4><ul><li>Tốt nghiệp Kế toán/ Kiểm toán/ Tài chính.</li><li>≥1 năm kinh nghiệm; ưu tiên biết MISA/FAST.</li><li>Tỉ mỉ, trung thực, trách nhiệm.</li></ul></template>
+        <template id="job3"><h3>Giám đốc miền – Tín chấp tiêu dùng (ĐN/HCM/CT)</h3><h4>Mô tả</h4><ul><li>Quản lý hoạt động kinh doanh khu vực.</li><li>Xây dựng chiến lược phát triển & mở rộng mạng lưới.</li><li>Tuyển dụng/đào tạo & quản lý giám sát, trưởng nhóm, NVKD.</li></ul><h4>Yêu cầu</h4><ul><li>ĐH (ưu tiên Tài chính/ QTKD).</li><li>≥5 năm tài chính tiêu dùng, ≥2 năm quản lý khu vực.</li><li>Lãnh đạo, phân tích thị trường, xây dựng đội ngũ mạnh.</li></ul></template>
+        <template id="job4"><h3>Giám sát – Tín chấp tiêu dùng (ĐN/HCM/CT)</h3><h4>Mô tả</h4><ul><li>Giám sát nhóm kinh doanh khu vực.</li><li>Đảm bảo doanh số, chất lượng hồ sơ, tuân thủ quy trình.</li><li>Hỗ trợ tuyển dụng, đào tạo & phát triển nhân sự.</li></ul><h4>Yêu cầu</h4><ul><li>Kinh nghiệm giám sát/trưởng nhóm trong tài chính/ bảo hiểm/ ngân hàng.</li><li>Kỹ năng quản lý nhóm, đào tạo & thúc đẩy hiệu suất.</li><li>Tư duy tổ chức, xử lý tình huống linh hoạt.</li></ul></template>
+        <template id="job5"><h3>Teamleader – Tín chấp tiêu dùng (Toàn quốc)</h3><h4>Mô tả</h4><ul><li>Quản lý nhóm 5–15 NVKD.</li><li>Hướng dẫn, hỗ trợ & thúc đẩy đạt chỉ tiêu.</li><li>Báo cáo hoạt động & đề xuất cải tiến.</li></ul><h4>Yêu cầu</h4><ul><li>Kinh nghiệm quản lý nhóm kinh doanh (ưu tiên tài chính).</li><li>Giao tiếp tốt, truyền cảm hứng, xử lý vấn đề.</li><li>Chủ động, trách nhiệm cao.</li></ul></template>
+        <template id="job6"><h3>Nhân viên Direct Sales – Tín chấp (Toàn quốc)</h3><h4>Mô tả</h4><ul><li>Tìm kiếm & tư vấn khách vay.</li><li>Hướng dẫn hồ sơ, theo dõi giải ngân.</li><li>CSKH sau vay, mối quan hệ lâu dài.</li></ul><h4>Yêu cầu</h4><ul><li>Không yêu cầu kinh nghiệm, được đào tạo.</li><li>Đam mê kinh doanh, giao tiếp tốt, kiên trì.</li><li>Ưu tiên có kinh nghiệm bán hàng/ tài chính/ bảo hiểm.</li></ul></template>
+        <template id="job7"><h3>Nhân viên Hỗ trợ Kinh doanh – TP.HCM</h3><h4>Mô tả</h4><ul><li>Tổng hợp dữ liệu, phân tích hiệu quả.</li><li>Hỗ trợ vận hành, phối hợp giữa phòng ban & kinh doanh.</li><li>Báo cáo định kỳ, đề xuất cải tiến quy trình.</li></ul><h4>Yêu cầu</h4><ul><li>Tốt nghiệp Kinh tế/ Quản trị/ liên quan.</li><li>Thành thạo Excel, tư duy logic, phân tích.</li><li>Cẩn thận, làm việc nhóm.</li></ul></template>
+        <template id="job8"><h3>CTV Tín dụng – Thế chấp cá nhân & DN (Toàn quốc)</h3><h4>Mô tả</h4><ul><li>Giới thiệu khách vay thế chấp (nhà đất, ô tô, tài sản DN).</li><li>Hỗ trợ hồ sơ & kết nối thẩm định.</li><li>Làm việc linh hoạt, không ràng buộc thời gian.</li></ul><h4>Yêu cầu</h4><ul><li>Có nguồn khách tiềm năng/ kinh nghiệm môi giới tài chính.</li><li>Kỹ năng giao tiếp, tư vấn, chăm sóc KH.</li><li>Thu nhập theo hiệu quả, không giới hạn.</li></ul></template>
+        <template id="job9"><h3>CTV Đăng tin Online tại nhà</h3><h4>Mô tả</h4><ul><li>Đăng tin cho thuê (KTX/ căn hộ) lên Facebook/ Zalo/ website/ hội nhóm…</li><li>Nội dung có sẵn, chỉnh sửa nhẹ theo hướng dẫn.</li><li>Không gọi điện, không tư vấn – chỉ cần chăm chỉ đăng tin.</li></ul><h4>Yêu cầu</h4><ul><li>Có điện thoại/ máy tính, Internet.</li><li>Biết dùng MXH cơ bản, siêng năng, độc lập.</li><li>Không yêu cầu kinh nghiệm – được hướng dẫn chi tiết.</li></ul><h4>Quyền lợi</h4><ul><li><b>Thưởng 500K</b> khi giới thiệu khách thuê thành công.</li><li>Thời gian linh hoạt, làm tại nhà.</li><li>Được cung cấp nội dung, hình ảnh, công cụ hỗ trợ.</li></ul></template>
+      </section>
     </section>
 
     <!-- NEWS -->
@@ -371,7 +342,6 @@
             <p class="ui-hero__subtitle">Giải pháp tín dụng toàn diện · Minh bạch · Nhanh chóng</p>
             <div class="ui-hero__cta">
               <button class="btn primary" onclick="document.getElementById('creditDetail').scrollIntoView({behavior:'smooth'})">Khám phá</button>
-              <button class="btn ghost" id="openCreditForm">Đăng ký vay</button>
             </div>
           </div>
         </div>
@@ -421,6 +391,19 @@
             <p>Các mục: mua ô tô, bổ sung vốn lưu động, mua BĐS. Tỷ lệ vay tới 85% giá trị tài sản, phương thức trả nợ linh hoạt, cấp hạn mức DN.</p>
           </article>
         </div>
+
+        <!-- Box đăng ký cuối trang Credit -->
+        <div class="signup-stripe">
+          <div class="signup-card">
+            <div class="sc-left">
+              <h3>Đăng ký vay ngay</h3>
+              <p>Nhập thông tin để được tư vấn & thẩm định nhanh.</p>
+            </div>
+            <div class="sc-right">
+              <button class="btn ghost" id="openCreditForm">Đăng Ký Vay</button>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- MODAL: Đăng ký vay -->
@@ -466,9 +449,6 @@
           <div class="ui-hero__body animate-in a-fadeUp">
             <h1 class="ui-hero__title">VIETFORTURE HOME</h1>
             <p class="ui-hero__subtitle">Căn hộ dịch vụ & Phòng 2 giường tầng · Gần ĐH Mở, ĐH TN&MT, ĐH SP TDTT</p>
-            <div class="ui-hero__cta">
-              <button class="btn ghost" id="openStayForm">Đăng ký nhận phòng</button>
-            </div>
           </div>
         </div>
         <img class="ui-hero__img pos-center" src="images/stay-hero@1600x600-center.jpg" alt="Lưu trú VietForture hero">
@@ -498,6 +478,19 @@
           <img class="animate-in a-fadeIn" src="images/stay-g1@1200x900-center.jpg" alt="Gallery 1">
           <img class="animate-in a-fadeIn" style="--a-delay:120ms" src="images/stay-g2@1200x900-center.jpg" alt="Gallery 2">
           <img class="animate-in a-fadeIn" style="--a-delay:240ms" src="images/stay-g3@1200x900-center.jpg" alt="Gallery 3">
+        </div>
+
+        <!-- Box đăng ký cuối trang Stay -->
+        <div class="signup-stripe">
+          <div class="signup-card">
+            <div class="sc-left">
+              <h3>Đăng ký nhận phòng</h3>
+              <p>Chọn Căn hộ dịch vụ / Phòng 2 giường tầng.</p>
+            </div>
+            <div class="sc-right">
+              <button class="btn ghost" id="openStayForm">Đăng Ký Nhận Phòng</button>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -560,6 +553,48 @@
       </div>
     </div>
   </footer>
+
+  <!-- Modal: Thông tin job -->
+  <div class="modal" id="jobInfoModal" aria-hidden="true" role="dialog" aria-labelledby="jobInfoTitle">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3 id="jobInfoTitle" class="modal-title">Chi tiết tuyển dụng</h3>
+        <button class="btn secondary" id="closeJobInfo">Đóng</button>
+      </div>
+      <div class="modal-body">
+        <div id="jobInfoContent" class="job-info-content"></div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn secondary" id="cancelJobInfo">Hủy</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Ứng tuyển job -->
+  <div class="modal" id="jobApplyModal" aria-hidden="true" role="dialog" aria-labelledby="jobApplyTitle">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3 id="jobApplyTitle" class="modal-title">Ứng tuyển — VietForture</h3>
+        <button class="btn secondary" id="closeJobApply">Đóng</button>
+      </div>
+      <form id="jobApplyForm">
+        <div class="modal-body">
+          <div class="form-grid">
+            <div><label class="label" for="ja_name">Họ và tên *</label><input class="input" id="ja_name" required></div>
+            <div><label class="label" for="ja_phone">Số điện thoại *</label><input class="input" id="ja_phone" inputmode="tel" required></div>
+            <div><label class="label" for="ja_email">Email</label><input class="input" id="ja_email" type="email"></div>
+            <div><label class="label" for="ja_city">Thành phố</label><input class="input" id="ja_city" placeholder="TP. Hồ Chí Minh"></div>
+            <div><label class="label" for="ja_pos">Vị trí ứng tuyển *</label><input class="input" id="ja_pos" required></div>
+            <div class="full"><label class="label" for="ja_note">Ghi chú</label><textarea class="textarea" id="ja_note" placeholder="Kinh nghiệm, thời gian có thể bắt đầu, v.v."></textarea></div>
+          </div>
+        </div>
+        <div class="modal-foot">
+          <button type="button" class="btn secondary" id="cancelJobApply">Hủy</button>
+          <button class="btn primary" type="submit">Gửi về email</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <script src="script.js" defer></script>
 </body>
