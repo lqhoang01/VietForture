@@ -132,18 +132,14 @@
       if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); }
     });
   }, {threshold:.16, rootMargin:'0px 0px -8% 0px'});
-  $$('.animate-in,.info-box,.core-card,.kpi-card,.news-card,.svc-card,.job-item').forEach(el=>io.observe(el));
+  $$('.animate-in,.info-box,.core-card,.kpi-card,.news-card,.svc-card,.job-item,.job-card').forEach(el=>io.observe(el));
 
   const statIO = new IntersectionObserver((ents)=>{
     ents.forEach(e=>{
       if(!e.isIntersecting) return;
       const el=e.target; const to = parseFloat(el.dataset.count||'0');
       let cur=0; const step = Math.max(1, Math.ceil(to/40));
-      const t=setInterval(()=>{
-        cur += step;
-        if(cur>=to){ cur=to; clearInterval(t); }
-        el.textContent = String(cur);
-      }, 24);
+      const t=setInterval(()=>{ cur += step; if(cur>=to){ cur=to; clearInterval(t); } el.textContent = String(cur); }, 24);
       statIO.unobserve(el);
     });
   }, {threshold:.4});
@@ -227,8 +223,19 @@
     }
   );
 
+  /* ============== Jobs accordion ============== */
+  $$('.job-card .job-head').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const card = btn.closest('.job-card');
+      const open = !card.classList.contains('open');
+      // close others for cleaner UX
+      $$('.job-card.open').forEach(c=>{ if(c!==card) c.classList.remove('open'); c.querySelector('.job-head')?.setAttribute('aria-expanded','false'); });
+      card.classList.toggle('open', open);
+      btn.setAttribute('aria-expanded', open);
+    });
+  });
+
   /* ============== Safe defaults on first load ============== */
-  // If About was visible at load, make sure height is correct
   if (views.about?.classList.contains('is-visible')) {
     fontsReady.then(()=>after2Frames(calcStageHeight));
   }
