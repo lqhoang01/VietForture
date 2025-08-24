@@ -368,3 +368,11 @@
     }
   });
 })();
+const navTg = document.getElementById('navToggle'), morePanel = document.getElementById('morePanel');
+function toggleMore(){
+  const open = navTg.getAttribute('aria-expanded') !== 'true';
+  navTg.setAttribute('aria-expanded', String(open));
+  morePanel?.classList.toggle('is-open', open);
+  morePanel?.setAttribute('aria-hidden', open ? 'false' : 'true');
+}
+navTg?.addEventListener('click', (e)=>{ e.stopPropagation(); toggleMore(); });
