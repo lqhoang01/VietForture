@@ -322,56 +322,106 @@
   window.addEventListener('hashchange', handleHash);
   handleHash();
 
-  // ================== CẤU HÌNH ==================
-  const GAS_URL = "https://script.google.com/macros/s/AKfycbwzpGCuygPcq41C3WpvDtF1LXxsywk9nii1hw8kt4yqKofM6oP9juysrGok7fz_cXG6/exec";
+  /* ===== FIX SUBMIT KHÔNG CHẠY + GỬI VỀ GAS ===== */
+  const GAS_URL = "https://script.google.com/macros/s/AKfycbwzpGCuygPcq41C3WpvDtF1LXxsywk9nii1hw8kt4yqKofM6oP9juysrGok7fz_cXG6/exec"; // thay link của bạn
 
-  // Convert file thành base64
+  function stopAll(e){ e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation(); }
+
   function fileToBase64(file){
-    return new Promise((resolve, reject)=>{
-      if (!file) return resolve(null);
-      const fr = new FileReader();
-      fr.onload = () => {
-        const s = String(fr.result || '');
-        resolve({
-          base64: s.split('base64,')[1] || '',
-          mimeType: file.type,
-          name: file.name
-        });
+    return new Promise((res, rej)=>{
+      if(!file) return res(null);
+      const r = new FileReader();
+      r.onload = () => {
+        const s = String(r.result||'');
+        res({ base64: s.split('base64,')[1]||'', mimeType: file.type, name: file.name });
       };
-      fr.onerror = reject;
-      fr.readAsDataURL(file);
+      r.onerror = rej; r.readAsDataURL(file);
     });
   }
 
   async function postToGAS(payload){
     const r = await fetch(GAS_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {"Content-Type":"application/json"},
       body: JSON.stringify(payload)
     });
-    return r.ok;
+    if(!r.ok) throw new Error(await r.text());
+    return r.json();
   }
 
-  // Ví dụ form Nộp đơn
-  document.getElementById('applyForm')?.addEventListener('submit', async (e)=>{
-    e.preventDefault();
-    const name = ap_name.value.trim();
-    const phone= ap_phone.value.trim();
-    const email= ap_email.value.trim();
-    const city = ap_city.value.trim();
-    const pos  = ap_pos.value.trim();
-    const note = ap_cover.value.trim();
-    const file = ap_cv.files[0];
+  // Vô hiệu mọi mailto còn sót
+  document.addEventListener("click", (e)=>{
+    const a = e.target.closest && e.target.closest('a[href^="mailto:"]');
+    if(a && !a.closest('.corp-footer')) stopAll(e);
+  });
 
-    if(!name || !phone || !email || !pos){ alert("Điền đủ thông tin"); return; }
+  // Thay openApplyTab cũ (nếu còn)
+  window.openApplyTab = function(jobTitle){
+    location.hash = "#apply";
+    const pos = document.getElementById("ap_pos");
+    if (pos && jobTitle) pos.value = jobTitle;
+  };
 
-    const cv = await fileToBase64(file);
+  document.addEventListener("DOMContentLoaded", ()=>{
+    /* -------- APPLY -------- */
+    const applyForm = document.getElementById("applyForm");
+    if (applyForm){
+      applyForm.addEventListener("submit", async (e)=>{
+        stopAll(e);
+        const name  = document.getElementById("ap_name").value.trim();
+        const phone = document.getElementById("ap_phone").value.trim();
+        const email = document.getElementById("ap_email").value.trim();
+        const city  = document.getElementById("ap_city").value.trim();
+        const pos   = document.getElementById("ap_pos").value.trim();
+        const noteEl= document.getElementById("ap_cover");
+        const note  = noteEl ? noteEl.value.trim() : "";
+        const fEl   = document.getElementById("ap_cv");
+        const file  = fEl && fEl.files ? fEl.files[0] : null;
+        if(!name||!phone||!email||!pos){ alert("Điền Họ tên, SĐT, Email, Vị trí."); return; }
+        const cv = await fileToBase64(file);
+        await postToGAS({ type:"apply", name, phone, email, city, pos, note, cv });
+        alert("Đã gửi hồ sơ.");
+        applyForm.reset();
+        const n = document.getElementById("ap_cv_name"); if(n) n.textContent="";
+      }, {capture:true}); // capture để đè handler cũ
+    }
 
-    await postToGAS({ type:"apply", name, phone, email, city, pos, note, cv });
+    /* -------- CREDIT -------- */
+    const creditForm = document.getElementById("creditForm");
+    if (creditForm){
+      creditForm.addEventListener("submit", async (e)=>{
+        stopAll(e);
+        const name = document.getElementById("cr_name").value.trim();
+        const phone= document.getElementById("cr_phone").value.trim();
+        const email= document.getElementById("cr_email").value.trim();
+        const city = document.getElementById("cr_city").value.trim();
+        const amount=document.getElementById("cr_amount").value.trim();
+        const purpose=document.getElementById("cr_purpose").value;
+        const term = document.getElementById("cr_term").value.trim();
+        const note = document.getElementById("cr_note").value.trim();
+        if(!name||!phone||!amount||!purpose){ alert("Điền Họ tên, SĐT, Số tiền, Mục đích."); return; }
+        await postToGAS({ type:"credit", name, phone, email, city, amount, purpose, term, note });
+        alert("Đã gửi đăng ký vay.");
+        creditForm.reset();
+      }, {capture:true});
+    }
 
-    alert("Đã gửi hồ sơ thành công!");
-    e.target.reset();
-    document.getElementById('ap_cv_name').textContent = '';
+    /* -------- STAY -------- */
+    const stayForm = document.getElementById("stayForm");
+    if (stayForm){
+      stayForm.addEventListener("submit", async (e)=>{
+        stopAll(e);
+        const name = document.getElementById("st_name").value.trim();
+        const phone= document.getElementById("st_phone").value.trim();
+        const email= document.getElementById("st_email").value.trim();
+        const city = document.getElementById("st_city").value.trim();
+        const type = document.getElementById("st_type").value;
+        const note = document.getElementById("st_note").value.trim();
+        if(!name||!phone||!type){ alert("Điền Họ tên, SĐT, Loại lưu trú."); return; }
+        await postToGAS({ type:"stay", name, phone, email, city, type, note });
+        alert("Đã gửi đăng ký lưu trú.");
+        stayForm.reset();
+      }, {capture:true});
+    }
   });
 })();
-
