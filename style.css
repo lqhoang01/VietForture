@@ -255,3 +255,46 @@ main{flex:1;padding:18px 0}
 .view.is-entering{animation:viewIn .32s cubic-bezier(.2,.7,.2,1) both}
 @keyframes viewIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @keyframes viewOut{from{opacity:1;transform:none}to{opacity:0;transform:translateY(6px)}}
+/* === Responsive tweaks (mobile-first add-on) === */
+.only-mobile{display:none}
+@media (max-width:920px){.only-mobile{display:initial!important}}
+@media (max-width:920px){
+  :root{--header-h:76px}
+  .container{padding:0 12px}
+  .logo-rect{height:48px;width:auto}
+  .edge-nav{display:none}           /* Ẩn nút điều hướng nổi ở mobile */
+  .only-desktop{display:none!important}
+
+  /* Layout & grids */
+  .ui-grid,
+  .ui-grid--rev,
+  .grid-2{grid-template-columns:1fr}
+  .services{grid-template-columns:repeat(2,1fr)}
+  .jobs-grid{grid-template-columns:repeat(2,1fr)}
+  .news-grid{grid-template-columns:repeat(2,1fr)}
+
+  /* Hero */
+  .ui-hero__img{height:300px}
+  .hero-inner{padding:24px 16px 12vh}
+  .stage-dots{bottom:calc(var(--slogan-h) - 4px)}
+
+  /* Cards & forms */
+  .signup-card{flex-direction:column;align-items:stretch}
+}
+
+@media (max-width:640px){
+  :root{--header-h:68px;--wm-size:64vw}
+  .vf-hero .word{font-size:clamp(48px,14vw,96px)}
+  .greet{font-size:clamp(14px,3.5vw,18px)}
+  .services{grid-template-columns:1fr}
+  .jobs-grid{grid-template-columns:1fr}
+  .news-grid{grid-template-columns:1fr}
+  .kpi-row{grid-template-columns:repeat(2,1fr)}
+  .cta-down{width:48px;height:48px}
+}
+
+@media (max-width:480px){
+  .kpi-row{grid-template-columns:1fr}
+  .ui-hero__img{height:240px}
+}
+
