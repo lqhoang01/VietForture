@@ -289,7 +289,6 @@
       cover ? `\n--- Thư giới thiệu ---\n${cover}\n----------------------` : '',
       '\n(Vui lòng đính kèm CV nếu chưa có trong Drive)'
     ].filter(Boolean).join('\n'));
-    window.location.href = `mailto:vietforture@gmail.com?subject=${subject}&body=${body}`;
   });
 
   // Uploader check + reset
@@ -375,3 +374,4 @@
     document.getElementById('ap_cv_name').textContent = '';
   });
 })();
+
