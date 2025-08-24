@@ -682,16 +682,5 @@
   </div>
 
   <script src="script.js" defer></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const upFile = document.getElementById('ap_cv');
-      if (upFile) {
-        upFile.addEventListener('change', function(e) {
-          document.getElementById('ap_cv_name').textContent = e.target.files?.[0]?.name || '';
-          markUploader();
-        });
-      }
-    });
-  </script>
-</body>
-</html>
+
+
