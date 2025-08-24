@@ -363,10 +363,4 @@ button,.btn,.link-btn{min-height:44px;padding:10px 14px}
 #navToggle::before, #navToggle::after, #navToggle b::before{
   content:""; position:absolute; left:10px; right:10px; height:2px; background:var(--ink); transition:transform .2s ease, opacity .2s ease, top .2s ease, bottom .2s ease;
 }
-#navToggle::before{top:14px}
-#navToggle b::before{top:21px}
-#navToggle::after{bottom:14px}
-#navToggle[aria-expanded="true"]::before{top:21px; transform:rotate(45deg)}
-#navToggle[aria-expanded="true"]::after{bottom:auto; top:21px; transform:rotate(-45deg)}
-#navToggle[aria-expanded="true"] b::before{opacity:0}
 
