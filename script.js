@@ -1,3 +1,5 @@
+<script>
+/* ===== VietForture – script.js (FULL) ===== */
 (function () {
   const $  = (sel, ctx=document) => ctx.querySelector(sel);
   const $$ = (sel, ctx=document) => Array.from(ctx.querySelectorAll(sel));
@@ -20,7 +22,7 @@
   const fontsReady = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
   const after2Frames = (fn) => requestAnimationFrame(() => requestAnimationFrame(fn));
 
-  /* Header glass on scroll */
+  /* ================= Header glass on scroll ================= */
   (function glassHeader(){
     const header = $('.site-header');
     if(!header) return;
@@ -32,7 +34,7 @@
     window.addEventListener('scroll', onScroll, {passive:true});
   })();
 
-  /* Mobile burger */
+  /* ================= Mobile burger ================= */
   function closeMore(){
     morePanel?.classList.remove('is-open');
     navTg?.setAttribute('aria-expanded','false');
@@ -52,7 +54,7 @@
   });
   $$('.menu-link').forEach(b=>b.addEventListener('click', ()=>{ show(b.dataset.nav); closeMore(); }));
 
-  /* View switching (smooth) */
+  /* ================= View switching (smooth) ================= */
   function setTab(id){
     $('#tab-home')?.setAttribute('aria-selected', String(id==='home'));
     $('#tab-gioithieu')?.setAttribute('aria-selected', String(id==='about'));
@@ -72,17 +74,13 @@
     closeAllModals();
     const next = views[id] || views.home;
     const cur  = Object.values(views).find(v=>v && v.classList.contains('is-visible'));
-
     if (cur === next) return;
 
-    // animate out current
     if (cur) {
       cur.classList.remove('is-visible');
       cur.classList.add('is-leaving');
       setTimeout(()=>cur.classList.remove('is-leaving'), 280);
     }
-
-    // animate in next
     if (next) {
       next.classList.add('is-entering');
       next.style.display = 'block';
@@ -110,7 +108,7 @@
   $('#btn-show-about')?.addEventListener('click', ()=>show('about'));
   $$('.svc-card[data-nav]').forEach(b=>b.addEventListener('click', ()=>show(b.dataset.nav)));
 
-  /* About slider + height fix */
+  /* ================= About slider + height fix ================= */
   function setupAbout(){
     const stage = $('#aboutStage'); if(!stage || stage.dataset.bound) return;
     stage.dataset.bound='1';
@@ -159,13 +157,14 @@
   function debounce(fn, t=100){ let to; return (...a)=>{ clearTimeout(to); to=setTimeout(()=>fn(...a), t); }; }
   if (views.about?.classList.contains('is-visible')) { setupAbout(); fontsReady.then(()=>after2Frames(calcStageHeight)); }
 
-  /* Reveal on view */
+  /* ================= Reveal on view ================= */
   const io = new IntersectionObserver((ents)=>{ ents.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target); } }); }, {threshold:.16, rootMargin:'0px 0px -8% 0px'});
   $$('.animate-in,.info-box,.core-card,.kpi-card,.news-card,.svc-card,.job-card').forEach(el=>io.observe(el));
+
   const statIO = new IntersectionObserver((ents)=>{ ents.forEach(e=>{ if(!e.isIntersecting) return; const el=e.target; const to = parseFloat(el.dataset.count||'0'); let cur=0; const step = Math.max(1, Math.ceil(to/40)); const t=setInterval(()=>{ cur += step; if(cur>=to){ cur=to; clearInterval(t); } el.textContent = String(cur); }, 24); statIO.unobserve(el); }); }, {threshold:.4});
   $$('.kpi-num').forEach(el=>statIO.observe(el));
 
-  /* Modal helper */
+  /* ================= Modal helper ================= */
   function bindModal(openBtns, modalSel, closeSel, cancelSel, onOpen){
     const modal = $(modalSel);
     if(!modal) return {openFn:()=>{},closeFn:()=>{},modal:null};
@@ -190,33 +189,72 @@
     return {openFn, closeFn, modal};
   }
 
-  /* Credit & Stay (mailto) */
-  const creditBind = bindModal(['#openCreditForm','#openCreditFormFoot'], '#creditModal','#closeCreditForm','#cancelCreditForm');
-  $('#creditForm')?.addEventListener('submit', function(e){
-    e.preventDefault();
-    const name = $('#cr_name').value.trim(); const phone= $('#cr_phone').value.trim();
-    const email= $('#cr_email').value.trim(); const city = $('#cr_city').value.trim();
-    const amount = $('#cr_amount').value.trim(); const purpose= $('#cr_purpose').value;
-    const term = $('#cr_term').value.trim(); const note = $('#cr_note').value.trim();
-    if(!name || !phone || !amount || !purpose){ alert('Điền Họ tên, SĐT, Số tiền, Mục đích vay.'); return; }
-    const subject = encodeURIComponent(`Đăng ký vay - ${purpose} - ${name}`);
-    const body = encodeURIComponent([`Họ tên: ${name}`,`SĐT: ${phone}`,`Email: ${email || '(không cung cấp)'}`,`Thành phố: ${city || '(chưa nhập)'}`,`Số tiền: ${amount}`,`Mục đích: ${purpose}`,`Thời hạn: ${term || '(chưa nhập)'}`,`Ghi chú: ${note || ''}`].join('\n'));
-    creditBind?.closeFn();
+  /* ================= GAS helpers ================= */
+  const GAS_URL = "https://script.google.com/macros/s/AKfycbwzpGCuygPcq41C3WpvDtF1LXxsywk9nii1hw8kt4yqKofM6oP9juysrGok7fz_cXG6/exec";
+
+  function stopAll(e){ e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation?.(); }
+
+  function fileToBase64(file){
+    return new Promise((res, rej)=>{
+      if(!file) return res(null);
+      const r = new FileReader();
+      r.onload = () => {
+        const s = String(r.result||'');
+        res({ base64: s.split('base64,')[1]||'', mimeType: file.type, name: file.name });
+      };
+      r.onerror = rej; r.readAsDataURL(file);
+    });
+  }
+
+  async function postToGAS(payload){
+    const r = await fetch(GAS_URL, {
+      method: "POST",
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify(payload)
+    });
+    const text = await r.text();
+    if(!r.ok) throw new Error(text || r.status);
+    try { return JSON.parse(text); }
+    catch { return { ok: true, message: text }; }
+  }
+
+  // Chặn mọi mailto còn sót (trừ ở footer nếu muốn giữ)
+  document.addEventListener("click", (e)=>{
+    const a = e.target.closest && e.target.closest('a[href^="mailto:"]');
+    if(a && !a.closest('.corp-footer')) stopAll(e);
   });
+
+  /* ================= Credit & Stay (GAS) ================= */
+  const creditBind = bindModal(['#openCreditForm','#openCreditFormFoot'], '#creditModal','#closeCreditForm','#cancelCreditForm');
+  $('#creditForm')?.addEventListener('submit', async function(e){
+    stopAll(e);
+    try{
+      const name = $('#cr_name').value.trim(); const phone= $('#cr_phone').value.trim();
+      const email= $('#cr_email').value.trim(); const city = $('#cr_city').value.trim();
+      const amount = $('#cr_amount').value.trim(); const purpose= $('#cr_purpose').value;
+      const term = $('#cr_term').value.trim(); const note = $('#cr_note').value.trim();
+      if(!name || !phone || !amount || !purpose){ alert('Điền Họ tên, SĐT, Số tiền, Mục đích vay.'); return; }
+      const res = await postToGAS({ type:"credit", name, phone, email, city, amount, purpose, term, note });
+      alert(res?.message || 'Đã gửi đăng ký vay.');
+      creditBind?.closeFn(); this.reset();
+    }catch(err){ alert('Gửi thất bại: ' + err.message); }
+  }, {capture:true});
 
   const stayBind = bindModal(['#openStayForm','#openStayFormFoot'], '#stayModal','#closeStayForm','#cancelStayForm');
-  $('#stayForm')?.addEventListener('submit', function(e){
-    e.preventDefault();
-    const name=$('#st_name').value.trim(); const phone=$('#st_phone').value.trim();
-    const email=$('#st_email').value.trim(); const city=$('#st_city').value.trim();
-    const type=$('#st_type').value; const note=$('#st_note').value.trim();
-    if(!name || !phone || !type){ alert('Điền Họ tên, SĐT, Loại lưu trú.'); return; }
-    const subject=encodeURIComponent(`Đăng ký lưu trú - ${type} - ${name}`);
-    const body=encodeURIComponent([`Họ tên: ${name}`,`SĐT: ${phone}`,`Email: ${email || '(không cung cấp)'}`,`Thành phố: ${city || '(chưa nhập)'}`,`Loại lưu trú: ${type}`,`Ghi chú: ${note || ''}`].join('\n'));
-    stayBind?.closeFn();
-  });
+  $('#stayForm')?.addEventListener('submit', async function(e){
+    stopAll(e);
+    try{
+      const name=$('#st_name').value.trim(); const phone=$('#st_phone').value.trim();
+      const email=$('#st_email').value.trim(); const city=$('#st_city').value.trim();
+      const type=$('#st_type').value; const note=$('#st_note').value.trim();
+      if(!name || !phone || !type){ alert('Điền Họ tên, SĐT, Loại lưu trú.'); return; }
+      const res = await postToGAS({ type:"stay", name, phone, email, city, type, note });
+      alert(res?.message || 'Đã gửi đăng ký lưu trú.');
+      stayBind?.closeFn(); this.reset();
+    }catch(err){ alert('Gửi thất bại: ' + err.message); }
+  }, {capture:true});
 
-  /* JOBS: mở modal chi tiết + nút Nộp đơn */
+  /* ================= JOBS: mở modal chi tiết + Nộp đơn ================= */
   $('.jobs-grid')?.addEventListener('click', (e)=>{
     const applyBtn = e.target.closest?.('.job-apply');
     if (!applyBtn) return;
@@ -247,7 +285,7 @@
     if (location.hash !== '#apply') history.replaceState(null,'','#apply');
   });
 
-  // Fallback delegation
+  // Fallback delegation nếu DOM thay đổi
   document.addEventListener('click', (e)=>{
     if(e.target?.id==='jobInfoApply'){
       const title = $('#jobInfoApply')?.dataset.title || 'Vị trí ứng tuyển';
@@ -259,60 +297,60 @@
     }
   });
 
-  /* Apply view */
+  /* ================= Apply view ================= */
   $('#ap_cover_toggle')?.addEventListener('change', (e) => {
     $('#ap_cover_wrap').style.display = e.target.checked ? 'block' : 'none';
   });
   $('#ap_cv')?.addEventListener('change', (e) => {
     $('#ap_cv_name').textContent = e.target.files?.[0]?.name || '';
-  });
-  $('#applyForm')?.addEventListener('submit', function(e){
-    e.preventDefault();
-    const name = $('#ap_name')?.value?.trim();
-    const phone = $('#ap_phone')?.value?.trim();
-    const email = $('#ap_email')?.value?.trim();
-    const city  = $('#ap_city')?.value?.trim() || '';
-    const pos   = $('#ap_pos')?.value?.trim();
-    const cover = $('#ap_cover_toggle')?.checked ? ($('#ap_cover')?.value?.trim()||'') : '';
-    const drive = $('#ap_cv_drive')?.value?.trim() || '';
-    const file  = $('#ap_cv')?.files?.[0]?.name || '';
-    if(!name || !phone || !email || !pos){ alert('Điền Họ tên, SĐT, Email, Vị trí.'); return; }
-    const subject = encodeURIComponent(`Ứng tuyển - ${pos} - ${name}`);
-    const body = encodeURIComponent([
-      `Họ tên: ${name}`,
-      `SĐT: ${phone}`,
-      `Email: ${email}`,
-      `Thành phố: ${city || '(chưa nhập)'}`,
-      `Vị trí ứng tuyển: ${pos}`,
-      drive ? `Link CV (Drive): ${drive}` : '',
-      file ? `CV đính kèm (tên file): ${file}` : '',
-      cover ? `\n--- Thư giới thiệu ---\n${cover}\n----------------------` : '',
-      '\n(Vui lòng đính kèm CV nếu chưa có trong Drive)'
-    ].filter(Boolean).join('\n'));
+    window.markUploader?.();
   });
 
-  // Uploader check + reset
-  document.addEventListener('DOMContentLoaded', function() {
+  $('#applyForm')?.addEventListener('submit', async function(e){
+    stopAll(e);
+    try{
+      const name = $('#ap_name')?.value?.trim();
+      const phone = $('#ap_phone')?.value?.trim();
+      const email = $('#ap_email')?.value?.trim();
+      const city  = $('#ap_city')?.value?.trim() || '';
+      const pos   = $('#ap_pos')?.value?.trim();
+      const cover = $('#ap_cover_toggle')?.checked ? ($('#ap_cover')?.value?.trim()||'') : '';
+      const drive = $('#ap_cv_drive')?.value?.trim() || '';
+      const fEl   = $('#ap_cv'); const file = fEl?.files?.[0] || null;
+      if(!name || !phone || !email || !pos){ alert('Điền Họ tên, SĐT, Email, Vị trí.'); return; }
+      const cv = file ? await fileToBase64(file) : null;
+      const res = await postToGAS({ type:"apply", name, phone, email, city, pos, cover, drive, cv });
+      alert(res?.message || 'Đã gửi hồ sơ.');
+      this.reset();
+      $('#ap_cv_name').textContent='';
+      $('#ap_cover_wrap').style.display='none';
+      window.markUploader?.();
+    }catch(err){ alert('Gửi thất bại: ' + err.message); }
+  }, {capture:true});
+
+  // Uploader mark (global để inline script gọi được)
+  window.markUploader = function(){
     const up = document.querySelector('#applyForm .uploader');
     const upFile = document.getElementById('ap_cv');
     const upDrive = document.getElementById('ap_cv_drive');
-    function markUploader(){
-      const has = (upFile?.files?.length>0) || (upDrive?.value?.trim());
-      up?.classList.toggle('ok', !!has);
-    }
-    upFile?.addEventListener('change', function(e){
-      document.getElementById('ap_cv_name').textContent = e.target.files?.[0]?.name || '';
-      markUploader();
-    });
-    upDrive?.addEventListener('input', markUploader);
+    const has = (upFile?.files?.length>0) || (upDrive?.value?.trim());
+    up?.classList.toggle('ok', !!has);
+  };
+
+  // Khởi tạo mark + reset xử lý
+  document.addEventListener('DOMContentLoaded', function() {
+    const upFile = document.getElementById('ap_cv');
+    const upDrive = document.getElementById('ap_cv_drive');
+    upFile?.addEventListener('change', window.markUploader);
+    upDrive?.addEventListener('input', window.markUploader);
     document.getElementById('applyForm')?.addEventListener('reset', function(){
-      setTimeout(markUploader, 10);
+      setTimeout(window.markUploader, 10);
       const coverWrap = document.getElementById('ap_cover_wrap');
       if (coverWrap) coverWrap.style.display = 'none';
     });
   });
 
-  /* Hash direct to #apply */
+  /* ================= Hash direct to #apply ================= */
   function handleHash(){
     if (location.hash === '#apply') {
       show('apply');
@@ -322,106 +360,11 @@
   window.addEventListener('hashchange', handleHash);
   handleHash();
 
-  /* ===== FIX SUBMIT KHÔNG CHẠY + GỬI VỀ GAS ===== */
-  const GAS_URL = "https://script.google.com/macros/s/AKfycbwzpGCuygPcq41C3WpvDtF1LXxsywk9nii1hw8kt4yqKofM6oP9juysrGok7fz_cXG6/exec"; // thay link của bạn
-
-  function stopAll(e){ e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation(); }
-
-  function fileToBase64(file){
-    return new Promise((res, rej)=>{
-      if(!file) return res(null);
-      const r = new FileReader();
-      r.onload = () => {
-        const s = String(r.result||'');
-        res({ base64: s.split('base64,')[1]||'', mimeType: file.type, name: file.name });
-      };
-      r.onerror = rej; r.readAsDataURL(file);
-    });
-  }
-
-  async function postToGAS(payload){
-    const r = await fetch(GAS_URL, {
-      method: "POST",
-      headers: {"Content-Type":"application/json"},
-      body: JSON.stringify(payload)
-    });
-    if(!r.ok) throw new Error(await r.text());
-    return r.json();
-  }
-
-  // Vô hiệu mọi mailto còn sót
-  document.addEventListener("click", (e)=>{
-    const a = e.target.closest && e.target.closest('a[href^="mailto:"]');
-    if(a && !a.closest('.corp-footer')) stopAll(e);
-  });
-
-  // Thay openApplyTab cũ (nếu còn)
+  /* ================= Helpers for legacy calls ================= */
   window.openApplyTab = function(jobTitle){
     location.hash = "#apply";
     const pos = document.getElementById("ap_pos");
     if (pos && jobTitle) pos.value = jobTitle;
   };
-
-  document.addEventListener("DOMContentLoaded", ()=>{
-    /* -------- APPLY -------- */
-    const applyForm = document.getElementById("applyForm");
-    if (applyForm){
-      applyForm.addEventListener("submit", async (e)=>{
-        stopAll(e);
-        const name  = document.getElementById("ap_name").value.trim();
-        const phone = document.getElementById("ap_phone").value.trim();
-        const email = document.getElementById("ap_email").value.trim();
-        const city  = document.getElementById("ap_city").value.trim();
-        const pos   = document.getElementById("ap_pos").value.trim();
-        const noteEl= document.getElementById("ap_cover");
-        const note  = noteEl ? noteEl.value.trim() : "";
-        const fEl   = document.getElementById("ap_cv");
-        const file  = fEl && fEl.files ? fEl.files[0] : null;
-        if(!name||!phone||!email||!pos){ alert("Điền Họ tên, SĐT, Email, Vị trí."); return; }
-        const cv = await fileToBase64(file);
-        await postToGAS({ type:"apply", name, phone, email, city, pos, note, cv });
-        alert("Đã gửi hồ sơ.");
-        applyForm.reset();
-        const n = document.getElementById("ap_cv_name"); if(n) n.textContent="";
-      }, {capture:true}); // capture để đè handler cũ
-    }
-
-    /* -------- CREDIT -------- */
-    const creditForm = document.getElementById("creditForm");
-    if (creditForm){
-      creditForm.addEventListener("submit", async (e)=>{
-        stopAll(e);
-        const name = document.getElementById("cr_name").value.trim();
-        const phone= document.getElementById("cr_phone").value.trim();
-        const email= document.getElementById("cr_email").value.trim();
-        const city = document.getElementById("cr_city").value.trim();
-        const amount=document.getElementById("cr_amount").value.trim();
-        const purpose=document.getElementById("cr_purpose").value;
-        const term = document.getElementById("cr_term").value.trim();
-        const note = document.getElementById("cr_note").value.trim();
-        if(!name||!phone||!amount||!purpose){ alert("Điền Họ tên, SĐT, Số tiền, Mục đích."); return; }
-        await postToGAS({ type:"credit", name, phone, email, city, amount, purpose, term, note });
-        alert("Đã gửi đăng ký vay.");
-        creditForm.reset();
-      }, {capture:true});
-    }
-
-    /* -------- STAY -------- */
-    const stayForm = document.getElementById("stayForm");
-    if (stayForm){
-      stayForm.addEventListener("submit", async (e)=>{
-        stopAll(e);
-        const name = document.getElementById("st_name").value.trim();
-        const phone= document.getElementById("st_phone").value.trim();
-        const email= document.getElementById("st_email").value.trim();
-        const city = document.getElementById("st_city").value.trim();
-        const type = document.getElementById("st_type").value;
-        const note = document.getElementById("st_note").value.trim();
-        if(!name||!phone||!type){ alert("Điền Họ tên, SĐT, Loại lưu trú."); return; }
-        await postToGAS({ type:"stay", name, phone, email, city, type, note });
-        alert("Đã gửi đăng ký lưu trú.");
-        stayForm.reset();
-      }, {capture:true});
-    }
-  });
 })();
+</script>
