@@ -190,7 +190,7 @@
   }
 
   /* ================= GAS helpers ================= */
-  const GAS_URL = "https://script.google.com/macros/s/AKfycbwzpGCuygPcq41C3WpvDtF1LXxsywk9nii1hw8kt4yqKofM6oP9juysrGok7fz_cXG6/exec";
+  const GAS_URL = "https://script.google.com/macros/s/AKfycbxei0rTkI2j0WjorJLtT0Q4mJ9fzfdFZbfUpfPexYRQKzZZmTMbaG1Kgb-EU2dIGPdV/exec";
 
   function stopAll(e){ e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation?.(); }
 
@@ -368,3 +368,4 @@
   };
 })();
 </script>
+
