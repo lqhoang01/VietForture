@@ -256,8 +256,8 @@ main{flex:1;padding:18px 0}
 @keyframes viewIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @keyframes viewOut{from{opacity:1;transform:none}to{opacity:0;transform:translateY(6px)}}
 /* === RESPONSIVE PATCH: mobile-only, tôn trọng desktop gốc === */
-@media (max-width: 920px){
-  /* Safe resets chống vỡ layout nhỏ */
+@media (max-width: 950px){
+  /* Safe resets */
   section,article,div{min-width:0}
   h1,h2,h3,p,a,button{overflow-wrap:anywhere;word-break:break-word;hyphens:auto}
   img,video{max-width:100%;height:auto;display:block}
@@ -267,25 +267,21 @@ main{flex:1;padding:18px 0}
   .container,.site-header .inner{max-width:100%;padding-inline:16px}
   .logo-rect{height:38px;max-width:60vw}
 
-  /* Nav: ẩn tab desktop, dùng mobile-primary */
+  /* Tabs → mobile tabs; burger giữ 3 gạch mới */
   .tabs{display:none!important}
   .mobile-primary{display:flex!important;flex-wrap:wrap;gap:8px;justify-content:flex-end}
+  .tab.mob{padding:8px 12px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--brand);font-weight:800}
+  .tab.mob[aria-selected="true"]{background:var(--brand);color:#fff;border-color:var(--brand)}
+  .nav-toggle span{position:relative}
+  .nav-toggle[aria-expanded="true"] span{background:transparent}
+  .nav-toggle[aria-expanded="true"] span::before{top:0;transform:rotate(45deg)}
+  .nav-toggle[aria-expanded="true"] span::after{top:0;transform:rotate(-45deg)}
 
-  /* Lưới: 1 cột ở mobile */
-  .grid-2,.ui-grid,.ui-grid--rev,.services,.jobs-grid,.news-grid{display:grid;gap:12px}
-  .grid-2,.ui-grid,.ui-grid--rev{grid-template-columns:1fr}
-  .services,.jobs-grid,.news-grid{grid-template-columns:1fr}
-
-  /* Type & hero */
+  /* Hero typography */
   .vf-hero .word{font-size:clamp(36px,9vw,72px);line-height:1.06}
   .greet{font-size:clamp(14px,3.8vw,18px)}
-  .ui-hero__img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:12px}
 
-  /* Cards & touch targets */
-  .card{border:1px solid var(--line);border-radius:16px;padding:12px;background:#fff}
-  button,.btn,.link-btn{min-height:44px;padding:10px 14px}
-
-  /* Home: mũi tên xuống Giới thiệu (nếu có .cta-down) */
+  /* CTA mũi tên xuống Giới thiệu */
   #view-home{position:relative}
   .cta-down{
     position:absolute;left:50%;bottom:12px;transform:translateX(-50%);
@@ -297,21 +293,30 @@ main{flex:1;padding:18px 0}
     transform:rotate(45deg);margin-top:-4px
   }
 
-  /* About: nút trái/phải slider (nếu có .edge-nav) */
+  /* About slider controls (nhỏ gọn trong container) */
   #view-about .container{position:relative}
-  .edge-nav{display:flex!important;gap:8px;position:absolute;right:12px;top:50%;transform:translateY(-50%);z-index:20}
+  .about-page .edge-nav{display:flex!important;gap:8px;position:absolute;right:12px;top:50%;transform:translateY(-50%);width:auto;height:auto;background:transparent;box-shadow:none;border:0}
+  .about-page .edge-nav::after{display:none}
+  .about-page .edge-nav.prev,.about-page .edge-nav.next{left:auto;right:auto}
+  .edge-btn,.about-page .edge-nav{z-index:20}
   .edge-btn{
     width:44px;height:44px;border-radius:999px;border:1px solid var(--line);
     background:#fff;display:grid;place-items:center;box-shadow:0 4px 12px rgba(0,0,0,.08)
   }
   .edge-btn svg{width:18px;height:18px}
 
-  /* Footer: không ngăn xếp, cuộn ngang giữ nguyên nội dung */
-  .corp-footer .fgrid,.site-footer .container{
+  /* Grids → 1 cột */
+  .grid-2,.ui-grid,.ui-grid--rev,.services,.jobs-grid,.news-grid{display:grid;gap:12px}
+  .grid-2,.ui-grid,.ui-grid--rev{grid-template-columns:1fr}
+  .services,.jobs-grid,.news-grid{grid-template-columns:1fr}
+
+  /* Footer: không ngăn xếp, cuộn ngang giữ nội dung */
+  .corp-footer .fgrid{
     display:grid;grid-auto-flow:column;grid-auto-columns:minmax(220px,1fr);
-    gap:16px;overflow-x:auto;padding-bottom:12px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch
+    overflow-x:auto;gap:16px;padding-bottom:12px;
+    scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch
   }
-  .corp-footer .fgrid > *,.site-footer .container > *{min-width:220px;scroll-snap-align:start}
+  .corp-footer .fgrid > *{min-width:220px;scroll-snap-align:start}
 }
 
 /* Guard desktop ≥921px: giữ nguyên layout gốc */
