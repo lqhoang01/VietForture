@@ -255,41 +255,66 @@ main{flex:1;padding:18px 0}
 .view.is-entering{animation:viewIn .32s cubic-bezier(.2,.7,.2,1) both}
 @keyframes viewIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @keyframes viewOut{from{opacity:1;transform:none}to{opacity:0;transform:translateY(6px)}}
-/* === RESPONSIVE PATCH: mobile-only, no desktop conflicts === */
-
-/* Chỉ áp cho màn ≤920px */
+/* === RESPONSIVE PATCH: mobile-only, tôn trọng desktop gốc === */
 @media (max-width: 920px){
-  /* Safe resets */
+  /* Safe resets chống vỡ layout nhỏ */
   section,article,div{min-width:0}
   h1,h2,h3,p,a,button{overflow-wrap:anywhere;word-break:break-word;hyphens:auto}
   img,video{max-width:100%;height:auto;display:block}
-  body{line-height:1.5;text-size-adjust:100%}
+  body{text-size-adjust:100%}
 
-  /* Layout */
-  .container,
-  .site-header .inner{max-width:100%;padding-inline:16px}
+  /* Container & header */
+  .container,.site-header .inner{max-width:100%;padding-inline:16px}
   .logo-rect{height:38px;max-width:60vw}
 
-  /* Nav */
+  /* Nav: ẩn tab desktop, dùng mobile-primary */
   .tabs{display:none!important}
   .mobile-primary{display:flex!important;flex-wrap:wrap;gap:8px;justify-content:flex-end}
 
-  /* Grids */
+  /* Lưới: 1 cột ở mobile */
   .grid-2,.ui-grid,.ui-grid--rev,.services,.jobs-grid,.news-grid{display:grid;gap:12px}
   .grid-2,.ui-grid,.ui-grid--rev{grid-template-columns:1fr}
   .services,.jobs-grid,.news-grid{grid-template-columns:1fr}
 
   /* Type & hero */
-  .vf-hero{font-size:clamp(28px,7vw,48px);line-height:1.1}
+  .vf-hero .word{font-size:clamp(36px,9vw,72px);line-height:1.06}
   .greet{font-size:clamp(14px,3.8vw,18px)}
   .ui-hero__img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:12px}
 
-  /* Touch targets */
+  /* Cards & touch targets */
   .card{border:1px solid var(--line);border-radius:16px;padding:12px;background:#fff}
   button,.btn,.link-btn{min-height:44px;padding:10px 14px}
+
+  /* Home: mũi tên xuống Giới thiệu (nếu có .cta-down) */
+  #view-home{position:relative}
+  .cta-down{
+    position:absolute;left:50%;bottom:12px;transform:translateX(-50%);
+    width:48px;height:48px;border-radius:999px;border:1px solid var(--line);
+    background:#fff;display:grid;place-items:center;box-shadow:0 6px 16px rgba(0,0,0,.08)
+  }
+  .cta-down::before{
+    content:"";width:12px;height:12px;border-right:2px solid var(--ink);border-bottom:2px solid var(--ink);
+    transform:rotate(45deg);margin-top:-4px
+  }
+
+  /* About: nút trái/phải slider (nếu có .edge-nav) */
+  #view-about .container{position:relative}
+  .edge-nav{display:flex!important;gap:8px;position:absolute;right:12px;top:50%;transform:translateY(-50%);z-index:20}
+  .edge-btn{
+    width:44px;height:44px;border-radius:999px;border:1px solid var(--line);
+    background:#fff;display:grid;place-items:center;box-shadow:0 4px 12px rgba(0,0,0,.08)
+  }
+  .edge-btn svg{width:18px;height:18px}
+
+  /* Footer: không ngăn xếp, cuộn ngang giữ nguyên nội dung */
+  .corp-footer .fgrid,.site-footer .container{
+    display:grid;grid-auto-flow:column;grid-auto-columns:minmax(220px,1fr);
+    gap:16px;overflow-x:auto;padding-bottom:12px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch
+  }
+  .corp-footer .fgrid > *,.site-footer .container > *{min-width:220px;scroll-snap-align:start}
 }
 
-/* Guard desktop ≥921px luôn dùng layout gốc */
+/* Guard desktop ≥921px: giữ nguyên layout gốc */
 @media (min-width: 921px){
   .tabs{display:flex!important}
   .mobile-primary{display:none!important}
@@ -297,5 +322,3 @@ main{flex:1;padding:18px 0}
   .site-header .inner{max-width:1200px}
   .logo-rect{height:auto;max-width:none}
 }
-
-
