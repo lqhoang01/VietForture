@@ -425,3 +425,43 @@
     }
   });
 })();
+/* === Helpers responsive, không đụng logic cũ === */
+
+/* Home: scroll xuống Giới thiệu khi bấm .cta-down (nếu tồn tại) */
+document.addEventListener('click', e=>{
+  const a = e.target.closest('.cta-down');
+  if(!a) return;
+  e.preventDefault();
+  document.querySelector('#view-about')?.scrollIntoView({behavior:'smooth'});
+});
+
+/* About: điều khiển slider bằng nút .edge-btn hoặc .edge-nav */
+(()=> {
+  // 1) Track cuộn ngang (slides/carousel/cards) nếu có
+  const track = document.querySelector('#view-about .slides, #view-about .carousel, #view-about .cards');
+  const next1 = document.querySelector('#view-about .edge-btn.next, #view-about .edge-nav .next');
+  const prev1 = document.querySelector('#view-about .edge-btn.prev, #view-about .edge-nav .prev');
+  if (track && (next1 || prev1)) {
+    const step = () => Math.round(track.clientWidth * 0.9);
+    next1?.addEventListener('click', ()=> track.scrollBy({left: step(),  behavior:'smooth'}));
+    prev1?.addEventListener('click', ()=> track.scrollBy({left: -step(), behavior:'smooth'}));
+  }
+
+  // 2) Fallback: chuyển .slide is-active nếu dùng slide rời
+  const slides = document.querySelectorAll('#aboutStage .slide');
+  const next2  = document.querySelector('#abNext');
+  const prev2  = document.querySelector('#abPrev');
+  const dots   = document.querySelectorAll('#stageDots .dot');
+  if (slides.length && (next2 || prev2 || dots.length)) {
+    let i = [...slides].findIndex(s=>s.classList.contains('is-active'));
+    if (i < 0) i = 0;
+    const set = (n)=>{
+      i = (n + slides.length) % slides.length;
+      slides.forEach((s,idx)=> s.classList.toggle('is-active', idx===i));
+      dots.forEach((d,idx)=> d.classList.toggle('is-active', idx===i));
+    };
+    next2?.addEventListener('click', ()=> set(i+1));
+    prev2?.addEventListener('click', ()=> set(i-1));
+    dots.forEach((d,idx)=> d.addEventListener('click', ()=> set(idx)));
+  }
+})();
