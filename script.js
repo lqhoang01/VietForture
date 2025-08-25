@@ -1,10 +1,3 @@
-v// VietForture – app script (vanilla)
-// - Tabs & views
-// - About slider + counters
-// - Jobs modal + Apply routing
-// - Services panel V3: hiển thị menu + chi tiết NGAY TRONG MODAL (không mở trang nền)
-// - CTA -> modal form (#svcApplyModal) nếu có, fallback sang view #apply
-// - Gửi GAS x-www-form-urlencoded (no-cors) theo endpoint của bạn
 
 (function () {
   const $  = (sel, ctx=document) => ctx.querySelector(sel);
