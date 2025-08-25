@@ -179,13 +179,17 @@
             <span class="svc-title">Tín Dụng</span>
             <span class="svc-sub">Minh bạch – nhanh</span>
           </button>
-          <button class="svc-card animate-in a-rise" style="--a-delay:120ms" data-nav="kitucxa" type="button">
+          <button class="svc-card animate-in a-rise" data-nav="kitucxa" type="button">
             <span class="svc-ico">🏠</span>
             <span class="svc-title">Lưu Trú</span>
             <span class="svc-sub">An ninh – tiện nghi</span>
           </button>
+          <button class="svc-card animate-in a-rise" data-nav="thongbao" type="button">
+            <span class="svc-ico">🔔</span>
+            <span class="svc-title">Thông báo</span>
+            <span class="svc-sub">Tin mới & cập nhật</span>
+          </button>
         </div>
-        <!-- (ĐÃ XOÁ) Stripe đăng ký ở Dịch vụ theo yêu cầu -->
       </div>
     </section>
 
@@ -194,109 +198,112 @@
       <div class="panel-flat">
         <h2 class="view-title">Tuyển Dụng</h2>
         <p class="jobs-intro">Chúng tôi tìm đồng đội cho nhiều vị trí.</p>
+        <div class="job-search">
+          <input type="text" id="jobKeyword" placeholder="Từ khóa">
+          <input type="text" id="jobIndustry" placeholder="Ngành nghề">
+          <input type="text" id="jobCity" placeholder="Thành phố">
+          <button class="btn primary search-jobs" type="button">Tìm kiếm</button>
+        </div>
 
         <div class="jobs-grid">
           <article class="job-card">
-            <div class="job-ico">👔</div>
+            <div class="job-ico"><img src="dragon-v1.png" alt="Icon"></div>
             <div class="job-body">
               <h3>Trưởng phòng Nhân sự – TP.HCM</h3>
               <ul class="job-bullets"><li>Xây dựng chiến lược nhân sự tổng thể.</li><li>Quản lý đội ngũ HR, tuân thủ pháp luật.</li><li>Tư vấn BGĐ về tổ chức & nhân sự.</li></ul>
               <div class="job-acts">
-                <button class="btn primary job-apply" data-title="Trưởng phòng Nhân sự – TP.HCM" data-template="job1" type="button">Ứng tuyển</button>
+                <button class="btn primary job-apply" data-title="Trưởng phòng Nhân sự – TP.HCM" data-template="job1" data-hash="truongphong-nhansu" type="button">Ứng tuyển</button>
               </div>
             </div>
           </article>
 
           <article class="job-card">
-            <div class="job-ico">📊</div>
+            <div class="job-ico"><img src="dragon-v1.png" alt="Icon"></div>
             <div class="job-body">
               <h3>Nhân viên Kế toán – TP.HCM</h3>
               <ul class="job-bullets"><li>Thu chi, công nợ, báo cáo định kỳ.</li><li>Kiểm tra chứng từ, hạch toán chính xác.</li><li>Phối hợp đảm bảo minh bạch.</li></ul>
               <div class="job-acts">
-                <button class="btn primary job-apply" data-title="Nhân viên Kế toán – TP.HCM" data-template="job2" type="button">Ứng tuyển</button>
+                <button class="btn primary job-apply" data-title="Nhân viên Kế toán – TP.HCM" data-template="job2" data-hash="nv-ke-toan" type="button">Ứng tuyển</button>
               </div>
             </div>
           </article>
 
           <article class="job-card">
-            <div class="job-ico">🧭</div>
+            <div class="job-ico"><img src="dragon-v1.png" alt="Icon"></div>
             <div class="job-body">
               <h3>Giám đốc miền – Tín chấp tiêu dùng (ĐN/HCM/CT)</h3>
               <ul class="job-bullets"><li>Quản lý kinh doanh khu vực.</li><li>Chiến lược mở rộng thị trường.</li><li>Tuyển & đào tạo đội ngũ.</li></ul>
               <div class="job-acts">
-                <button class="btn primary job-apply" data-title="Giám đốc miền – Tín chấp tiêu dùng" data-template="job3" type="button">Ứng tuyển</button>
+                <button class="btn primary job-apply" data-title="Giám đốc miền – Tín chấp tiêu dùng" data-template="job3" data-hash="giamdoc-mien" type="button">Ứng tuyển</button>
               </div>
             </div>
           </article>
 
           <article class="job-card">
-            <div class="job-ico">🛰️</div>
+            <div class="job-ico"><img src="dragon-v1.png" alt="Icon"></div>
             <div class="job-body">
               <h3>Giám sát – Tín chấp tiêu dùng (ĐN/HCM/CT)</h3>
               <ul class="job-bullets"><li>Giám sát nhóm kinh doanh.</li><li>Đảm bảo chỉ tiêu & chất lượng hồ sơ.</li><li>Hỗ trợ tuyển/đào tạo.</li></ul>
               <div class="job-acts">
-                <button class="btn primary job-apply" data-title="Giám sát – Tín chấp tiêu dùng" data-template="job4" type="button">Ứng tuyển</button>
+                <button class="btn primary job-apply" data-title="Giám sát – Tín chấp tiêu dùng" data-template="job4" data-hash="giam-sat" type="button">Ứng tuyển</button>
               </div>
             </div>
           </article>
 
           <article class="job-card">
-            <div class="job-ico">🧑‍🤝‍🧑</div>
+            <div class="job-ico"><img src="dragon-v1.png" alt="Icon"></div>
             <div class="job-body">
               <h3>Teamleader – Tín chấp tiêu dùng (Toàn quốc)</h3>
               <ul class="job-bullets"><li>Quản lý 5–15 NVKD.</li><li>Huấn luyện & thúc đẩy KPI.</li><li>Báo cáo & cải tiến.</li></ul>
               <div class="job-acts">
-                <button class="btn primary job-apply" data-title="Teamleader – Tín chấp tiêu dùng" data-template="job5" type="button">Ứng tuyển</button>
+                <button class="btn primary job-apply" data-title="Teamleader – Tín chấp tiêu dùng" data-template="job5" data-hash="teamleader-tinchap" type="button">Ứng tuyển</button>
               </div>
             </div>
           </article>
 
           <article class="job-card">
-            <div class="job-ico">📞</div>
+            <div class="job-ico"><img src="dragon-v1.png" alt="Icon"></div>
             <div class="job-body">
               <h3>Nhân viên Direct Sales – Tín chấp (Toàn quốc)</h3>
               <ul class="job-bullets"><li>Tìm kiếm & tư vấn khách vay.</li><li>Hướng dẫn hồ sơ, theo dõi giải ngân.</li><li>CSKH sau vay.</li></ul>
               <div class="job-acts">
-                <button class="btn primary job-apply" data-title="Nhân viên Direct Sales – Tín chấp" data-template="job6" type="button">Ứng tuyển</button>
+                <button class="btn primary job-apply" data-title="Nhân viên Direct Sales – Tín chấp" data-template="job6" data-hash="nv-directsales" type="button">Ứng tuyển</button>
               </div>
             </div>
           </article>
 
           <!-- job7 -->
           <article class="job-card">
-            <div class="job-ico">🧮</div>
+            <div class="job-ico"><img src="dragon-v1.png" alt="Icon"></div>
             <div class="job-body">
               <h3>Nhân viên Hỗ trợ Kinh doanh – TP.HCM</h3>
               <ul class="job-bullets"><li>Tổng hợp dữ liệu, phân tích hiệu quả.</li><li>Hỗ trợ vận hành & phối hợp.</li><li>Báo cáo định kỳ.</li></ul>
               <div class="job-acts">
-                <!-- ĐÃ XOÁ nút Thông tin -->
-                <button class="btn primary job-apply" data-title="Nhân viên Hỗ trợ Kinh doanh – TP.HCM" data-template="job7" type="button">Ứng tuyển</button>
+                <button class="btn primary job-apply" data-title="Nhân viên Hỗ trợ Kinh doanh – TP.HCM" data-template="job7" data-hash="nv-htkd" type="button">Ứng tuyển</button>
               </div>
             </div>
           </article>
 
           <!-- job8 -->
           <article class="job-card">
-            <div class="job-ico">🏦</div>
+            <div class="job-ico"><img src="dragon-v1.png" alt="Icon"></div>
             <div class="job-body">
               <h3>CTV Tín dụng – Thế chấp (Toàn quốc)</h3>
               <ul class="job-bullets"><li>Giới thiệu khách vay thế chấp.</li><li>Hỗ trợ hồ sơ, kết nối thẩm định.</li><li>Linh hoạt thời gian.</li></ul>
               <div class="job-acts">
-                <!-- ĐÃ XOÁ nút Thông tin -->
-                <button class="btn primary job-apply" data-title="CTV Tín dụng – Thế chấp" data-template="job8" type="button">Ứng tuyển</button>
+                <button class="btn primary job-apply" data-title="CTV Tín dụng – Thế chấp" data-template="job8" data-hash="ctv-thechap" type="button">Ứng tuyển</button>
               </div>
             </div>
           </article>
 
           <!-- job9 -->
           <article class="job-card">
-            <div class="job-ico">🖊️</div>
+            <div class="job-ico"><img src="dragon-v1.png" alt="Icon"></div>
             <div class="job-body">
               <h3>CTV Đăng tin Online tại nhà</h3>
               <ul class="job-bullets"><li>Đăng tin KTX/căn hộ lên MXH.</li><li>Nội dung có sẵn, chỉnh sửa nhẹ.</li><li>Linh hoạt thời gian, thưởng theo hiệu quả.</li></ul>
               <div class="job-acts">
-                <!-- ĐÃ XOÁ nút Thông tin -->
-                <button class="btn primary job-apply" data-title="CTV Đăng tin Online" data-template="job9" type="button">Ứng tuyển</button>
+                <button class="btn primary job-apply" data-title="CTV Đăng tin Online" data-template="job9" data-hash="ctv-dangtin" type="button">Ứng tuyển</button>
               </div>
             </div>
           </article>
@@ -580,6 +587,47 @@
       </div>
     </section>
   </main>
+</main>
+<!-- Modal: Chọn hạng mục Dịch vụ (canvas v2) -->
+<div class="modal" id="svcPanel" aria-hidden="true" role="dialog" aria-labelledby="svcPanelTitle">
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3 id="svcPanelTitle" class="modal-title">Chọn hạng mục</h3>
+      <button class="btn ghost" id="closeSvcPanel" type="button">Đóng</button>
+    </div>
+    <div class="modal-body">
+      <div id="svcPanelContent" class="svc-panel-content"></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn secondary" id="cancelSvcPanel" type="button">Hủy</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Đăng ký dịch vụ (canvas V3) -->
+<div class="modal" id="svcApplyModal" aria-hidden="true" role="dialog" aria-labelledby="svcApplyTitle">
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3 id="svcApplyTitle" class="modal-title">Đăng ký dịch vụ</h3>
+      <button class="btn ghost" id="closeSvcApply" type="button">Đóng</button>
+    </div>
+    <form id="svcApplyForm" class="form-grid">
+      <div class="modal-body">
+        <div><label class="label" for="sa_type">Dịch vụ</label><input class="input" id="sa_type" name="service" readonly></div>
+        <div><label class="label" for="sa_name">Họ tên *</label><input class="input" id="sa_name" name="name" required></div>
+        <div><label class="label" for="sa_phone">Số điện thoại *</label><input class="input" id="sa_phone" name="phone" inputmode="tel" required></div>
+        <div><label class="label" for="sa_email">Email *</label><input class="input" id="sa_email" name="email" type="email" required></div>
+        <div><label class="label" for="sa_city">Thành phố</label><input class="input" id="sa_city" name="city" placeholder="TP.HCM / Hà Nội"></div>
+        <div class="full"><label class="label" for="sa_note">Ghi chú</label><textarea class="textarea" id="sa_note" name="note" rows="4"></textarea></div>
+        <div class="muted text-xs">Dữ liệu sẽ gửi tới Google Apps Script (Gmail nội bộ).</div>
+      </div>
+      <div class="modal-foot">
+        <button type="button" class="btn secondary" id="cancelSvcApply">Hủy</button>
+        <button type="submit" class="btn primary" id="sa_submit">Gửi đăng ký</button>
+      </div>
+    </form>
+  </div>
+</div>
 
   <!-- FOOTER -->
   <footer class="corp-footer" role="contentinfo" itemscope itemtype="https://schema.org/Organization">
@@ -682,6 +730,5 @@
   </div>
 
   <script src="script.js" defer></script>
-
 
 
