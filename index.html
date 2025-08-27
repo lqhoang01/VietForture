@@ -172,24 +172,297 @@
     <!-- SERVICES -->
     <section id="view-dichvu" class="view" role="tabpanel" aria-labelledby="tab-dichvu">
       <div class="panel-flat">
-        <h2 class="view-title">Dịch Vụ</h2>
-        <div class="services">
-          <button class="svc-card animate-in a-rise" data-nav="tindung" type="button">
-            <span class="svc-ico">💳</span>
-            <span class="svc-title">Tín Dụng</span>
-            <span class="svc-sub">Minh bạch – nhanh</span>
-          </button>
-          <button class="svc-card animate-in a-rise" data-nav="kitucxa" type="button">
-            <span class="svc-ico">🏠</span>
-            <span class="svc-title">Lưu Trú</span>
-            <span class="svc-sub">An ninh – tiện nghi</span>
-          </button>
-          <button class="svc-card animate-in a-rise" data-nav="thongbao" type="button">
-            <span class="svc-ico">🔔</span>
-            <span class="svc-title">Thông báo</span>
-            <span class="svc-sub">Tin mới & cập nhật</span>
-          </button>
+        <div class="svc-hero">
+          <div class="svc-hero__body">
+            <h2 class="svc-hero__title">Dịch vụ VietForture</h2>
+            <p class="svc-hero__sub">Minh bạch · Nhanh · Chuyên nghiệp</p>
+            <div class="svc-hero__badges">
+              <span class="svc-badge">Tư vấn 1-1</span>
+              <span class="svc-badge">Quy trình rõ ràng</span>
+              <span class="svc-badge">Tối ưu cho di động</span>
+            </div>
+          </div>
         </div>
+
+        <div class="svc-tiles">
+          <article class="svc-tile" data-nav="tindung" tabindex="0" role="button" aria-label="Mở Tín dụng">
+            <div class="svc-tile__ico">💳</div>
+            <h3 class="svc-tile__title">Tín Dụng</h3>
+            <p class="svc-tile__sub">Vay tín chấp · thế chấp · doanh nghiệp</p>
+            <div class="svc-acts">
+              <button class="btn primary svc-act" type="button" data-action="discover" data-kind="credit">Khám phá</button>
+            </div>
+          </article>
+
+          <article class="svc-tile" data-nav="kitucxa" tabindex="0" role="button" aria-label="Mở Lưu trú">
+            <div class="svc-tile__ico">🏠</div>
+            <h3 class="svc-tile__title">Lưu Trú</h3>
+            <p class="svc-tile__sub">Căn hộ dịch vụ · Ký túc xá</p>
+            <div class="svc-acts">
+              <button class="btn primary svc-act" type="button" data-action="discover" data-kind="stay">Khám phá</button>
+            </div>
+          </article>
+
+          <article class="svc-tile" data-nav="thongbao" tabindex="0" role="button" aria-label="Mở Thông báo">
+            <div class="svc-tile__ico">🔔</div>
+            <h3 class="svc-tile__title">Thông Báo</h3>
+            <p class="svc-tile__sub">Lãi suất hôm nay · Phòng trống · Tin mới</p>
+            <div class="svc-acts">
+              <button class="btn primary svc-act" type="button" data-action="news">Xem tin</button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- CREDIT (banking layout) + (crx detail) in one view -->
+    <section id="view-tindung" class="view" role="tabpanel" aria-labelledby="tab-tindung">
+      <!-- Banking-style block -->
+      <div class="bk wrap">
+        <header class="bk-hero">
+          <div class="bk-hero__body">
+            <h1 class="bk-title">VietForture Credit</h1>
+            <p class="bk-sub">Một đời thay đổi, một gói tín dụng linh hoạt.</p>
+            <div class="bk-seg" role="tablist" aria-label="Nhóm khách hàng">
+              <button class="bk-seg__btn is-active" aria-selected="true" data-tab="per">Cá nhân</button>
+              <button class="bk-seg__btn" aria-selected="false" data-tab="biz">Doanh nghiệp</button>
+            </div>
+          </div>
+          <div class="bk-hero__img" style="--bk-img:url('hero-credit.jpg')"></div>
+        </header>
+
+        <section id="bank-per" class="bk-panel is-active" role="tabpanel">
+          <div class="bk-banner">Lợi ích là gì?</div>
+          <div class="bk-grid">
+            <h2 class="bk-h2">Tùy biến khoản vay theo nhu cầu và trải nghiệm trọn bộ dịch vụ của chúng tôi.</h2>
+            <div class="bk-col">
+              <h3 class="bk-mini">Truy cập dễ dàng</h3>
+              <p>Gặp trực tiếp hoặc làm hồ sơ online, trợ lý VietForture đồng hành.</p>
+              <h3 class="bk-mini">Bảo mật 24/7</h3>
+              <p>Khóa thẻ nhanh, theo dõi trạng thái hồ sơ theo thời gian thực.</p>
+            </div>
+            <div class="bk-col">
+              <h3 class="bk-mini">Thanh toán tiện lợi</h3>
+              <p>Ví điện tử, chuyển khoản, hoặc tại hệ thống đối tác.</p>
+              <h3 class="bk-mini">Công cụ quản lý</h3>
+              <p>Nhắc lịch, mục tiêu trả nợ, ưu đãi và hoàn tiền phù hợp.</p>
+            </div>
+          </div>
+
+          <div class="bk-how">
+            <div class="bk-how__txt">
+              <h3 class="bk-h3">Hoạt động như thế nào</h3>
+              <p>Chọn gói phù hợp. Khi nhu cầu đổi khác, bạn chỉ cần chuyển chế độ.</p>
+            </div>
+            <div class="bk-how__img" style="--bk-img:url('hero-credit.jpg')"></div>
+          </div>
+
+          <div class="bk-accs">
+            <details class="bk-acc"><summary>Vay tín chấp tiêu dùng</summary>
+              <p>6–60 tháng • hồ sơ gọn • giải ngân nhanh.</p>
+            </details>
+            <details class="bk-acc"><summary>Vay mua/xây/sửa nhà</summary>
+              <p>LTV tới 85% • kỳ hạn tới 35 năm.</p>
+            </details>
+            <details class="bk-acc"><summary>Vay mua ô tô</summary>
+              <p>Phê duyệt nhanh • hỗ trợ xe mới/đã qua sử dụng.</p>
+            </details>
+            <details class="bk-acc"><summary>Vay SXKD / Bổ sung VLĐ</summary>
+              <p>Hạn mức 50 triệu – 10 tỷ • phương thức linh hoạt.</p>
+            </details>
+            <a class="bk-compare" href="#">So sánh các gói</a>
+          </div>
+        </section>
+
+        <section id="bank-biz" class="bk-panel" role="tabpanel" hidden>
+          <div class="bk-banner">Giải pháp cho doanh nghiệp</div>
+          <div class="bk-grid">
+            <h2 class="bk-h2">Tối ưu dòng tiền, mở rộng quy mô với danh mục tín dụng cho SME.</h2>
+            <div class="bk-col">
+              <h3 class="bk-mini">Hạn mức lớn</h3>
+              <p>Tới 100 tỷ đồng tùy quy mô và báo cáo tài chính.</p>
+              <h3 class="bk-mini">Thủ tục tinh gọn</h3>
+              <p>Thẩm định theo dòng tiền, tư vấn cấu trúc vốn.</p>
+            </div>
+            <div class="bk-col">
+              <h3 class="bk-mini">Phương thức linh hoạt</h3>
+              <p>Từng lần, theo hạn mức, hoặc dự án.</p>
+              <h3 class="bk-mini">Quản trị rủi ro</h3>
+              <p>Tài sản bảo đảm đa dạng, lãi suất cạnh tranh.</p>
+            </div>
+          </div>
+
+          <div class="bk-how">
+            <div class="bk-how__txt">
+              <h3 class="bk-h3">Quy trình</h3>
+              <p>Tiếp nhận nhu cầu → Đánh giá nhanh → Phê duyệt → Giải ngân/thiết lập hạn mức.</p>
+            </div>
+            <div class="bk-how__img" style="--bk-img:url('hero-business.jpg')"></div>
+          </div>
+
+          <div class="bk-accs">
+            <details class="bk-acc"><summary>Tín chấp doanh nghiệp</summary>
+              <p>Vốn lưu động nhanh • không TSĐB.</p>
+            </details>
+            <details class="bk-acc"><summary>Thế chấp doanh nghiệp</summary>
+              <p>LTV tới 85% • BĐS/máy móc/phương tiện.</p>
+            </details>
+            <a class="bk-compare" href="#">So sánh sản phẩm</a>
+          </div>
+        </section>
+
+        <div class="sticky-cta" hidden>
+          <strong>Tư vấn miễn phí</strong>
+          <button class="btn" data-action="discover" data-kind="credit">Đăng ký ngay</button>
+        </div>
+      </div>
+
+      <!-- crx detail block -->
+      <div class="crx wrap">
+        <header class="crx-hero">
+          <h2 class="crx-title">Tín Dụng</h2>
+          <p class="crx-sub">Chọn nhóm khách hàng để xem chi tiết</p>
+          <div class="crx-seg" role="tablist" aria-label="Nhóm">
+            <button class="crx-seg__btn is-active" role="tab" aria-selected="true" data-tab="per">Cá nhân</button>
+            <button class="crx-seg__btn" role="tab" aria-selected="false" data-tab="biz">Doanh nghiệp</button>
+          </div>
+        </header>
+
+        <!-- Cá nhân -->
+        <section id="crx-per" class="crx-panel is-active" role="tabpanel">
+          <article class="crx-card">
+            <h3 class="crx-h3">Tín chấp tiêu dùng</h3>
+            <p class="crx-lead">Không cần tài sản bảo đảm. Hồ sơ gọn. Giải ngân nhanh.</p>
+
+            <div class="crx-timeline">
+              <div class="crx-step"><b>1</b><span>Các gói vay phù hợp nhiều đối tượng</span></div>
+              <ul class="crx-list">
+                <li>Thu nhập từ lương</li>
+                <li>Cán bộ công chức, viên chức</li>
+                <li>Khách hàng là phụ nữ</li>
+                <li>Hợp đồng bảo hiểm nhân thọ</li>
+                <li>Lịch sử vay tại TCTD</li>
+                <li>Chủ kinh doanh</li>
+                <li>Vay theo CCCD</li>
+              </ul>
+              <div class="crx-step"><b>2</b><span>Điều kiện & thanh toán</span></div>
+              <div class="crx-kvgrid">
+                <div class="crx-kv"><span>Thời hạn</span><b>6–60 tháng</b></div>
+                <div class="crx-kv"><span>Lãi suất</span><b>Cạnh tranh</b></div>
+                <div class="crx-kv"><span>Thanh toán</span><b>ĐMX/TGDĐ · Momo · Viettel · chuyển khoản</b></div>
+              </div>
+              <div class="crx-step"><b>3</b><span>Đối tác</span></div>
+              <div class="crx-pills">
+                <span class="crx-pill">SHBFinance</span>
+                <span class="crx-pill">LOTTE Finance</span>
+                <span class="crx-pill">FE Credit</span>
+              </div>
+            </div>
+
+            <div class="crx-cta">
+              <button type="button" class="btn primary crx-apply" data-title="Đăng ký vay tín chấp">Đăng ký</button>
+              <button type="button" class="btn ghost crx-backtop">Về đầu mục</button>
+            </div>
+          </article>
+
+          <article class="crx-card">
+            <h3 class="crx-h3">Thế chấp tài sản bảo đảm</h3>
+            <p class="crx-lead">Khoản vay lớn. Kỳ hạn dài. Trả nợ linh hoạt.</p>
+
+            <details class="crx-acc">
+              <summary><b>Bài 1: Vay mua nhà, xây sửa nhà</b> <small>tới 35 năm</small></summary>
+              <ul class="crx-list">
+                <li>Cho vay tới 85% giá trị tài sản</li>
+                <li>Thời gian vay tới 35 năm</li>
+                <li>Linh hoạt hồ sơ chứng minh thu nhập</li>
+                <li>Phương thức trả nợ linh hoạt</li>
+              </ul>
+              <p><a class="crx-link" target="_blank" rel="noopener" href="https://www.pvcombank.com.vn/san-pham/ca-nhan/san-pham-vay/vay-mua-nha-xay-sua-nha">Tham khảo</a></p>
+            </details>
+
+            <details class="crx-acc">
+              <summary><b>Bài 2: Vay mua ô tô</b> <small>phê duyệt nhanh</small></summary>
+              <ul class="crx-list">
+                <li>Phê duyệt trong 4 giờ</li>
+                <li>Cho vay 80% giá trị xe</li>
+                <li>Thời gian vay đến 72 tháng</li>
+                <li>Xe mới hoặc đã qua sử dụng</li>
+              </ul>
+              <p><a class="crx-link" target="_blank" rel="noopener" href="https://www.pvcombank.com.vn/san-pham/ca-nhan/san-pham-vay/vay-mua-o-to">Tham khảo</a></p>
+            </details>
+
+            <details class="crx-acc">
+              <summary><b>Bài 3: Vay SXKD & Bổ sung VLĐ</b></summary>
+              <div class="crx-cols">
+                <div>
+                  <h4 class="crx-h4">Vay sản xuất kinh doanh</h4>
+                  <ul class="crx-list">
+                    <li>Đối tượng: SXKD nông nghiệp, sản xuất, thương mại, dịch vụ</li>
+                    <li>Thời hạn tới 120 tháng</li>
+                    <li>Hạn mức 50 triệu — 10 tỷ</li>
+                    <li>Phương thức cho vay từng lần</li>
+                    <li>Tối đa 80% giá trị BĐS bảo đảm</li>
+                  </ul>
+                </div>
+                <div>
+                  <h4 class="crx-h4">Bổ sung vốn lưu động</h4>
+                  <ul class="crx-list">
+                    <li>Đối tượng: KH SXKD các lĩnh vực trên</li>
+                    <li>Thời hạn tối đa 24 tháng</li>
+                    <li>Hạn mức 50 triệu — 10 tỷ</li>
+                    <li>Cho vay từng lần hoặc hạn mức</li>
+                    <li>LTV tối đa 80% giá trị BĐS</li>
+                  </ul>
+                </div>
+              </div>
+              <p><a class="crx-link" target="_blank" rel="noopener" href="https://www.ocb.com.vn/vi/ca-nhan/tien-vay/vay-san-xuat-kinh-doanh/vay-san-xuat-kinh-doanh-bo-sung-von-luu-dong">Tham khảo</a></p>
+            </details>
+
+            <div class="crx-cta">
+              <button type="button" class="btn primary crx-apply" data-title="Đăng ký vay thế chấp">Đăng ký</button>
+              <button type="button" class="btn ghost crx-backtop">Về đầu mục</button>
+            </div>
+          </article>
+        </section>
+
+        <!-- Doanh nghiệp -->
+        <section id="crx-biz" class="crx-panel" role="tabpanel">
+          <article class="crx-card">
+            <h3 class="crx-h3">Tín chấp doanh nghiệp</h3>
+            <div class="crx-show">
+              <div class="crx-show__item"><h4>Tăng vốn lưu động</h4><p>Chi phí vận hành: lương, nguyên liệu, thuê mặt bằng.</p></div>
+              <div class="crx-show__item"><h4>Đầu tư mở rộng</h4><p>Mở quy mô, mua thiết bị, triển khai dự án.</p></div>
+              <div class="crx-show__item"><h4>Giải quyết tạm thời</h4><p>Dòng tiền thiếu hụt ngắn hạn.</p></div>
+            </div>
+            <ul class="crx-list crx-list--disc">
+              <li>Hạn mức tới <b>100 tỷ đồng</b></li>
+              <li>Thẩm định dựa trên <b>100% báo cáo tài chính</b></li>
+              <li>Hỗ trợ toàn quốc</li>
+            </ul>
+            <div class="crx-cta">
+              <button type="button" class="btn primary crx-apply" data-title="Vay DN tín chấp">Đăng ký</button>
+            </div>
+          </article>
+
+          <article class="crx-card">
+            <h3 class="crx-h3">Thế chấp doanh nghiệp</h3>
+            <div class="crx-grid3">
+              <div class="crx-mini"><h4>Vay mua ô tô</h4><p>Mới hoặc đã qua sử dụng.</p></div>
+              <div class="crx-mini"><h4>Bổ sung VLĐ</h4><p>Tối ưu dòng tiền theo mùa vụ.</p></div>
+              <div class="crx-mini"><h4>Vay mua BĐS</h4><p>Mặt bằng, kho bãi, nhà xưởng.</p></div>
+            </div>
+            <h4 class="crx-h4">Đặc điểm</h4>
+            <ul class="crx-list">
+              <li>Phương thức trả nợ linh hoạt</li>
+              <li>Tài sản bảo đảm đa dạng</li>
+              <li>Tỷ lệ cho vay tới <b>85% giá trị tài sản</b></li>
+              <li>Hỗ trợ cấp hạn mức doanh nghiệp</li>
+            </ul>
+            <div class="crx-cta">
+              <button type="button" class="btn primary crx-apply" data-title="Vay DN thế chấp">Đăng ký</button>
+            </div>
+          </article>
+        </section>
       </div>
     </section>
 
@@ -272,7 +545,6 @@
             </div>
           </article>
 
-          <!-- job7 -->
           <article class="job-card">
             <div class="job-ico"><img src="dragon-v1.png" alt="Icon"></div>
             <div class="job-body">
@@ -284,7 +556,6 @@
             </div>
           </article>
 
-          <!-- job8 -->
           <article class="job-card">
             <div class="job-ico"><img src="dragon-v1.png" alt="Icon"></div>
             <div class="job-body">
@@ -296,7 +567,6 @@
             </div>
           </article>
 
-          <!-- job9 -->
           <article class="job-card">
             <div class="job-ico"><img src="dragon-v1.png" alt="Icon"></div>
             <div class="job-body">
@@ -311,7 +581,7 @@
       </div>
 
       <!-- Templates chi tiết job (ẩn) -->
-      <section class="sr-only">
+      <section class="sr-only" aria-hidden="true">
         <template id="job1"><h3>Trưởng phòng Nhân sự – TP.HCM</h3><h4>Mô tả công việc</h4><ul><li>Xây dựng và triển khai chiến lược nhân sự toàn diện: tuyển dụng, đào tạo, phát triển, đánh giá hiệu suất, văn hóa.</li><li>Quản lý đội ngũ nhân sự, đảm bảo tuân thủ pháp luật & nội quy.</li><li>Tư vấn BGĐ về các vấn đề nhân sự & tổ chức.</li></ul><h4>Yêu cầu</h4><ul><li>ĐH chuyên ngành Nhân sự/Luật/Kinh tế hoặc tương đương.</li><li>≥5 năm kinh nghiệm nhân sự, ≥2 năm quản lý.</li><li>Kỹ năng lãnh đạo, giao tiếp, xử lý xung đột, ra quyết định.</li></ul></template>
         <template id="job2"><h3>Nhân viên Kế toán – TP.HCM</h3><h4>Mô tả</h4><ul><li>Thực hiện thu chi, công nợ, BCTC định kỳ.</li><li>Kiểm tra chứng từ, hạch toán & lưu trữ hồ sơ.</li><li>Phối hợp phòng ban đảm bảo minh bạch & hiệu quả tài chính.</li></ul><h4>Yêu cầu</h4><ul><li>Tốt nghiệp Kế toán/ Kiểm toán/ Tài chính.</li><li>≥1 năm kinh nghiệm; ưu tiên biết MISA/FAST.</li><li>Tỉ mỉ, trung thực, trách nhiệm.</li></ul></template>
         <template id="job3"><h3>Giám đốc miền – Tín chấp tiêu dùng (ĐN/HCM/CT)</h3><h4>Mô tả</h4><ul><li>Quản lý hoạt động kinh doanh khu vực.</li><li>Xây dựng chiến lược phát triển & mở rộng mạng lưới.</li><li>Tuyển dụng/đào tạo & quản lý giám sát, trưởng nhóm, NVKD.</li></ul><h4>Yêu cầu</h4><ul><li>ĐH (ưu tiên Tài chính/ QTKD).</li><li>≥5 năm tài chính tiêu dùng, ≥2 năm quản lý khu vực.</li><li>Lãnh đạo, phân tích thị trường, xây dựng đội ngũ mạnh.</li></ul></template>
@@ -336,199 +606,175 @@
       </div>
     </section>
 
-    <!-- CREDIT -->
-    <section id="view-tindung" class="view" role="tabpanel" aria-label="VIETFORTURE CREDIT">
-      <div class="ui-hero ui-hero--credit animate-in a-zoomBg">
-        <div class="ui-hero__inner container">
-          <div class="ui-hero__body animate-in a-fadeUp">
-            <h1 class="ui-hero__title">VIETFORTURE CREDIT</h1>
-            <p class="ui-hero__subtitle">Giải pháp tín dụng toàn diện · Minh bạch · Nhanh chóng</p>
-            <div class="ui-hero__cta">
-              <button class="btn primary" onclick="document.getElementById('creditDetail').scrollIntoView({behavior:'smooth'})" type="button">Khám phá</button>
-            </div>
-          </div>
-        </div>
-        <img class="ui-hero__img pos-center" src="images/credit-hero@1600x600-center.jpg" alt="VietForture Credit hero">
+<!-- LƯU TRÚ v2 -->
+<section id="view-luutru" class="view" role="tabpanel" aria-labelledby="tab-luutru">
+  <div class="sv2 wrap" id="stayv2">
+    <header class="sv2-hero">
+      <h2 class="sv2-title">Lưu Trú</h2>
+      <p class="sv2-sub">Chọn loại hình để xem chi tiết & đăng ký</p>
+      <div class="sv2-seg" role="tablist" aria-label="Loại hình lưu trú">
+        <button class="sv2-seg__btn is-active" role="tab" aria-selected="true" data-tab="apt">Căn hộ dịch vụ</button>
+        <button class="sv2-seg__btn" role="tab" aria-selected="false" data-tab="dorm2">KTX – Phòng 2 giường tầng</button>
       </div>
+    </header>
 
-      <div id="creditDetail" class="ui-section container">
-        <h2 class="ui-h2">Sản phẩm tín dụng</h2>
-
-        <div class="ui-grid">
-          <article class="ui-textcard animate-in a-rise">
-            <h3>Vay tiêu dùng tín chấp (Cá nhân)</h3>
-            <p>Thời gian vay linh hoạt 6–60 tháng. Thanh toán tiện lợi qua nhiều kênh. Gói dành cho: lương, CBCCVC, phụ nữ, BHNT, lịch sử vay tốt, chủ kinh doanh, CCCD.</p>
-            <div class="ui-badges"><span class="ui-badge">Lãi suất cạnh tranh</span><span class="ui-badge">Giải ngân nhanh</span><span class="ui-badge">Đối tác: SHBFinance · LOTTE Finance · FE Credit</span></div>
-          </article>
-          <figure class="ui-photo animate-in a-fadeIn"><img src="images/credit-consumer@800x600-center.jpg" alt="Vay tiêu dùng"></figure>
+    <!-- PANEL: CĂN HỘ DỊCH VỤ -->
+    <section id="sv2-apt" class="sv2-panel is-active" role="tabpanel">
+      <div class="sv2-highlights">
+        <div class="sv2-hi">
+          <b>Full nội thất</b><span>Vào ở ngay</span>
         </div>
-
-        <div class="ui-grid ui-grid--rev">
-          <figure class="ui-photo animate-in a-fadeIn"><img src="images/credit-mortgage@800x600-right.jpg" alt="Vay thế chấp"></figure>
-          <article class="ui-textcard animate-in a-rise">
-            <h3>Vay thế chấp tài sản (Cá nhân)</h3>
-            <ul>
-              <li><b>Vay mua/ xây sửa nhà</b>: đến 85% TSBĐ, kỳ hạn đến 35 năm, linh hoạt chứng minh thu nhập.</li>
-              <li><b>Vay mua ô tô</b>: duyệt trong ~4h, tối đa 80% giá trị xe, kỳ hạn đến 72 tháng.</li>
-            </ul>
-            <div class="ui-badges"><span class="ui-badge">Phương thức trả nợ linh hoạt</span><span class="ui-badge">Điều khoản rõ ràng</span></div>
-          </article>
+        <div class="sv2-hi">
+          <b>An ninh 24/7</b><span>Thẻ từ/camera</span>
         </div>
-
-        <div class="ui-grid">
-          <article class="ui-textcard animate-in a-rise">
-            <h3>Tín chấp doanh nghiệp</h3>
-            <ul>
-              <li>Tăng vốn lưu động, đầu tư mở rộng, xử lý thiếu hụt tạm thời.</li>
-              <li>Dựa trên <b>báo cáo tài chính</b>, không cần TSBĐ; hạn mức tối đa tới 100 tỷ; hỗ trợ toàn quốc.</li>
-            </ul>
-            <div class="ui-badges"><span class="ui-badge">Không TSBĐ</span><span class="ui-badge">Hạn mức cao</span></div>
-          </article>
-          <figure class="ui-photo animate-in a-fadeIn"><img src="images/credit-biz@800x600-center.jpg" alt="Vay doanh nghiệp tín chấp"></figure>
-        </div>
-
-        <div class="ui-grid ui-grid--rev">
-          <figure class="ui-photo animate-in a-fadeIn"><img src="images/credit-asset@800x600-right.jpg" alt="Vay DN thế chấp"></figure>
-          <article class="ui-textcard animate-in a-rise">
-            <h3>Thế chấp doanh nghiệp</h3>
-            <p>Các mục: mua ô tô, bổ sung vốn lưu động, mua BĐS. Tỷ lệ vay tới 85% giá trị tài sản, phương thức trả nợ linh hoạt, cấp hạn mức DN.</p>
-          </article>
-        </div>
-
-        <!-- Box đăng ký cuối trang Credit -->
-        <div class="signup-stripe">
-          <div class="signup-card">
-            <div class="sc-left">
-              <h3>Đăng ký vay ngay</h3>
-              <p>Nhập thông tin để được tư vấn & thẩm định nhanh.</p>
-            </div>
-            <div class="sc-right">
-              <button class="btn ghost" id="openCreditForm" type="button">Đăng Ký Vay</button>
-            </div>
-          </div>
+        <div class="sv2-hi">
+          <b>Vị trí kết nối</b><span>Gần tiện ích</span>
         </div>
       </div>
 
-      <!-- MODAL: Đăng ký vay -->
-      <div class="modal" id="creditModal" aria-hidden="true" role="dialog" aria-labelledby="creditTitle">
-        <div class="modal-card">
-          <div class="modal-head">
-            <h3 id="creditTitle" class="modal-title">Đăng ký vay vốn — VIETFORTURE CREDIT</h3>
-            <button class="btn secondary" id="closeCreditForm" type="button">Đóng</button>
+      <div class="sv2-grid">
+        <!-- Studio -->
+        <article class="sv2-card">
+          <div class="sv2-cover" style="--img:url('apt-studio.jpg')"></div>
+          <div class="sv2-body">
+            <h3 class="sv2-h3">Studio</h3>
+            <ul class="sv2-list">
+              <li>Nội thất cơ bản · WC riêng</li>
+              <li>Wifi mạnh · Thang máy</li>
+              <li>Điện/nước theo đồng hồ</li>
+            </ul>
+            <div class="sv2-meta">
+              <span class="sv2-price">Từ 5–7 triệu/tháng</span>
+              <button type="button" class="btn primary sv2-apply" data-title="Đăng ký Studio">Đăng ký</button>
+            </div>
           </div>
-          <form id="creditForm">
-            <div class="modal-body">
-              <div class="form-grid">
-                <div><label class="label" for="cr_name">Họ và tên *</label><input class="input" id="cr_name" name="name" required></div>
-                <div><label class="label" for="cr_phone">Số điện thoại *</label><input class="input" id="cr_phone" name="phone" inputmode="tel" required></div>
-                <div><label class="label" for="cr_email">Email</label><input class="input" id="cr_email" name="email" type="email"></div>
-                <div><label class="label" for="cr_city">Thành phố</label><input class="input" id="cr_city" name="city"></div>
-                <div><label class="label" for="cr_amount">Số tiền cần vay *</label><input class="input" id="cr_amount" name="amount" required placeholder="100,000,000"></div>
-                <div><label class="label" for="cr_purpose">Mục đích vay *</label>
-                  <select class="select" id="cr_purpose" name="purpose" required>
-                    <option value="">Chọn mục đích</option>
-                    <option value="cons">Tiêu dùng cá nhân</option>
-                    <option value="asset">Mua nhà/xe (thế chấp)</option>
-                    <option value="biz">Kinh doanh</option>
-                  </select>
-                </div>
-                <div><label class="label" for="cr_term">Thời hạn (tháng)</label><input class="input" id="cr_term" name="term" placeholder="12"></div>
-                <div class="full"><label class="label" for="cr_note">Ghi chú</label><textarea class="textarea" id="cr_note" name="note"></textarea></div>
-              </div>
+        </article>
+
+        <!-- 1PN -->
+        <article class="sv2-card">
+          <div class="sv2-cover" style="--img:url('apt-1pn.jpg')"></div>
+          <div class="sv2-body">
+            <h3 class="sv2-h3">1PN / 1WC</h3>
+            <ul class="sv2-list">
+              <li>Bếp riêng · Ban công thoáng</li>
+              <li>Bảo vệ 24/7 · Camera</li>
+              <li>Gần chợ · TTTM</li>
+            </ul>
+            <div class="sv2-meta">
+              <span class="sv2-price">Từ 7–10 triệu/tháng</span>
+              <button type="button" class="btn primary sv2-apply" data-title="Đăng ký Căn hộ 1PN">Đăng ký</button>
             </div>
-            <div class="modal-foot">
-              <button type="button" class="btn secondary" id="cancelCreditForm">Hủy</button>
-              <button class="btn primary" type="submit">Gửi về email</button>
+          </div>
+        </article>
+
+        <!-- 2PN -->
+        <article class="sv2-card">
+          <div class="sv2-cover" style="--img:url('apt-2pn.jpg')"></div>
+          <div class="sv2-body">
+            <h3 class="sv2-h3">2PN / 2WC</h3>
+            <ul class="sv2-list">
+              <li>Phù hợp gia đình/nhóm</li>
+              <li>Bãi xe máy/ô tô</li>
+              <li>Dọn phòng tùy chọn</li>
+            </ul>
+            <div class="sv2-meta">
+              <span class="sv2-price">Từ 11–15 triệu/tháng</span>
+              <button type="button" class="btn primary sv2-apply" data-title="Đăng ký Căn hộ 2PN">Đăng ký</button>
             </div>
-          </form>
-        </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="sv2-faq">
+        <details class="sv2-qa"><summary>Giờ giấc ra vào?</summary><p>Linh hoạt, có bảo vệ & kiểm soát ra/vào bằng thẻ từ.</p></details>
+        <details class="sv2-qa"><summary>Chi phí phát sinh?</summary><p>Điện/nước theo đồng hồ; gửi xe theo bảng giá tòa nhà.</p></details>
       </div>
     </section>
 
-    <!-- LƯU TRÚ -->
-    <section id="view-kitucxa" class="view" role="tabpanel" aria-label="Lưu trú VietForture">
-      <div class="ui-hero ui-hero--stay animate-in a-zoomBg">
-        <div class="ui-hero__inner container">
-          <div class="ui-hero__body animate-in a-fadeUp">
-            <h1 class="ui-hero__title">VIETFORTURE HOME</h1>
-            <p class="ui-hero__subtitle">Căn hộ dịch vụ & Phòng 2 giường tầng · Gần ĐH Mở, ĐH TN&MT, ĐH SP TDTT</p>
-          </div>
+    <!-- PANEL: KTX 2 GIƯỜNG TẦNG -->
+    <section id="sv2-dorm2" class="sv2-panel" role="tabpanel" hidden>
+      <div class="sv2-highlights">
+        <div class="sv2-hi">
+          <b>Kinh tế</b><span>Tối ưu chi phí</span>
         </div>
-        <img class="ui-hero__img pos-center" src="images/stay-hero@1600x600-center.jpg" alt="Lưu trú VietForture hero">
-      </div>
-
-      <div class="ui-section container">
-        <h2 class="ui-h2">Không gian dành cho bạn</h2>
-        <div class="ui-grid">
-          <article class="ui-textcard animate-in a-rise">
-            <h3>Căn hộ dịch vụ</h3>
-            <p>Riêng tư – đủ tiện nghi: máy lạnh, bàn học, bếp/VS riêng (tuỳ căn). Phù hợp sinh viên & người đi làm.</p>
-            <div class="ui-badges"><span class="ui-badge">Riêng tư</span><span class="ui-badge">Tiện nghi</span><span class="ui-badge">Bảo trì định kỳ</span></div>
-          </article>
-          <figure class="ui-photo animate-in a-fadeIn"><img src="images/stay-apt@800x600-center.jpg" alt="Căn hộ dịch vụ"></figure>
+        <div class="sv2-hi">
+          <b>Tiện nghi</b><span>Giường tầng, tủ riêng</span>
         </div>
-
-        <div class="ui-grid ui-grid--rev">
-          <figure class="ui-photo animate-in a-fadeIn"><img src="images/stay-bunk@800x600-top.jpg" alt="Phòng 2 giường tầng"></figure>
-          <article class="ui-textcard animate-in a-rise">
-            <h3>Phòng 2 giường tầng</h3>
-            <p>Tối ưu chi phí, kết nối cộng đồng. Có bàn học, kệ sách, tủ đồ riêng. Wi-Fi nhanh, khu tự học yên tĩnh.</p>
-            <div class="ui-badges"><span class="ui-badge">Tiết kiệm</span><span class="ui-badge">Thân thiện</span><span class="ui-badge">Đủ tiện ích</span></div>
-          </article>
-        </div>
-
-        <div class="ui-gallery">
-          <img class="animate-in a-fadeIn" src="images/stay-g1@1200x900-center.jpg" alt="Gallery 1">
-          <img class="animate-in a-fadeIn" style="--a-delay:120ms" src="images/stay-g2@1200x900-center.jpg" alt="Gallery 2">
-          <img class="animate-in a-fadeIn" style="--a-delay:240ms" src="images/stay-g3@1200x900-center.jpg" alt="Gallery 3">
-        </div>
-
-        <!-- Box đăng ký cuối trang Stay -->
-        <div class="signup-stripe">
-          <div class="signup-card">
-            <div class="sc-left">
-              <h3>Đăng ký nhận phòng</h3>
-              <p>Chọn Căn hộ dịch vụ / Phòng 2 giường tầng.</p>
-            </div>
-            <div class="sc-right">
-              <button class="btn ghost" id="openStayForm" type="button">Đăng Ký Nhận Phòng</button>
-            </div>
-          </div>
+        <div class="sv2-hi">
+          <b>Sạch & an toàn</b><span>Dọn định kỳ, camera</span>
         </div>
       </div>
 
-      <!-- MODAL: Đăng ký nhận phòng -->
-      <div class="modal" id="stayModal" aria-hidden="true" role="dialog" aria-labelledby="stayTitle">
-        <div class="modal-card">
-          <div class="modal-head">
-            <h3 id="stayTitle" class="modal-title">Đăng ký nhận phòng — VIETFORTURE HOME</h3>
-            <button class="btn secondary" id="closeStayForm" type="button">Đóng</button>
+      <article class="sv2-card sv2-card--wide">
+        <div class="sv2-cover" style="--img:url('ktx-2bunks.jpg')"></div>
+        <div class="sv2-body">
+          <h3 class="sv2-h3">Phòng 2 giường tầng (4 người)</h3>
+          <ul class="sv2-list">
+  <li>Được trang bị sự dụng miễn phí wifi tốc độ cao, bếp nấu ăn, máy lạnh, máy giặt, tủ đồ.</li>
+  <li>Bao trọn gói tiền điện, nước.</li>
+  <li>Giường tầng chắc chắn, niệm cao su non chất lượng cao</li>
+  <li>Các giường sẽ có màn che, không gian riêng tư cá nhân.</li>
+  <li>An ninh, trật tự tuyệt đối.</li>
+  <li>Giờ giấc tự do thoải mái.</li>
+  <li>Được vệ sinh định kỳ thường xuyên.</li>
+</ul>
+          <div class="sv2-meta">
+            <span class="sv2-price">Từ 1.5–2.2 triệu/người/tháng</span>
+            <button type="button" class="btn primary sv2-apply" data-title="Đăng ký KTX 2 giường tầng">Đăng ký</button>
           </div>
-          <form id="stayForm">
-            <div class="modal-body">
-              <div class="form-grid">
-                <div><label class="label" for="st_name">Họ và tên *</label><input class="input" id="st_name" name="name" required></div>
-                <div><label class="label" for="st_phone">Số điện thoại *</label><input class="input" id="st_phone" name="phone" inputmode="tel" required></div>
-                <div><label class="label" for="st_email">Email</label><input class="input" id="st_email" name="email" type="email"></div>
-                <div><label class="label" for="st_city">Thành phố</label><input class="input" id="st_city" name="city" placeholder="TP. Hồ Chí Minh"></div>
-                <div><label class="label" for="st_type">Loại lưu trú *</label>
-                  <select class="select" id="st_type" name="stay_type" required>
-                    <option value="">Chọn loại</option>
-                    <option>Căn hộ dịch vụ</option>
-                    <option>Phòng 2 giường tầng</option>
-                  </select>
-                </div>
-                <div class="full"><label class="label" for="st_note">Ghi chú</label><textarea class="textarea" id="st_note" name="note"></textarea></div>
-              </div>
-            </div>
-            <div class="modal-foot">
-              <button type="button" class="btn secondary" id="cancelStayForm">Hủy</button>
-              <button class="btn primary" type="submit">Gửi về email</button>
-            </div>
-          </form>
         </div>
+      </article>
+
+      <div class="sv2-grid">
+        <article class="sv2-card">
+          <div class="sv2-cover" style="--img:url('ktx-3bunks.jpg')"></div>
+          <div class="sv2-body">
+            <h3 class="sv2-h3">Phòng 3 giường tầng (6 người)</h3>
+<ul class="sv2-list">
+  <li>Được trang bị sự dụng miễn phí wifi tốc độ cao, bếp nấu ăn, máy lạnh, máy giặt, tủ đồ.</li>
+  <li>Bao trọn gói tiền điện, nước.</li>
+  <li>Giường tầng chắc chắn, niệm cao su non chất lượng cao</li>
+  <li>Các giường sẽ có màn che, không gian riêng tư cá nhân.</li>
+  <li>An ninh, trật tự tuyệt đối.</li>
+  <li>Giờ giấc tự do thoải mái.</li>
+  <li>Được vệ sinh định kỳ thường xuyên.</li>
+</ul>
+            <div class="sv2-meta">
+              <span class="sv2-price">Liên hệ để biết giá</span>
+              <button type="button" class="btn primary sv2-apply" data-title="Đăng ký KTX 3 giường tầng">Đăng ký</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="sv2-card">
+          <div class="sv2-cover" style="--img:url('ktx-4bunks.jpg')"></div>
+          <div class="sv2-body">
+            <h3 class="sv2-h3">Phòng 4 giường tầng (8 người)</h3>
+<ul class="sv2-list">
+  <li>Được trang bị sự dụng miễn phí wifi tốc độ cao, bếp nấu ăn, máy lạnh, máy giặt, tủ đồ.</li>
+  <li>Bao trọn gói tiền điện, nước.</li>
+  <li>Giường tầng chắc chắn, niệm cao su non chất lượng cao</li>
+  <li>Các giường sẽ có màn che, không gian riêng tư cá nhân.</li>
+  <li>An ninh, trật tự tuyệt đối.</li>
+  <li>Giờ giấc tự do thoải mái.</li>
+  <li>Được vệ sinh định kỳ thường xuyên.</li>
+</ul>
+            <div class="sv2-meta">
+              <span class="sv2-price">Liên hệ để biết giá</span>
+              <button type="button" class="btn primary sv2-apply" data-title="Đăng ký KTX 4 giường tầng">Đăng ký</button>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="sv2-faq">
+        <details class="sv2-qa"><summary>Vị trí & khoảng cách</summary><p>Gần các trường đại học thuộc cơ sở Nhà Bè, chỉ đi bộ 2 phút là đến nơi. Các trường như:  Trường Đại học Tài nguyên và Môi trường Tp. Hồ Chí Minh, Trường Đại học Mở Tp. Hồ Chí Minh, Trường Đại học Sư phạm Thể dục Thể thao TP. Hồ Chí Minh.</p></details>
+        <details class="sv2-qa"><summary>Quy định chung?</summary><p>Giữ vệ sinh, hạn chế ồn sau 22h, tôn trọng không gian chung.</p></details>
+        <details class="sv2-qa"><summary>Gửi xe & khách thăm?</summary><p>Gửi xe theo quy định tòa nhà; khách thăm đăng ký với bảo vệ.</p></details>
       </div>
     </section>
+  </div>
+</section>
 
     <!-- APPLY -->
     <section id="view-apply" class="view">
@@ -587,48 +833,75 @@
       </div>
     </section>
   </main>
-</main>
-<!-- Modal: Chọn hạng mục Dịch vụ (canvas v2) -->
-<div class="modal" id="svcPanel" aria-hidden="true" role="dialog" aria-labelledby="svcPanelTitle">
-  <div class="modal-card">
-    <div class="modal-head">
-      <h3 id="svcPanelTitle" class="modal-title">Chọn hạng mục</h3>
-      <button class="btn ghost" id="closeSvcPanel" type="button">Đóng</button>
-    </div>
-    <div class="modal-body">
-      <div id="svcPanelContent" class="svc-panel-content"></div>
-    </div>
-    <div class="modal-foot">
-      <button class="btn secondary" id="cancelSvcPanel" type="button">Hủy</button>
-    </div>
-  </div>
-</div>
 
-<!-- Modal: Đăng ký dịch vụ (canvas V3) -->
-<div class="modal" id="svcApplyModal" aria-hidden="true" role="dialog" aria-labelledby="svcApplyTitle">
-  <div class="modal-card">
-    <div class="modal-head">
-      <h3 id="svcApplyTitle" class="modal-title">Đăng ký dịch vụ</h3>
-      <button class="btn ghost" id="closeSvcApply" type="button">Đóng</button>
-    </div>
-    <form id="svcApplyForm" class="form-grid">
+  <!-- Modal: Thông tin job -->
+  <div class="modal" id="jobInfoModal" aria-hidden="true" role="dialog" aria-labelledby="jobInfoTitle">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3 id="jobInfoTitle" class="modal-title">Chi tiết tuyển dụng</h3>
+        <button class="btn secondary" id="closeJobInfo" type="button">Đóng</button>
+      </div>
       <div class="modal-body">
-        <div><label class="label" for="sa_type">Dịch vụ</label><input class="input" id="sa_type" name="service" readonly></div>
-        <div><label class="label" for="sa_name">Họ tên *</label><input class="input" id="sa_name" name="name" required></div>
-        <div><label class="label" for="sa_phone">Số điện thoại *</label><input class="input" id="sa_phone" name="phone" inputmode="tel" required></div>
-        <div><label class="label" for="sa_email">Email *</label><input class="input" id="sa_email" name="email" type="email" required></div>
-        <div><label class="label" for="sa_city">Thành phố</label><input class="input" id="sa_city" name="city" placeholder="TP.HCM / Hà Nội"></div>
-        <div class="full"><label class="label" for="sa_note">Ghi chú</label><textarea class="textarea" id="sa_note" name="note" rows="4"></textarea></div>
+        <div id="jobInfoContent" class="job-info-content"></div>
       </div>
       <div class="modal-foot">
-        <button type="button" class="btn secondary" id="cancelSvcApply">Hủy</button>
-        <button type="submit" class="btn primary" id="sa_submit">Gửi đăng ký</button>
+        <button class="btn secondary" id="cancelJobInfo" type="button">Hủy</button>
+        <button class="btn primary" id="jobInfoApply" type="button">Nộp Đơn</button>
       </div>
-    </form>
+    </div>
   </div>
-</div>
 
-  <!-- FOOTER -->
+  <!-- Modal: Ứng tuyển job -->
+  <div class="modal" id="jobApplyModal" aria-hidden="true" role="dialog" aria-labelledby="jobApplyTitle">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3 id="jobApplyTitle" class="modal-title">Ứng tuyển — VietForture</h3>
+        <button class="btn secondary" id="closeJobApply" type="button">Đóng</button>
+      </div>
+      <form id="jobApplyForm">
+        <div class="modal-body">
+          <div class="form-grid">
+            <div><label class="label" for="ja_name">Họ và tên *</label><input class="input" id="ja_name" name="name" required></div>
+            <div><label class="label" for="ja_phone">Số điện thoại *</label><input class="input" id="ja_phone" name="phone" inputmode="tel" required></div>
+            <div><label class="label" for="ja_email">Email *</label><input class="input" id="ja_email" name="email" type="email" required></div>
+            <div><label class="label" for="ja_city">Thành phố</label><input class="input" id="ja_city" name="city" placeholder="TP. Hồ Chí Minh"></div>
+            <div><label class="label" for="ja_pos">Vị trí ứng tuyển *</label><input class="input" id="ja_pos" name="position" required></div>
+            <div class="full"><label class="label" for="ja_note">Ghi chú</label><textarea class="textarea" id="ja_note" name="note" placeholder="Kinh nghiệm, thời gian có thể bắt đầu, v.v."></textarea></div>
+            <div class="full uploader">
+              <div class="u-actions">
+                <label class="btn ghost">
+                  <input id="ja_cv" name="cv_file" type="file" accept=".pdf,.doc,.docx,.xls,.xlsx" hidden>
+                  Nộp CV từ máy
+                </label>
+                <span class="or">hoặc</span>
+                <input class="input" id="ja_cv_drive" name="cv_drive" placeholder="Dán link Google Drive (tùy chọn)">
+              </div>
+              <div id="ja_cv_name" class="muted"></div>
+              <div class="u-help">Hỗ trợ .pdf, .doc, .docx, .xls, .xlsx. ≤ 8MB.</div>
+            </div>
+            <div class="full">
+              <label class="check"><input id="ja_cover_toggle" type="checkbox"> Sử dụng thư giới thiệu?</label>
+              <div id="ja_cover_wrap" style="display:none;margin-top:8px">
+                <label class="label" for="ja_cover">Thư Tự Giới Thiệu</label>
+                <textarea class="textarea" id="ja_cover" name="cover_letter" rows="8" placeholder="Tóm tắt điểm mạnh, thành tích, lý do phù hợp..."></textarea>
+              </div>
+            </div>
+            <div class="full">
+              <label class="check">
+                <input id="ja_tos" name="tos" type="checkbox" required>
+                Tôi xác nhận đã đọc điều khoản và đồng ý chia sẻ thông tin cho mục đích tuyển dụng.
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="modal-foot">
+          <button type="button" class="btn secondary" id="cancelJobApply">Hủy</button>
+          <button class="btn primary" id="ja_submit" type="submit">Nộp đơn</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <footer class="corp-footer" role="contentinfo" itemscope itemtype="https://schema.org/Organization">
     <div class="container fgrid">
       <div class="fcol">
@@ -654,81 +927,6 @@
     </div>
   </footer>
 
-  <!-- Modal: Thông tin job -->
-  <div class="modal" id="jobInfoModal" aria-hidden="true" role="dialog" aria-labelledby="jobInfoTitle">
-    <div class="modal-card">
-      <div class="modal-head">
-        <h3 id="jobInfoTitle" class="modal-title">Chi tiết tuyển dụng</h3>
-        <button class="btn secondary" id="closeJobInfo" type="button">Đóng</button>
-      </div>
-      <div class="modal-body">
-        <div id="jobInfoContent" class="job-info-content"></div>
-      </div>
-      <div class="modal-foot">
-        <button class="btn secondary" id="cancelJobInfo" type="button">Hủy</button>
-        <button class="btn primary" id="jobInfoApply" type="button">Nộp Đơn</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal: Ứng tuyển job (đÃ nâng cấp) -->
-  <div class="modal" id="jobApplyModal" aria-hidden="true" role="dialog" aria-labelledby="jobApplyTitle">
-    <div class="modal-card">
-      <div class="modal-head">
-        <h3 id="jobApplyTitle" class="modal-title">Ứng tuyển — VietForture</h3>
-        <button class="btn secondary" id="closeJobApply" type="button">Đóng</button>
-      </div>
-      <form id="jobApplyForm">
-        <div class="modal-body">
-          <div class="form-grid">
-            <div><label class="label" for="ja_name">Họ và tên *</label><input class="input" id="ja_name" name="name" required></div>
-            <div><label class="label" for="ja_phone">Số điện thoại *</label><input class="input" id="ja_phone" name="phone" inputmode="tel" required></div>
-            <div><label class="label" for="ja_email">Email *</label><input class="input" id="ja_email" name="email" type="email" required></div>
-            <div><label class="label" for="ja_city">Thành phố</label><input class="input" id="ja_city" name="city" placeholder="TP. Hồ Chí Minh"></div>
-            <div><label class="label" for="ja_pos">Vị trí ứng tuyển *</label><input class="input" id="ja_pos" name="position" required></div>
-            <div class="full"><label class="label" for="ja_note">Ghi chú</label><textarea class="textarea" id="ja_note" name="note" placeholder="Kinh nghiệm, thời gian có thể bắt đầu, v.v."></textarea></div>
-
-            <!-- NỘP CV -->
-            <div class="full uploader">
-              <div class="u-actions">
-                <label class="btn ghost">
-                  <input id="ja_cv" name="cv_file" type="file" accept=".pdf,.doc,.docx,.xls,.xlsx" hidden>
-                  Nộp CV từ máy
-                </label>
-                <span class="or">hoặc</span>
-                <input class="input" id="ja_cv_drive" name="cv_drive" placeholder="Dán link Google Drive (tùy chọn)">
-              </div>
-              <div id="ja_cv_name" class="muted"></div>
-              <div class="u-help">Hỗ trợ .pdf, .doc, .docx, .xls, .xlsx. ≤ 8MB.</div>
-            </div>
-
-            <!-- THƯ GIỚI THIỆU -->
-            <div class="full">
-              <label class="check"><input id="ja_cover_toggle" type="checkbox"> Sử dụng thư giới thiệu?</label>
-              <div id="ja_cover_wrap" style="display:none;margin-top:8px">
-                <label class="label" for="ja_cover">Thư Tự Giới Thiệu</label>
-                <textarea class="textarea" id="ja_cover" name="cover_letter" rows="8" placeholder="Tóm tắt điểm mạnh, thành tích, lý do phù hợp..."></textarea>
-              </div>
-            </div>
-
-            <!-- XÁC NHẬN -->
-            <div class="full">
-              <label class="check">
-                <input id="ja_tos" name="tos" type="checkbox" required>
-                Tôi xác nhận đã đọc điều khoản và đồng ý chia sẻ thông tin cho mục đích tuyển dụng.
-              </label>
-            </div>
-          </div>
-        </div>
-        <div class="modal-foot">
-          <button type="button" class="btn secondary" id="cancelJobApply">Hủy</button>
-          <button class="btn primary" id="ja_submit" type="submit">Nộp đơn</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
   <script src="script.js" defer></script>
-
-
-
+</body>
+</html>
