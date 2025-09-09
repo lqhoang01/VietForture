@@ -1,3 +1,4 @@
+
 (function () {
   const $  = (sel, ctx=document) => ctx.querySelector(sel);
   const $$ = (sel, ctx=document) => Array.from(ctx.querySelectorAll(sel));
@@ -730,6 +731,189 @@
       show('apply');
       const pos = document.getElementById('ap_pos'); if(pos) pos.value = title;
       try{ history.replaceState(null,'','#apply'); }catch(e){}
+    }
+  });
+})();
+
+
+/* LƯU TRÚ: hero sub-title & switch sync */
+(function(){
+  const root = document.getElementById('stayv2'); if(!root) return;
+  const tag = document.getElementById('sv2-heroTag');
+  function sync(){
+    const active = root.querySelector('.sv2-panel.is-active')?.id || 'sv2-dorm2';
+    if(tag) tag.textContent = active==='sv2-apt' ? 'Căn hộ dịch vụ' : 'Kí túc xá (KTX)';
+    const sw = root.querySelector('.sv2-switch');
+    if(sw){
+      sw.dataset.active = active==='sv2-apt' ? 'apt' : 'dorm2';
+      sw.querySelectorAll('.sv2-seg__btn').forEach(b=>{
+        const on = b.dataset.tab === (active==='sv2-apt' ? 'apt' : 'dorm2');
+        b.classList.toggle('is-active', on);
+        b.setAttribute('aria-selected', on?'true':'false');
+      });
+    }
+  }
+  sync();
+  root.addEventListener('click', (e)=>{
+    if(e.target.closest('.sv2-seg__btn')){
+        const sw = root.querySelector('.sv2-switch');
+        sw?.classList.add('is-anim');
+        setTimeout(()=>sw?.classList.remove('is-anim'), 500);
+        setTimeout(sync,0);
+      }
+  });
+  // Notify button scroll
+  root.addEventListener('click', (e)=>{
+    const n = e.target.closest('.sv2-notify'); if(!n) return;
+    const active = root.querySelector('.sv2-panel.is-active')?.id;
+    const id = active==='sv2-apt' ? 'offers-apt' : 'offers-ktx';
+    document.getElementById(id)?.scrollIntoView({behavior:'smooth', block:'start'});
+  });
+  // Apply button scroll to contact
+  root.addEventListener('click', (e)=>{
+    const n = e.target.closest('.sv2-apply'); if(!n) return;
+    const active = root.querySelector('.sv2-panel.is-active')?.id;
+    const id = active==='sv2-apt' ? 'contact-apt' : 'contact-ktx';
+    document.getElementById(id)?.scrollIntoView({behavior:'smooth', block:'start'});
+  });
+})();
+// Sticky CTA scroll
+(function(){
+  const root = document.getElementById('stayv2'); if(!root) return;
+  document.getElementById('stay-sticky')?.addEventListener('click', (e)=>{
+    if(!e.target.closest('.sv2-apply')) return;
+    const active = root.querySelector('.sv2-panel.is-active')?.id;
+    const id = active==='sv2-apt' ? 'contact-apt' : 'contact-ktx';
+    document.getElementById(id)?.scrollIntoView({behavior:'smooth', block:'start'});
+  });
+})();
+
+
+
+// KTX chips + lightbox
+(function(){
+  const root = document.getElementById('stayv2'); if(!root) return;
+  // filter chips
+  root.addEventListener('click', (e)=>{
+    const chip = e.target.closest('.roomx .chip'); if(!chip) return;
+    const type = chip.dataset.type;
+    chip.parentElement.querySelectorAll('.chip').forEach(c=>c.classList.toggle('is-on', c===chip));
+    root.querySelectorAll('#sv2-dorm2 .roomx .flip').forEach(card=>{
+      const ok = type==='all' || card.dataset.type===type;
+      card.style.display = ok ? '' : 'none';
+    });
+  });
+  // lightbox
+  const lb = document.getElementById('stay-lightbox');
+  root.addEventListener('click', (e)=>{
+    const btn = e.target.closest('.view-img'); if(!btn) return;
+    const src = btn.dataset.img;
+    if(lb){ lb.querySelector('img').src = src; lb.classList.add('is-open'); }
+  });
+  lb?.addEventListener('click', ()=> lb.classList.remove('is-open'));
+})();
+// Lightbox stronger binding and Zalo form handler
+(function(){
+  const root = document.getElementById('stayv2'); if(!root) return;
+  // lightbox: delegate on document for robustness
+  const lb = document.getElementById('stay-lightbox');
+  document.addEventListener('click', (e)=>{
+    const btn = e.target.closest('.view-img'); if(btn){ 
+      const src = btn.dataset.img || btn.getAttribute('data-img');
+      if(lb && src){ lb.querySelector('img').src = src; lb.classList.add('is-open'); }
+    }
+    if(lb && (e.target === lb || e.target.closest('#stay-lightbox img')==null && e.target.closest('.lightbox'))){
+      // click backdrop closes
+      if(e.target.classList.contains('lightbox')) lb.classList.remove('is-open');
+    }
+  }, true);
+
+  // Zalo form submit
+  const zaloForm = document.getElementById('contact-zalo-ktx')?.querySelector('form');
+  zaloForm?.addEventListener('submit', (ev)=>{
+    ev.preventDefault();
+    const f = ev.target;
+    const payload = {
+      name: f.name.value.trim(),
+      phone: f.phone.value.trim(),
+      email: f.email.value.trim(),
+      room: f.room.value,
+      note: f.note.value.trim()
+    };
+    const msg = `Xin chào, tôi muốn đăng ký xem phòng KTX.\nHọ tên: ${payload.name}\nĐiện thoại: ${payload.phone}\nEmail: ${payload.email}\nLoại phòng: ${payload.room}\nGhi chú: ${payload.note}`;
+    // Open Zalo company link
+    window.open('https://zalo.me/2857015321649379174', '_blank');
+    alert('Đã mở Zalo. Vui lòng dán hoặc gửi thông tin cho CSKH nếu cần.');
+  });
+})();
+
+// Reveal on scroll
+(function(){
+  const root = document.getElementById('stayv2'); if(!root) return;
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('is-in'); io.unobserve(en.target); } });
+  },{threshold:.12});
+  root.querySelectorAll('#view-luutru [data-reveal]').forEach(el=>io.observe(el));
+})();
+
+// CTA scroll to Zalo contact
+(function(){
+  const container = document.getElementById('stayv2'); if(!container) return;
+  container.addEventListener('click', (e)=>{
+    const btn = e.target.closest('.sv2-apply, .sv2-heroActions .btn'); if(!btn) return;
+    const target = document.getElementById('contact-zalo-ktx');
+    if(target){ target.scrollIntoView({behavior:'smooth', block:'start'}); }
+    else { window.open('https://zalo.me/2857015321649379174', '_blank'); }
+  });
+})();
+
+// Force CTA -> Zalo scroll with capture to override other handlers
+(function(){
+  const container = document.getElementById('stayv2'); if(!container) return;
+  function handler(e){
+    const targetBtn = e.target.closest('.sv2-apply'); if(!targetBtn) return;
+    // Stop all other click handlers
+    e.preventDefault(); e.stopImmediatePropagation(); e.stopPropagation();
+    const contact = document.getElementById('contact-zalo-ktx');
+    if(contact){ contact.scrollIntoView({behavior:'smooth', block:'start'}); }
+    else{ window.open('https://zalo.me/2857015321649379174','_blank'); }
+  }
+  // capture=true to intercept before modal handlers
+  document.addEventListener('click', handler, true);
+})();
+
+// Lưu trú: switch & CTA behavior for new hero
+(function(){
+  const view = document.getElementById('view-luutru'); if(!view) return;
+  const switcher = view.querySelector('.sv2-switch');
+  const sub = view.querySelector('#lt-subtitle');
+  const dorm = view.querySelector('#sv2-dorm2');
+  const apt  = view.querySelector('#sv2-apt');
+
+  function show(tab){
+    if(!switcher) return;
+    switcher.dataset.active = tab;
+    view.querySelectorAll('.sv2-seg__btn').forEach(b=>{
+      const on = b.dataset.tab === tab;
+      b.classList.toggle('is-active', on);
+      b.setAttribute('aria-selected', String(on));
+    });
+    if(sub) sub.textContent = (tab==='dorm2') ? 'Ký túc xá (KTX)' : 'Căn hộ dịch vụ';
+    if(dorm) dorm.hidden = (tab!=='dorm2');
+    if(apt)  apt.hidden  = (tab!=='apt');
+  }
+  // init
+  show(switcher?.dataset.active || 'dorm2');
+  view.addEventListener('click', (e)=>{
+    const seg = e.target.closest('.sv2-seg__btn');
+    if(seg){ show(seg.dataset.tab); }
+
+    const cta = e.target.closest('.sv2-apply');
+    if(cta){
+      const active = switcher?.dataset.active || 'dorm2';
+      const target = view.querySelector(active==='dorm2' ? '#contact-ktx' : '#contact-apt');
+      if(target){ target.scrollIntoView({behavior:'smooth',block:'start'}); }
+      else{ window.open('https://zalo.me/2857015321649379174','_blank'); }
     }
   });
 })();
