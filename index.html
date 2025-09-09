@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="vi">
 <head>
@@ -609,175 +610,319 @@
 <!-- LƯU TRÚ v2 -->
 <section id="view-luutru" class="view" role="tabpanel" aria-labelledby="tab-luutru">
   <div class="sv2 wrap" id="stayv2">
-    <header class="sv2-hero">
-      <h2 class="sv2-title">Lưu Trú</h2>
-      <p class="sv2-sub">Chọn loại hình để xem chi tiết & đăng ký</p>
-      <div class="sv2-seg" role="tablist" aria-label="Loại hình lưu trú">
-        <button class="sv2-seg__btn is-active" role="tab" aria-selected="true" data-tab="apt">Căn hộ dịch vụ</button>
-        <button class="sv2-seg__btn" role="tab" aria-selected="false" data-tab="dorm2">KTX – Phòng 2 giường tầng</button>
+    
+
+  <header class="sv2-hero">
+    <div class="ui-hero a-zoomBg">
+      <img class="ui-hero__img pos-center" src="hero-stay.jpg" alt="Lưu trú VietForture">
+      <div class="ui-hero__inner">
+        <div class="ui-hero__body">
+          <h1 class="ui-hero__title">VIETFORTURE HOME</h1>
+          <p class="ui-hero__subtitle" id="lt-subtitle">Ký túc xá (KTX)</p>
+          <div class="sv2-switch" data-active="dorm2" role="tablist" aria-label="Chọn loại lưu trú">
+            <span class="sv2-switch__thumb" aria-hidden="true"></span>
+            <button type="button" class="sv2-seg__btn is-active" data-tab="dorm2" aria-selected="true">KTX</button>
+            <button type="button" class="sv2-seg__btn" data-tab="apt" aria-selected="false">Căn hộ dịch vụ</button>
+          </div>
+          <div class="ui-hero__cta" style="margin-top:10px">
+            <button type="button" class="btn primary sv2-apply">Đặt lịch xem phòng</button>
+            <button type="button" class="btn ghost sv2-apply">Đăng ký</button>
+          </div>
+        </div>
       </div>
-    </header>
+    </div>
+  </header>
+
+
+
 
     <!-- PANEL: CĂN HỘ DỊCH VỤ -->
-    <section id="sv2-apt" class="sv2-panel is-active" role="tabpanel">
-      <div class="sv2-highlights">
-        <div class="sv2-hi">
-          <b>Full nội thất</b><span>Vào ở ngay</span>
-        </div>
-        <div class="sv2-hi">
-          <b>An ninh 24/7</b><span>Thẻ từ/camera</span>
-        </div>
-        <div class="sv2-hi">
-          <b>Vị trí kết nối</b><span>Gần tiện ích</span>
-        </div>
-      </div>
+    <section id="sv2-dorm2" class="sv2-panel is-active" role="tabpanel">
+      <nav class="ktx-subnav" aria-label="Điều hướng KTX">
+        <a href="#rooms">Phòng</a>
+        <a href="#location">Vị trí</a>
+        <a href="#policy">Chi phí</a>
+        <a href="#features">Tiện nghi</a>
+        <a href="#contact-zalo-ktx">Liên hệ</a>
+      </nav>
 
-      <div class="sv2-grid">
-        <!-- Studio -->
-        <article class="sv2-card">
-          <div class="sv2-cover" style="--img:url('apt-studio.jpg')"></div>
-          <div class="sv2-body">
-            <h3 class="sv2-h3">Studio</h3>
-            <ul class="sv2-list">
-              <li>Nội thất cơ bản · WC riêng</li>
-              <li>Wifi mạnh · Thang máy</li>
-              <li>Điện/nước theo đồng hồ</li>
-            </ul>
-            <div class="sv2-meta">
-              <span class="sv2-price">Từ 5–7 triệu/tháng</span>
-              <button type="button" class="btn primary sv2-apply" data-title="Đăng ký Studio">Đăng ký</button>
+      <!-- KTX: badges -->
+
+      <!-- Room Explorer with chips + flip cards -->
+      <section class="roomx" id="rooms" data-reveal>
+        <div class="chips" role="tablist">
+          <button class="chip is-on" data-type="all" role="tab" aria-selected="true">Tất cả</button>
+          <button class="chip" data-type="4" role="tab">4 người</button>
+          <button class="chip" data-type="6" role="tab">6 người</button>
+          <button class="chip" data-type="6m" role="tab">6 người · mới</button>
+          <button class="chip" data-type="8" role="tab">8 người</button>
+          <button class="chip" data-type="10" role="tab">10 người</button>
+        </div>
+
+        <div class="grid">
+          <article class="flip" data-type="4">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="media" style="--img:url('ktx-4p.jpg')"></div>
+                <h3>Phòng 4 người</h3>
+                <div class="price">2.400.000</div>
+              </div>
+              <div class="flip-back">
+                <ul class="sv2-list">
+                  <li>Wifi, bếp, máy lạnh</li><li>Máy giặt, tủ đồ</li><li>Nệm cao su non</li>
+                </ul>
+                <div class="actions"><button class="btn primary sv2-apply">Đăng ký</button><button class="btn ghost view-img" data-img="ktx-4p.jpg">Xem ảnh</button></div>
+              </div>
             </div>
-          </div>
-        </article>
+          </article>
 
-        <!-- 1PN -->
-        <article class="sv2-card">
-          <div class="sv2-cover" style="--img:url('apt-1pn.jpg')"></div>
-          <div class="sv2-body">
-            <h3 class="sv2-h3">1PN / 1WC</h3>
-            <ul class="sv2-list">
-              <li>Bếp riêng · Ban công thoáng</li>
-              <li>Bảo vệ 24/7 · Camera</li>
-              <li>Gần chợ · TTTM</li>
-            </ul>
-            <div class="sv2-meta">
-              <span class="sv2-price">Từ 7–10 triệu/tháng</span>
-              <button type="button" class="btn primary sv2-apply" data-title="Đăng ký Căn hộ 1PN">Đăng ký</button>
+          <article class="flip" data-type="6">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="media" style="--img:url('ktx-6p.jpg')"></div>
+                <h3>Phòng 6 người</h3>
+                <div class="price">2.300.000</div>
+              </div>
+              <div class="flip-back">
+                <ul class="sv2-list">
+                  <li>Wifi, bếp, máy lạnh</li><li>Máy giặt, tủ đồ</li><li>Màn che riêng tư</li>
+                </ul>
+                <div class="actions"><button class="btn primary sv2-apply">Đăng ký</button><button class="btn ghost view-img" data-img="ktx-6p.jpg">Xem ảnh</button></div>
+              </div>
             </div>
-          </div>
-        </article>
+          </article>
 
-        <!-- 2PN -->
-        <article class="sv2-card">
-          <div class="sv2-cover" style="--img:url('apt-2pn.jpg')"></div>
-          <div class="sv2-body">
-            <h3 class="sv2-h3">2PN / 2WC</h3>
-            <ul class="sv2-list">
-              <li>Phù hợp gia đình/nhóm</li>
-              <li>Bãi xe máy/ô tô</li>
-              <li>Dọn phòng tùy chọn</li>
-            </ul>
-            <div class="sv2-meta">
-              <span class="sv2-price">Từ 11–15 triệu/tháng</span>
-              <button type="button" class="btn primary sv2-apply" data-title="Đăng ký Căn hộ 2PN">Đăng ký</button>
+          <article class="flip" data-type="6m">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="media" style="--img:url('ktx-6p-new.jpg')"></div>
+                <h3>Phòng 6 người · mới</h3>
+                <div class="price">1.700.000</div>
+              </div>
+              <div class="flip-back">
+                <ul class="sv2-list">
+                  <li>Nội thất tối giản</li><li>Riêng tư tốt</li><li>Nệm cao su non</li>
+                </ul>
+                <div class="actions"><button class="btn primary sv2-apply">Đăng ký</button><button class="btn ghost view-img" data-img="ktx-6p-new.jpg">Xem ảnh</button></div>
+              </div>
             </div>
-          </div>
-        </article>
-      </div>
+          </article>
 
-      <div class="sv2-faq">
-        <details class="sv2-qa"><summary>Giờ giấc ra vào?</summary><p>Linh hoạt, có bảo vệ & kiểm soát ra/vào bằng thẻ từ.</p></details>
-        <details class="sv2-qa"><summary>Chi phí phát sinh?</summary><p>Điện/nước theo đồng hồ; gửi xe theo bảng giá tòa nhà.</p></details>
-      </div>
-    </section>
+          <article class="flip" data-type="8">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="media" style="--img:url('ktx-8p.jpg')"></div>
+                <h3>Phòng 8 người</h3>
+                <div class="price">2.100.000</div>
+              </div>
+              <div class="flip-back">
+                <ul class="sv2-list">
+                  <li>Wifi, bếp, máy lạnh</li><li>Máy giặt, tủ đồ</li><li>Màn che riêng tư</li>
+                </ul>
+                <div class="actions"><button class="btn primary sv2-apply">Đăng ký</button><button class="btn ghost view-img" data-img="ktx-8p.jpg">Xem ảnh</button></div>
+              </div>
+            </div>
+          </article>
 
-    <!-- PANEL: KTX 2 GIƯỜNG TẦNG -->
-    <section id="sv2-dorm2" class="sv2-panel" role="tabpanel" hidden>
-      <div class="sv2-highlights">
-        <div class="sv2-hi">
-          <b>Kinh tế</b><span>Tối ưu chi phí</span>
+          <article class="flip" data-type="10">
+            <div class="flip-inner">
+              <div class="flip-front">
+                <div class="media" style="--img:url('ktx-10p.jpg')"></div>
+                <h3>Phòng 10 người</h3>
+                <div class="price">1.600.000</div>
+              </div>
+              <div class="flip-back">
+                <ul class="sv2-list">
+                  <li>Không gian lớn</li><li>Tiện ích chung đầy đủ</li><li>Vệ sinh định kỳ</li>
+                </ul>
+                <div class="actions"><button class="btn primary sv2-apply">Đăng ký</button><button class="btn ghost view-img" data-img="ktx-10p.jpg">Xem ảnh</button></div>
+              </div>
+            </div>
+          </article>
         </div>
-        <div class="sv2-hi">
-          <b>Tiện nghi</b><span>Giường tầng, tủ riêng</span>
-        </div>
-        <div class="sv2-hi">
-          <b>Sạch & an toàn</b><span>Dọn định kỳ, camera</span>
-        </div>
-      </div>
+      </section>
 
-      <article class="sv2-card sv2-card--wide">
-        <div class="sv2-cover" style="--img:url('ktx-2bunks.jpg')"></div>
-        <div class="sv2-body">
-          <h3 class="sv2-h3">Phòng 2 giường tầng (4 người)</h3>
+      <!-- Sticky compare -->
+
+      <!-- Location + Policy -->
+      
+      <section class="zig" id="location" data-reveal>
+        <div class="ph" style="--img:url('ktx-6p-new.jpg')"></div>
+        <div class="txt">
+          <h4>Vị trí thuận tiện</h4>
           <ul class="sv2-list">
-  <li>Được trang bị sự dụng miễn phí wifi tốc độ cao, bếp nấu ăn, máy lạnh, máy giặt, tủ đồ.</li>
-  <li>Bao trọn gói tiền điện, nước.</li>
-  <li>Giường tầng chắc chắn, niệm cao su non chất lượng cao</li>
-  <li>Các giường sẽ có màn che, không gian riêng tư cá nhân.</li>
-  <li>An ninh, trật tự tuyệt đối.</li>
-  <li>Giờ giấc tự do thoải mái.</li>
-  <li>Được vệ sinh định kỳ thường xuyên.</li>
-</ul>
-          <div class="sv2-meta">
-            <span class="sv2-price">Từ 1.5–2.2 triệu/người/tháng</span>
-            <button type="button" class="btn primary sv2-apply" data-title="Đăng ký KTX 2 giường tầng">Đăng ký</button>
-          </div>
+            <li>Gần ĐH Tài nguyên &amp; Môi trường TP.HCM</li>
+            <li>ĐH Mở TP.HCM</li>
+            <li>ĐH Sư phạm Thể dục Thể thao TP.HCM</li>
+          </ul>
+          <p class="sv2-note">Địa chỉ: <em>Lô Số A18-22, Số 10, Đường Số 13, KDC Nhơn Đức, Xã Nhà Bè, Huyện Nhà Bè, Thành phố Hồ Chí Minh, Việt Nam.</em></p>
         </div>
-      </article>
+      </section>
 
-      <div class="sv2-grid">
-        <article class="sv2-card">
-          <div class="sv2-cover" style="--img:url('ktx-3bunks.jpg')"></div>
-          <div class="sv2-body">
-            <h3 class="sv2-h3">Phòng 3 giường tầng (6 người)</h3>
-<ul class="sv2-list">
-  <li>Được trang bị sự dụng miễn phí wifi tốc độ cao, bếp nấu ăn, máy lạnh, máy giặt, tủ đồ.</li>
-  <li>Bao trọn gói tiền điện, nước.</li>
-  <li>Giường tầng chắc chắn, niệm cao su non chất lượng cao</li>
-  <li>Các giường sẽ có màn che, không gian riêng tư cá nhân.</li>
-  <li>An ninh, trật tự tuyệt đối.</li>
-  <li>Giờ giấc tự do thoải mái.</li>
-  <li>Được vệ sinh định kỳ thường xuyên.</li>
-</ul>
-            <div class="sv2-meta">
-              <span class="sv2-price">Liên hệ để biết giá</span>
-              <button type="button" class="btn primary sv2-apply" data-title="Đăng ký KTX 3 giường tầng">Đăng ký</button>
-            </div>
+      <section class="sv2-boxGrid" id="policy" data-reveal>
+        <article class="sv2-box"><h4 class="sv2-boxTitle">Chính sách chi phí</h4><ul class="sv2-list"><li>Điện, nước: không bao</li><li>Giữ xe: 100.000/chiếc/tháng</li><li>Đặt cọc: 2 tháng</li></ul></article>
+        <article class="sv2-box"><h4 class="sv2-boxTitle">Dọn dẹp & giờ giấc</h4><ul class="sv2-list"><li>Vệ sinh định kỳ</li><li>Giờ giấc tự do</li><li>An ninh trật tự tuyệt đối</li></ul></article>
+        <article class="sv2-box"><h4 class="sv2-boxTitle">Loại phòng</h4><ul class="sv2-list"><li>4 | 6 | 6 mới | 8 | 10 người</li></ul></article>
+      </section>
+      <section class="feat3" id="features" data-reveal>
+        <article class="feat"><svg width="28" height="28" viewBox="0 0 24 24"><path fill="currentColor" d="M2 8h20v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8Zm4-4h12l2 4H4l2-4Z"/></svg><b>Tiện nghi đủ</b><div>Wifi mạnh · bếp · máy lạnh · máy giặt · tủ đồ</div></article>
+        <article class="feat"><svg width="28" height="28" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a7 7 0 0 1 7 7v3l1.3 2.2a1 1 0 0 1-.87 1.5H4.57a1 1 0 0 1-.87-1.5L5 12V9a7 7 0 0 1 7-7Zm0 20a3 3 0 0 1-3-3h6a3 3 0 0 1-3 3Z"/></svg><b>Riêng tư &amp; an ninh</b><div>Màn che từng giường · trật tự tuyệt đối</div></article>
+        <article class="feat"><svg width="28" height="28" viewBox="0 0 24 24"><path fill="currentColor" d="M3 4h18v12H3z"/><path fill="currentColor" d="M5 18h14v2H5z"/></svg><b>Vị trí lý tưởng</b><div>Gần 3 trường đại học</div></article>
+      </section>
+</section>
+      <section class="sv2-contact" id="contact-zalo-ktx" data-reveal>
+        <div class="sv2-contactHead">
+          <h4 class="sv2-secTitle"><span>Liên hệ qua Zalo</span></h4>
+          <p class="sv2-note">Điền thông tin, hệ thống sẽ mở Zalo của công ty để bạn gửi tin nhắn.</p>
+        </div>
+        <form class="sv2-contactForm">
+          <div class="grid-2">
+            <input class="input" name="name" placeholder="Họ và tên *" required>
+            <input class="input" name="phone" placeholder="Số điện thoại *" required>
           </div>
-        </article>
-
-        <article class="sv2-card">
-          <div class="sv2-cover" style="--img:url('ktx-4bunks.jpg')"></div>
-          <div class="sv2-body">
-            <h3 class="sv2-h3">Phòng 4 giường tầng (8 người)</h3>
-<ul class="sv2-list">
-  <li>Được trang bị sự dụng miễn phí wifi tốc độ cao, bếp nấu ăn, máy lạnh, máy giặt, tủ đồ.</li>
-  <li>Bao trọn gói tiền điện, nước.</li>
-  <li>Giường tầng chắc chắn, niệm cao su non chất lượng cao</li>
-  <li>Các giường sẽ có màn che, không gian riêng tư cá nhân.</li>
-  <li>An ninh, trật tự tuyệt đối.</li>
-  <li>Giờ giấc tự do thoải mái.</li>
-  <li>Được vệ sinh định kỳ thường xuyên.</li>
-</ul>
-            <div class="sv2-meta">
-              <span class="sv2-price">Liên hệ để biết giá</span>
-              <button type="button" class="btn primary sv2-apply" data-title="Đăng ký KTX 4 giường tầng">Đăng ký</button>
-            </div>
+          <div class="grid-2">
+            <input class="input" name="email" type="email" placeholder="Email">
+            <select class="input" name="room">
+              <option value="">Chọn loại phòng</option>
+              <option>Phòng 4 người</option>
+              <option>Phòng 6 người</option>
+              <option>Phòng 6 người · mới</option>
+              <option>Phòng 8 người</option>
+              <option>Phòng 10 người</option>
+            </select>
           </div>
-        </article>
-      </div>
+          <textarea class="input" name="note" rows="3" placeholder="Ghi chú thêm"></textarea>
+          <div class="form-actions"><button type="submit" class="btn primary">Gửi và mở Zalo</button></div>
+        </form>
+      </section>
+    
 
-      <div class="sv2-faq">
-        <details class="sv2-qa"><summary>Vị trí & khoảng cách</summary><p>Gần các trường đại học thuộc cơ sở Nhà Bè, chỉ đi bộ 2 phút là đến nơi. Các trường như:  Trường Đại học Tài nguyên và Môi trường Tp. Hồ Chí Minh, Trường Đại học Mở Tp. Hồ Chí Minh, Trường Đại học Sư phạm Thể dục Thể thao TP. Hồ Chí Minh.</p></details>
-        <details class="sv2-qa"><summary>Quy định chung?</summary><p>Giữ vệ sinh, hạn chế ồn sau 22h, tôn trọng không gian chung.</p></details>
-        <details class="sv2-qa"><summary>Gửi xe & khách thăm?</summary><p>Gửi xe theo quy định tòa nhà; khách thăm đăng ký với bảo vệ.</p></details>
-      </div>
-    </section>
-  </div>
+      <!-- Features (3 cột) -->
+      <section class="feat3" data-reveal>
+        <article class="feat">
+          <svg width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M2 8h20v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8Zm4-4h12l2 4H4l2-4Z"/></svg>
+          <b>Tiện nghi đủ</b><div>Wifi mạnh, bếp, máy lạnh, máy giặt, tủ đồ</div>
+        </article>
+        <article class="feat">
+          <svg width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a7 7 0 0 1 7 7v3l1.3 2.2a1 1 0 0 1-.87 1.5H4.57a1 1 0 0 1-.87-1.5L5 12V9a7 7 0 0 1 7-7Zm0 20a3 3 0 0 1-3-3h6a3 3 0 0 1-3 3Z"/></svg>
+          <b>Riêng tư & an ninh</b><div>Màn che từng giường · Trật tự tuyệt đối</div>
+        </article>
+        <article class="feat">
+          <svg width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M3 4h18v12H3z"/><path fill="currentColor" d="M5 18h14v2H5z"/></svg>
+          <b>Vị trí lý tưởng</b><div>Gần ĐH TN&amp;MT, ĐH Mở, ĐH SP TDTT</div>
+        </article>
+      </section>
+
+      <!-- Products / Room cards (3 thẻ giống APT) -->
+      <section class="products" data-reveal>
+        <div class="grid">
+          <article class="sv2-card">
+            <div class="sv2-cover" style="--img:url('ktx-4p.jpg')"></div>
+            <div class="sv2-body">
+              <h3 class="sv2-h3">Phòng 4 người</h3>
+              <ul class="sv2-list"><li>Wifi, bếp, máy lạnh</li><li>Máy giặt, tủ đồ</li><li>Nệm cao su non</li></ul>
+              <div class="sv2-meta"><span class="sv2-price">2.400.000</span><button class="btn primary sv2-apply">Đăng ký</button></div>
+            </div>
+          </article>
+          <article class="sv2-card">
+            <div class="sv2-cover" style="--img:url('ktx-6p.jpg')"></div>
+            <div class="sv2-body">
+              <h3 class="sv2-h3">Phòng 6 người</h3>
+              <ul class="sv2-list"><li>Wifi, bếp, máy lạnh</li><li>Máy giặt, tủ đồ</li><li>Màn che riêng tư</li></ul>
+              <div class="sv2-meta"><span class="sv2-price">2.300.000</span><button class="btn primary sv2-apply">Đăng ký</button></div>
+            </div>
+          </article>
+          <article class="sv2-card">
+            <div class="sv2-cover" style="--img:url('ktx-8p.jpg')"></div>
+            <div class="sv2-body">
+              <h3 class="sv2-h3">Phòng 8 người</h3>
+              <ul class="sv2-list"><li>Wifi, bếp, máy lạnh</li><li>Máy giặt, tủ đồ</li><li>Màn che riêng tư</li></ul>
+              <div class="sv2-meta"><span class="sv2-price">2.100.000</span><button class="btn primary sv2-apply">Đăng ký</button></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Zigzag info (2 hàng) -->
+      <section class="zig" data-reveal>
+        <div class="ph" style="--img:url('ktx-6p-new.jpg')"></div>
+        <div class="txt">
+          <h4>Loại phòng</h4>
+          <ul class="sv2-list"><li>4 / 6 / 8 / 10 người</li><li>Giờ giấc tự do · Vệ sinh định kỳ</li><li>Loại mới: 6 người &amp; 10 người</li></ul>
+          <button class="btn primary sv2-apply">Xem phòng</button>
+        </div>
+      </section>
+      <section class="zig" data-reveal>
+        <div class="txt">
+          <h4>Chi phí & chính sách</h4>
+          <ul class="sv2-list"><li>Điện nước: không bao</li><li>Giữ xe: 100.000/chiếc/tháng</li><li>Đặt cọc: 2 tháng</li></ul>
+          <button class="btn ghost sv2-apply">Đặt lịch</button>
+        </div>
+        <div class="ph" style="--img:url('hero-stay.jpg')"></div>
+      </section>
+
+      <!-- Bảng giá -->
+      <section class="sv2-priceTable" data-reveal>
+        <table class="sv2-table">
+          <thead><tr><th>Loại phòng</th><th>Giá / người / tháng</th><th>Điện nước</th><th>Giữ xe</th><th>Đặt cọc</th></tr></thead>
+          <tbody>
+            <tr><td>4 người</td><td class="price">2.400.000</td><td>Không bao</td><td>100.000/chiếc/tháng</td><td>2 tháng</td></tr>
+            <tr><td>6 người</td><td class="price">2.300.000</td><td>Không bao</td><td>100.000/chiếc/tháng</td><td>2 tháng</td></tr>
+            <tr><td>6 người · mới</td><td class="price">1.700.000</td><td>Không bao</td><td>100.000/chiếc/tháng</td><td>2 tháng</td></tr>
+            <tr><td>8 người</td><td class="price">2.100.000</td><td>Không bao</td><td>100.000/chiếc/tháng</td><td>2 tháng</td></tr>
+            <tr><td>10 người</td><td class="price">1.600.000</td><td>Không bao</td><td>100.000/chiếc/tháng</td><td>2 tháng</td></tr>
+          </tbody>
+        </table>
+      </section>
+    
+  <div class="lightbox" id="stay-lightbox"><img alt="Ảnh phòng"></div>
+<section id="sv2-apt" class="sv2-panel" role="tabpanel" hidden>
+      <!-- Intro half -->
+      <section class="intro-half" data-reveal>
+        <span class="curve" aria-hidden="true"></span>
+        <div class="intro-text">
+          <h3>Căn hộ dịch vụ — tiện nghi, riêng tư</h3>
+          <p>Nội thất đầy đủ, vị trí kết nối. Bạn có thể cập nhật chi tiết sau.</p>
+          <button class="btn primary sv2-apply">Đặt lịch xem căn</button>
+        </div>
+        <div class="intro-media" style="--img:url('apt-studio.jpg')"></div>
+
+  <div id="stay-sticky"><button class="bar sv2-apply">Đăng ký xem phòng</button></div>
 </section>
 
-    <!-- APPLY -->
-    <section id="view-apply" class="view">
+      <!-- Features -->
+      <section class="feat3" data-reveal>
+        <article class="feat"><svg width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M3 5h18v14H3z"/></svg><b>Full nội thất</b><div>Vào ở ngay</div></article>
+        <article class="feat"><svg width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a7 7 0 0 1 7 7v3l1.3 2.2a1 1 0 0 1-.87 1.5H4.57a1 1 0 0 1-.87-1.5L5 12V9a7 7 0 0 1 7-7Z"/></svg><b>An ninh 24/7</b><div>Camera, thang máy</div></article>
+        <article class="feat"><svg width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M5 13h14v6H5z"/><path fill="currentColor" d="M7 5h10v6H7z"/></svg><b>Vị trí</b><div>Gần chợ/TTTM</div></article>
+      </section>
+
+      <!-- Products -->
+      <section class="products" data-reveal>
+        <div class="grid">
+          <article class="sv2-card"><div class="sv2-cover" style="--img:url('apt-studio.jpg')"></div><div class="sv2-body"><h3 class="sv2-h3">Studio</h3><ul class="sv2-list"><li>Full nội thất</li><li>WC riêng</li></ul><div class="sv2-meta"><span class="sv2-price">Từ 7–10 triệu</span><button class="btn primary sv2-apply">Đăng ký</button></div></div></article>
+          <article class="sv2-card"><div class="sv2-cover" style="--img:url('apt-1pn.jpg')"></div><div class="sv2-body"><h3 class="sv2-h3">1PN / 1WC</h3><ul class="sv2-list"><li>Bếp riêng</li><li>Thang máy</li></ul><div class="sv2-meta"><span class="sv2-price">Từ 9–12 triệu</span><button class="btn primary sv2-apply">Đăng ký</button></div></div></article>
+          <article class="sv2-card"><div class="sv2-cover" style="--img:url('apt-2pn.jpg')"></div><div class="sv2-body"><h3 class="sv2-h3">2PN / 2WC</h3><ul class="sv2-list"><li>Phù hợp gia đình</li><li>Bãi xe</li></ul><div class="sv2-meta"><span class="sv2-price">Từ 11–15 triệu</span><button class="btn primary sv2-apply">Đăng ký</button></div></div></article>
+        </div>
+      </section>
+      <section class="sv2-contact" id="contact-apt" data-reveal>
+        <div class="contact-card">
+          <h3 class="sv2-h3">Liên hệ qua Zalo</h3>
+          <p>Nhắn Zalo để được tư vấn và đặt chỗ nhanh.</p>
+          <div class="sv2-meta">
+            <a class="btn primary" href="https://zalo.me/2857015321649379174" target="_blank" rel="nofollow noopener">Liên hệ qua Zalo</a>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- Zigzag -->
+      <section class="zig" data-reveal>
+        <div class="ph" style="--img:url('hero-stay.jpg')"></div>
+        <div class="txt"><h4>Chi phí</h4><ul class="sv2-list"><li>Điện nước theo đồng hồ</li><li>Gửi xe theo tòa nhà</li><li>Đặt cọc 1–2 tháng</li></ul><button class="btn primary sv2-apply">Xem chi tiết</button></div>
+      </section>
+    </section></section>
+</section><section id="view-apply" class="view">
       <div class="apply-wrap">
         <div class="apply-head">
           <h2>Nộp đơn ứng tuyển</h2>
@@ -920,7 +1065,7 @@
       <div class="fcol">
         <h4>Mạng xã hội</h4>
         <div class="social-2">
-          <a class="fb fb-home" href="https://www.facebook.com/profile.php?id=61579142315521" target="_blank" rel="me noopener" aria-label="VietForture Home"><span class="label">Home</span></a>
+          <a class="fb fb-home" href="https://www.facebook.com/profile.php?id=61579142315521" target="_blank" rel="me noopener" aria-label="VietForture Home"><span class="label">Home</span></a><a class="social-link zalo" href="https://zalo.me/2857015321649379174" target="_blank" rel="noopener" aria-label="Zalo"><img src="zalo-icon.png" alt="Zalo" loading="lazy"></a>
           <a class="fb fb-credit" href="https://www.facebook.com/profile.php?id=61579311806964" target="_blank" rel="me noopener" aria-label="VietForture Credit"><span class="label">Credit</span></a>
         </div>
       </div>
