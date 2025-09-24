@@ -917,3 +917,1072 @@
     }
   });
 })();
+/* === UI Enhancements: progress, parallax, ripple, tilt === */
+(function enhanceUI(){
+  // progress bar
+  let bar = document.createElement('div'); bar.className='scroll-progress'; document.body.appendChild(bar);
+  function setProg(){
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const p = max ? (h.scrollTop / max) * 100 : 0;
+    bar.style.width = p+'%';
+  }
+  document.addEventListener('scroll', setProg, {passive:true}); setProg();
+
+  // parallax hero word
+  const heroWord = document.querySelector('.vf-hero .word');
+  if(heroWord){ heroWord.classList.add('parallax'); }
+  document.addEventListener('scroll', () => {
+    if(!heroWord) return;
+    const y = Math.min(40, window.scrollY * 0.06);
+    heroWord.style.transform = `translateY(${y}px)`;
+  }, {passive:true});
+
+  // ripple coordinates
+  document.addEventListener('pointerdown', e=>{
+    const t = e.target.closest?.('.btn,.tab,.menu-link'); if(!t) return;
+    const r = t.getBoundingClientRect();
+    t.style.setProperty('--rx', (e.clientX - r.left)+'px');
+    t.style.setProperty('--ry', (e.clientY - r.top)+'px');
+  });
+
+  // auto add tilt to service tiles to tránh sửa HTML
+  document.querySelectorAll('.svc-tiles .svc-tile').forEach(el=>{
+    el.classList.add('tilt');
+    const ico = el.querySelector('.svc-tile__ico'); if(ico) ico.classList.add('tilt-pop');
+  });
+
+  // tilt bind
+  const TILT_MAX = 10;
+  function bindTilt(el){
+    let r = el.getBoundingClientRect();
+    function onMove(e){
+      const x = (e.clientX - r.left) / r.width;
+      const y = (e.clientY - r.top) / r.height;
+      const rx = (0.5 - y) * TILT_MAX;
+      const ry = (x - 0.5) * TILT_MAX;
+      el.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg)`;
+    }
+    function reset(){ el.style.transform = ''; }
+    el.addEventListener('pointerenter', ()=>{ r = el.getBoundingClientRect(); });
+    el.addEventListener('pointermove', onMove);
+    el.addEventListener('pointerleave', reset);
+  }
+  document.querySelectorAll('.tilt').forEach(bindTilt);
+})();
+
+/* === Floating Chatbot: rule-based + deep-link vào views === */
+(function vfChatbot(){
+  const el = {
+    root: document.getElementById('vfChat'),
+    btn:  document.getElementById('vfChatBtn'),
+    panel:document.getElementById('vfChatPanel'),
+    close:document.getElementById('vfChatClose'),
+    body: document.getElementById('vfChatBody'),
+    form: document.getElementById('vfChatForm'),
+    input:document.getElementById('vfChatInput')
+  };
+  if(!el.root) return;
+
+  function open(){ el.panel.classList.add('is-open'); el.panel.setAttribute('aria-hidden','false'); el.btn.setAttribute('aria-expanded','true'); el.body.focus(); }
+  function close(){ el.panel.classList.remove('is-open'); el.panel.setAttribute('aria-hidden','true'); el.btn.setAttribute('aria-expanded','false'); }
+  el.btn.addEventListener('click', ()=>{ const openState = !el.panel.classList.contains('is-open'); openState ? open() : close(); });
+  el.close.addEventListener('click', close);
+
+  function addMsg(txt, who='bot', options={}){
+    const wrap = document.createElement('div'); wrap.className = 'msg '+(who==='you'?'you':'bot');
+    const b = document.createElement('div'); b.className='bubble'; b.textContent = txt; wrap.appendChild(b);
+    if(options.suggest && options.suggest.length){
+      const sug = document.createElement('div'); sug.className='suggest';
+      options.suggest.forEach(s=>{
+        const btn = document.createElement('button'); btn.type='button'; btn.textContent=s.label;
+        btn.addEventListener('click', ()=>handleInput(s.send));
+        sug.appendChild(btn);
+      });
+      wrap.appendChild(sug);
+    }
+    el.body.appendChild(wrap); el.body.scrollTop = el.body.scrollHeight;
+  }
+
+  // intents đơn giản, điều hướng qua router show()
+  const intents = [
+    {test:/\b(tín.?dụng|vay|credit)\b/i, reply:()=>({
+      text:'Bạn quan tâm Tín dụng. Chọn nhóm để xem chi tiết.',
+      suggest:[
+        {label:'Cá nhân', send:'tín dụng cá nhân'},
+        {label:'Doanh nghiệp', send:'tín dụng doanh nghiệp'},
+        {label:'Hồ sơ cần gì?', send:'hồ sơ vay cần gì'}
+      ],
+      go:()=>window.show?.('tindung')
+    })},
+    {test:/\b(cá nhân)\b/i, reply:()=>({text:'Mời xem các gói vay cá nhân.', go:()=>window.show?.('tindung')})},
+    {test:/\b(doanh nghiệp|SME)\b/i, reply:()=>({text:'Giải pháp cho doanh nghiệp đã mở.', go:()=>window.show?.('tindung')})},
+    {test:/\b(lưu trú|căn hộ|ký túc|stay|home)\b/i, reply:()=>({
+      text:'Bạn quan tâm lưu trú. Mời chọn:',
+      suggest:[
+        {label:'Căn hộ dịch vụ', send:'căn hộ'},
+        {label:'Ký túc xá', send:'ký túc xá'}
+      ],
+      go:()=>window.show?.('luutru')
+    })},
+    {test:/\b(căn hộ)\b/i, reply:()=>({text:'Đã chuyển tới Căn hộ dịch vụ.', go:()=>{window.location.hash='#stay'; window.show?.('luutru');}})},
+    {test:/\b(ký túc|ktx)\b/i, reply:()=>({text:'Đã mở mục Ký túc xá.', go:()=>{window.location.hash='#stay'; window.show?.('luutru');}})},
+    {test:/\b(tuyển dụng|việc làm|job)\b/i, reply:()=>({text:'Đã mở Tuyển dụng.', go:()=>window.show?.('tuyendung')})},
+    {test:/\b(tin tức|thông báo|news|lãi suất)\b/i, reply:()=>({text:'Đã mở Tin tức/Thông báo.', go:()=>window.show?.('tintuc')})},
+    {test:/\b(hồ sơ|giấy tờ)\b/i, reply:()=>({text:'Hồ sơ cơ bản: CCCD, sao kê thu nhập. Có thể cần TSĐB/HĐLĐ/BHNT tùy gói.'})},
+    {test:/\b(liên hệ|tư vấn|đăng ký)\b/i, reply:()=>({text:'Bạn muốn đăng ký tư vấn. Mời điền form ngắn.', go:()=>window.show?.('apply')})}
+  ];
+
+  function handleInput(raw){
+    const q = String(raw||'').trim();
+    if(!q) return;
+    addMsg(q, 'you');
+    const intent = intents.find(it => it.test.test(q));
+    if(intent){
+      const out = intent.reply();
+      addMsg(out.text, 'bot', {suggest:out.suggest});
+      out.go && out.go();
+    }else{
+      addMsg('Bạn muốn xem Tín dụng, Lưu trú, Tuyển dụng hay Đăng ký tư vấn?', 'bot', {
+        suggest:[
+          {label:'Tín dụng', send:'tín dụng'},
+          {label:'Lưu trú', send:'lưu trú'},
+          {label:'Tuyển dụng', send:'tuyển dụng'},
+          {label:'Đăng ký', send:'đăng ký'}
+        ]
+      });
+    }
+  }
+
+  el.form.addEventListener('submit', e=>{ e.preventDefault(); handleInput(el.input.value); el.input.value=''; el.input.focus(); });
+
+  // chào mừng
+  addMsg('Xin chào! Tôi là trợ lý VietForture. Tôi có thể giúp gì cho bạn?', 'bot', {
+    suggest:[
+      {label:'Tín dụng', send:'tín dụng'},
+      {label:'Lưu trú', send:'lưu trú'},
+      {label:'Tuyển dụng', send:'tuyển dụng'}
+    ]
+  });
+})();
+/* === VIETBOT: intro nhảy và dock thành nút chat === */
+(function vietbotIntro(){
+  const intro = document.getElementById('vietbotIntro');
+  const svg = document.getElementById('vietbotSVG');
+  const btn = document.getElementById('vfChatBtn');
+  if(!intro || !svg || !btn) return;
+
+  // hiển thị intro 1 lần mỗi phiên
+  const KEY = 'vf_vietbot_seen';
+  if(sessionStorage.getItem(KEY)) { attachMiniIcon(); return; }
+
+  intro.classList.add('is-on');
+  svg.classList.add('vb-in');
+  const shadow = intro.querySelector('.vietbot-shadow');
+
+  // chuỗi animation
+  setTimeout(()=>{ svg.classList.remove('vb-in'); svg.classList.add('vb-hop'); shadow.classList.add('vb-shadow-hop'); }, 520);
+  setTimeout(()=>{ svg.classList.remove('vb-hop'); shadow.classList.remove('vb-shadow-hop'); svg.classList.add('vb-dock'); }, 2400);
+  setTimeout(()=>{ // ẩn intro, gắn icon nhỏ vào nút chat
+    intro.classList.remove('is-on');
+    attachMiniIcon();
+    sessionStorage.setItem(KEY, '1');
+  }, 3200);
+
+  // tạo icon nhỏ cho nút chat
+  function attachMiniIcon(){
+    btn.classList.add('has-vietbot');
+    btn.innerHTML = miniSVG();
+  }
+
+  function miniSVG(){
+    return `
+    <svg class="vb-mini" viewBox="0 0 44 48" aria-hidden="true">
+      <defs>
+        <linearGradient id="mRed" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#ff6b79"/><stop offset="1" stop-color="#c1121f"/>
+        </linearGradient>
+      </defs>
+      <rect x="16" y="2" width="4" height="6" rx="2" fill="url(#mRed)"/>
+      <circle cx="18" cy="2" r="4" fill="url(#mRed)"/>
+      <rect x="6" y="6" width="32" height="22" rx="10" fill="#fff" stroke="#c1121f" stroke-width="3"/>
+      <rect x="11" y="10" width="22" height="14" rx="7" fill="#0b1220"/>
+      <circle cx="18" cy="17" r="2" fill="#36d399"/><circle cx="26" cy="17" r="2" fill="#36d399"/>
+      <path d="M15 21 Q22 24 29 21" stroke="#36d399" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <rect x="10" y="28" width="24" height="14" rx="8" fill="#fff" stroke="#c1121f" stroke-width="3"/>
+      <circle cx="22" cy="35" r="4" fill="url(#mRed)"/>
+    </svg>`;
+  }
+})();
+/* === VIETBOT: chào theo giờ Việt Nam + làm header dễ thương === */
+(function vietbotGreeting(){
+  const head = document.querySelector('#vfChatPanel .vfchat-head');
+  const close = document.getElementById('vfChatClose');
+  if(!head || !close) return;
+
+  // avatar SVG nhỏ, đỏ trắng
+  const avatar = `
+    <svg viewBox="0 0 44 48" aria-hidden="true">
+      <defs>
+        <linearGradient id="vbMiniRed" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#ff8a96"/><stop offset="1" stop-color="#c1121f"/>
+        </linearGradient>
+      </defs>
+      <rect x="16" y="2" width="4" height="6" rx="2" fill="url(#vbMiniRed)"/>
+      <circle cx="18" cy="2" r="4" fill="url(#vbMiniRed)"/>
+      <rect x="6" y="6" width="32" height="22" rx="10" fill="#fff" stroke="#c1121f" stroke-width="3"/>
+      <rect x="11" y="10" width="22" height="14" rx="7" fill="#0b1220"/>
+      <circle cx="18" cy="17" r="2" fill="#36d399"/><circle cx="26" cy="17" r="2" fill="#36d399"/>
+      <path d="M15 21 Q22 24 29 21" stroke="#36d399" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <rect x="10" y="28" width="24" height="14" rx="8" fill="#fff" stroke="#c1121f" stroke-width="3"/>
+      <circle cx="22" cy="35" r="4" fill="url(#vbMiniRed)"/>
+    </svg>`;
+
+  // dựng lại phần trái của header với avatar + tên
+  const left = document.createElement('div');
+  left.className = 'vb-badge';
+  left.innerHTML = `${avatar}<strong>VIETBOT</strong>`;
+
+  // chèn vào đầu header, vẫn giữ nút đóng
+  head.insertBefore(left, head.firstChild);
+
+  // chào theo giờ VN
+  function greetVN(){
+    const now = new Date();
+    const hourVN = Number(new Intl.DateTimeFormat('en-US', {
+      hour: 'numeric', hour12: false, timeZone: 'Asia/Ho_Chi_Minh'
+    }).format(now));
+
+    const buoi = hourVN < 12 ? 'buổi sáng' : (hourVN < 18 ? 'buổi chiều' : 'buổi tối');
+    return `Chào ${buoi}! Tôi là VIETBOT.`;
+  }
+
+  // nếu chatbot đã có đoạn chào mặc định trước đó, bỏ qua; còn không thì chào mới
+  const body = document.getElementById('vfChatBody');
+  if(body && !body.querySelector('.msg')) {
+    // thêm gợi ý như cũ
+    const suggest = [
+      {label:'Tín dụng', send:'tín dụng'},
+      {label:'Lưu trú', send:'lưu trú'},
+      {label:'Tuyển dụng', send:'tuyển dụng'}
+    ];
+    // tận dụng addMsg và handleInput đã có
+    const addMsg = (txt, who='bot', options={})=>{
+      const wrap = document.createElement('div'); wrap.className = 'msg '+(who==='you'?'you':'bot');
+      const b = document.createElement('div'); b.className='bubble'; b.textContent = txt; wrap.appendChild(b);
+      if(options.suggest && options.suggest.length){
+        const sug = document.createElement('div'); sug.className='suggest';
+        options.suggest.forEach(s=>{
+          const btn = document.createElement('button'); btn.type='button'; btn.textContent=s.label;
+          btn.addEventListener('click', ()=>document.getElementById('vfChatInput').value=s.send);
+          sug.appendChild(btn);
+        });
+        wrap.appendChild(sug);
+      }
+      body.appendChild(wrap); body.scrollTop = body.scrollHeight;
+    };
+    addMsg(greetVN(), 'bot', {suggest});
+  }
+})();
+/* === VIETBOT: chào VN, vẫy tay, dock mượt tới đúng nút chat === */
+(function vietbotIntro(){
+  const intro = document.getElementById('vietbotIntro');
+  const svg   = document.getElementById('vietbotSVG');
+  const sayEl = document.getElementById('vietbotGreet');
+  const btn   = document.getElementById('vfChatBtn');
+  const shadow= document.querySelector('.vietbot-shadow');
+  if(!intro || !svg || !sayEl || !btn || !shadow) return;
+
+  // chạy lại intro phiên này
+  const KEY = 'vf_vietbot_seen_v4';
+  if(sessionStorage.getItem(KEY)) { attachMiniIcon(); return; }
+
+  // 1) Lời chào theo giờ Việt Nam
+  function vnGreeting(){
+    const h = Number(new Intl.DateTimeFormat('en-US',{hour:'numeric',hour12:false,timeZone:'Asia/Ho_Chi_Minh'}).format(new Date()));
+    const buoi = h < 12 ? 'SÁNG' : (h < 18 ? 'CHIỀU' : 'TỐI');
+    return `VIETFORTURE CHÀO BUỔI ${buoi}`;
+    // nếu muốn: + ` — Tôi là VIETBOT`
+  }
+  sayEl.textContent = vnGreeting();
+
+  // 2) Hiện intro, nhảy, vẫy
+  intro.classList.add('is-on');           // hiện toast
+  svg.classList.add('vb-in');             // float in
+  setTimeout(()=>{                         // hop + wave
+    svg.classList.remove('vb-in');
+    svg.classList.add('vb-hop','vb-wave');
+    shadow.classList.add('vb-shadow-hop');
+  }, 480);
+
+  // 3) Dock mượt: dùng Web Animations API tới đúng tọa độ nút chat
+  setTimeout(()=>{
+    svg.classList.remove('vb-hop','vb-wave');
+    shadow.classList.remove('vb-shadow-hop');
+
+    // vị trí hiện tại của robot
+    const botBox = svg.getBoundingClientRect();
+    // tâm mục tiêu: giữa nút chat
+    const btnBox = btn.getBoundingClientRect();
+    const targetX = btnBox.left + btnBox.width/2;
+    const targetY = btnBox.top  + btnBox.height/2;
+
+    // tâm hiện tại của robot
+    const botX = botBox.left + botBox.width/2;
+    const botY = botBox.top  + botBox.height/2;
+
+    // delta
+    const dx = targetX - botX;
+    const dy = targetY - botY;
+
+    // animate translate + scale mượt
+    const anim = svg.animate([
+      { transform: `translate(0px,0px) scale(1)`, offset: 0 },
+      { transform: `translate(${dx*0.6}px,${dy*0.6}px) scale(0.6)`, offset: 0.6 },
+      { transform: `translate(${dx}px,${dy}px) scale(0.25)`, offset: 1 }
+    ], { duration: 720, easing: 'cubic-bezier(.22,.9,.26,1)', fill: 'forwards' });
+
+    anim.onfinish = () => {
+      intro.classList.remove('is-on');   // ẩn toast
+      attachMiniIcon();                  // gắn icon vào nút chat
+      sessionStorage.setItem(KEY,'1');
+    };
+  }, 2100);
+
+  function attachMiniIcon(){
+    btn.classList.add('has-vietbot');
+    btn.innerHTML = miniSVG();
+  }
+  function miniSVG(){
+    return `
+    <svg class="vb-mini" viewBox="0 0 44 48" aria-hidden="true">
+      <defs><linearGradient id="mRed" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff8a96"/><stop offset="1" stop-color="#c1121f"/></linearGradient></defs>
+      <rect x="16" y="2" width="4" height="6" rx="2" fill="url(#mRed)"/>
+      <circle cx="18" cy="2" r="4" fill="url(#mRed)"/>
+      <rect x="6" y="6" width="32" height="22" rx="10" fill="#fff" stroke="#c1121f" stroke-width="3"/>
+      <rect x="11" y="10" width="22" height="14" rx="7" fill="#0b1220"/>
+      <circle cx="18" cy="17" r="2" fill="#36d399"/><circle cx="26" cy="17" r="2" fill="#36d399"/>
+      <path d="M15 21 Q22 24 29 21" stroke="#36d399" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <rect x="10" y="28" width="24" height="14" rx="8" fill="#fff" stroke="#c1121f" stroke-width="3"/>
+      <circle cx="22" cy="35" r="4" fill="url(#mRed)"/>
+    </svg>`;
+  }
+})();
+//* === VIETBOT: overlay tối, chào VN ở giữa, vẫy tay, dock mượt, ẩn khung chào khi dock === */
+(function vietbotIntro(){
+  const intro = document.getElementById('vietbotIntro');
+  const svg   = document.getElementById('vietbotSVG');
+  const sayBox= document.getElementById('vietbotSay');
+  const greet = document.getElementById('vietbotGreet');
+  const btn   = document.getElementById('vfChatBtn');
+  const shadow= intro?.querySelector('.vietbot-shadow');
+  if(!intro || !svg || !sayBox || !greet || !btn || !shadow) return;
+
+  // chạy lại intro sau chỉnh
+  const KEY='vf_vietbot_seen_v8'; sessionStorage.removeItem(KEY);
+
+  // chào theo giờ VN
+  function vnGreeting(){
+    const h = Number(new Intl.DateTimeFormat('en-US',{hour:'numeric',hour12:false,timeZone:'Asia/Ho_Chi_Minh'}).format(new Date()));
+    const buoi = h < 12 ? 'SÁNG' : (h < 18 ? 'CHIỀU' : 'TỐI');
+    return `VIETFORTURE CHÀO BUỔI ${buoi}`;
+  }
+
+  if(!sessionStorage.getItem(KEY)){
+    greet.textContent = vnGreeting();
+
+    // bật overlay + float-in
+    intro.classList.add('is-on');
+    svg.classList.add('vb-in');
+
+    // hop + vẫy, giữ khung chào
+    setTimeout(()=>{
+      svg.classList.remove('vb-in');
+      svg.classList.add('vb-hop','vb-wave');
+      shadow.classList.add('vb-shadow-hop');
+    }, 500);
+
+    // bắt đầu dock: ẩn khung chào trước khi trượt
+    setTimeout(()=>{ sayBox.classList.add('hide'); }, 1900);
+
+    // dock mượt tới nút chat
+    setTimeout(()=>{
+      svg.classList.remove('vb-hop','vb-wave');
+      shadow.classList.remove('vb-shadow-hop');
+
+      const bot = svg.getBoundingClientRect();
+      const tgt = btn.getBoundingClientRect();
+      const dx = (tgt.left + tgt.width/2) - (bot.left + bot.width/2);
+      const dy = (tgt.top  + tgt.height/2) - (bot.top  + bot.height/2);
+
+      if(svg.animate){
+        svg.animate([
+          { transform: 'translate(0,0) scale(1)' },
+          { transform: `translate(${dx*0.62}px,${dy*0.62}px) scale(.62)`, offset:.62 },
+          { transform: `translate(${dx}px,${dy}px) scale(.25)` }
+        ], { duration: 780, easing: 'cubic-bezier(.22,.9,.26,1)', fill: 'forwards' })
+        .addEventListener('finish', done);
+      }else{
+        svg.style.setProperty('--dx', dx+'px');
+        svg.style.setProperty('--dy', dy+'px');
+        svg.style.animation='vbDockEase .78s cubic-bezier(.22,.9,.26,1) forwards';
+        setTimeout(done, 800);
+      }
+
+      function done(){
+        intro.classList.remove('is-on');      // tắt overlay
+        btn.classList.add('has-vietbot');
+        btn.innerHTML = miniSVG();
+        sessionStorage.setItem(KEY,'1');
+      }
+    }, 2100);
+  }
+
+  function miniSVG(){
+    return `
+    <svg class="vb-mini" viewBox="0 0 44 48" aria-hidden="true">
+      <defs><linearGradient id="mRed" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff93a0"/><stop offset="1" stop-color="#c1121f"/></linearGradient></defs>
+      <rect x="16" y="2" width="4" height="6" rx="2" fill="url(#mRed)"/><circle cx="18" cy="2" r="4" fill="url(#mRed)"/>
+      <rect x="6" y="6" width="32" height="22" rx="10" fill="#fff" stroke="#c1121f" stroke-width="3"/>
+      <rect x="11" y="10" width="22" height="14" rx="7" fill="#0b1220"/>
+      <circle cx="18" cy="17" r="2" fill="#36d399"/><circle cx="26" cy="17" r="2" fill="#36d399"/>
+      <path d="M15 21 Q22 24 29 21" stroke="#36d399" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <rect x="10" y="28" width="24" height="14" rx="8" fill="#fff" stroke="#c1121f" stroke-width="3"/>
+      <circle cx="22" cy="35" r="4" fill="url(#mRed)"/>
+    </svg>`;
+  }
+})();
+/* === VIETBOT v10: overlay tối, chào VN giữa, tay chuẩn, dock mượt === */
+(function vietbotV10(){
+  const intro = document.getElementById('vietbotIntro');
+  const svg   = document.getElementById('vietbotSVG');
+  const sayBox= document.getElementById('vietbotSay');
+  const greet = document.getElementById('vietbotGreet');
+  const btn   = document.getElementById('vfChatBtn');
+  const shadow= intro?.querySelector('.vietbot-shadow');
+  if(!intro || !svg || !sayBox || !greet || !btn || !shadow) return;
+
+  // ép chạy intro lại
+  const KEY='vf_vietbot_seen_v10'; sessionStorage.removeItem(KEY);
+
+  function vnGreeting(){
+    const h = Number(new Intl.DateTimeFormat('en-US',{hour:'numeric',hour12:false,timeZone:'Asia/Ho_Chi_Minh'}).format(new Date()));
+    const buoi = h < 12 ? 'SÁNG' : (h < 18 ? 'CHIỀU' : 'TỐI');
+    return `VIETFORTURE CHÀO BUỔI ${buoi}`;
+  }
+
+  if(!sessionStorage.getItem(KEY)){
+    greet.textContent = vnGreeting();
+    intro.classList.add('is-on');
+    svg.classList.add('vb-in');
+
+    // hop + vẫy
+    setTimeout(()=>{
+      svg.classList.remove('vb-in');
+      svg.classList.add('vb-hop','vb-wave');
+      shadow.classList.add('vb-shadow-hop');
+      centerBubble(); // đảm bảo bubble thật sự giữa
+    }, 480);
+
+    // Ẩn bubble trước khi dock
+    setTimeout(()=>{ sayBox.classList.add('hide'); }, 1850);
+
+    // dock mượt về nút chat
+    setTimeout(()=>{
+      svg.classList.remove('vb-hop','vb-wave');
+      shadow.classList.remove('vb-shadow-hop');
+
+      const bot = svg.getBoundingClientRect();
+      const tgt = btn.getBoundingClientRect();
+      const dx = (tgt.left + tgt.width/2) - (bot.left + bot.width/2);
+      const dy = (tgt.top  + tgt.height/2) - (bot.top  + bot.height/2);
+
+      if(svg.animate){
+        svg.animate([
+          { transform: 'translate(0,0) scale(1)' },
+          { transform: `translate(${dx*0.62}px,${dy*0.62}px) scale(.62)`, offset:.62 },
+          { transform: `translate(${dx}px,${dy}px) scale(.25)` }
+        ], { duration: 780, easing: 'cubic-bezier(.22,.9,.26,1)', fill: 'forwards' })
+        .addEventListener('finish', done);
+      }else{
+        svg.style.setProperty('--dx', dx+'px');
+        svg.style.setProperty('--dy', dy+'px');
+        svg.style.animation='vbDockEase .78s cubic-bezier(.22,.9,.26,1) forwards';
+        setTimeout(done, 800);
+      }
+
+      function done(){
+        intro.classList.remove('is-on');      // tắt overlay
+        btn.classList.add('has-vietbot');
+        btn.innerHTML = miniSVG();
+        sessionStorage.setItem(KEY,'1');
+      }
+    }, 2100);
+  }
+
+  // Bubble luôn giữa và không đè tay
+  function centerBubble(){
+    const stage = document.querySelector('.vietbot-stage');
+    if(!stage) return;
+    const sb = sayBox.getBoundingClientRect();
+    const head = document.getElementById('vbHead').getBoundingClientRect();
+    // nếu bubble đè đầu/tay => đẩy lên thêm 8px
+    const collide = !(sb.right < head.left || sb.left > head.right || sb.bottom < head.top || sb.top > head.bottom);
+    if(collide){ sayBox.style.top = '6%'; } else { sayBox.style.top = '10%'; }
+  }
+
+  function miniSVG(){
+    return `
+    <svg class="vb-mini" viewBox="0 0 44 48" aria-hidden="true">
+      <defs><linearGradient id="mRed" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ff9aa6"/><stop offset="1" stop-color="#c1121f"/></linearGradient></defs>
+      <rect x="16" y="2" width="4" height="6" rx="2" fill="url(#mRed)"/><circle cx="18" cy="2" r="4" fill="url(#mRed)"/>
+      <rect x="6" y="6" width="32" height="22" rx="10" fill="#fff" stroke="#c1121f" stroke-width="3"/>
+      <rect x="11" y="10" width="22" height="14" rx="7" fill="#0b1220"/>
+      <circle cx="18" cy="17" r="2" fill="#36d399"/><circle cx="26" cy="17" r="2" fill="#36d399"/>
+      <path d="M15 21 Q22 24 29 21" stroke="#36d399" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <rect x="10" y="28" width="24" height="14" rx="8" fill="#fff" stroke="#c1121f" stroke-width="3"/>
+      <circle cx="22" cy="35" r="4" fill="url(#mRed)"/>
+    </svg>`;
+  }
+})();
+/* === VIETBOT v11: fix tay lộ + hiệu ứng halo & pháo sáng, vẫn giữ code cũ === */
+(function vietbotPatch(){
+  const intro = document.getElementById('vietbotIntro');
+  const svg   = document.getElementById('vietbotSVG');
+  const hand  = document.getElementById('vbHand');
+  const stage = document.querySelector('.vietbot-stage');
+  if(!intro || !svg || !hand || !stage) return;
+
+  // 1) Ngăn lộ tay khi CSS chưa tải: đặt tay về 0deg ngay lập tức
+  try{ hand.setAttribute('transform','rotate(0 192 164)'); }catch(e){}
+
+  // 2) Khi chuẩn bị chạy intro, bỏ hidden rồi thêm lớp .is-on như code cũ đang làm
+  //    Nếu IIFE trước đã bật intro thì khối này không can thiệp.
+
+  // 3) Đặc sắc: halo + pháo sáng khi .vb-wave được thêm vào #vietbotSVG
+  let halo = document.createElement('div'); halo.className='vb-halo'; stage.appendChild(halo);
+
+  const obs = new MutationObserver(()=>{
+    if(svg.classList.contains('vb-wave')) { emitHalo(); emitSparks(12); }
+  });
+  obs.observe(svg, {attributes:true, attributeFilter:['class']});
+
+  function emitHalo(){
+    halo.classList.remove('on');
+    // force reflow để restart animation
+    // eslint-disable-next-line no-unused-expressions
+    halo.offsetHeight;
+    halo.classList.add('on');
+  }
+
+  function emitSparks(n=12){
+    const boxH = hand.getBoundingClientRect();
+    const boxS = stage.getBoundingClientRect();
+    const baseX = boxH.left + boxH.width/2 - boxS.left;
+    const baseY = boxH.top  + boxH.height/2 - boxS.top;
+
+    for(let i=0;i<n;i++){
+      const d = document.createElement('div');
+      d.className='vb-spark';
+      d.style.left = (baseX + (Math.random()*24-12))+'px';
+      d.style.top  = (baseY + (Math.random()*16-20))+'px';
+      const ang = (Math.random()*Math.PI/2 - Math.PI/6); // toả lên trên
+      const dist = 60 + Math.random()*40;
+      d.style.setProperty('--sx',  Math.cos(ang)*dist+'px');
+      d.style.setProperty('--sy', -Math.abs(Math.sin(ang))*dist - 30 +'px');
+      stage.appendChild(d);
+      setTimeout(()=>d.remove(), 720);
+    }
+  }
+
+  // 4) Đổi version key để bạn thấy hiệu ứng ngay lần tới
+  try{ sessionStorage.removeItem('vf_vietbot_seen_v10'); }catch(e){}
+})();
+/* === VIETBOT Greeting Style A + panel intro === */
+(function greetStyleA(){
+  const MESSENGER_PAGE = '61579142315521'; // dùng page bạn đã cung cấp
+  const panel = document.getElementById('vfChatPanel');
+  const btn   = document.getElementById('vfChatBtn');
+
+  // 1) Bubble trên robot: "VIETFORTURE chào buổi {sáng|chiều|tối}"
+  const gEl = document.getElementById('vietbotGreet');
+  if(gEl){
+    const h = Number(new Intl.DateTimeFormat('vi-VN',{hour:'numeric',hour12:false,timeZone:'Asia/Ho_Chi_Minh'}).format(new Date()));
+    const buoi = h < 12 ? 'sáng' : (h < 18 ? 'chiều' : 'tối');
+    gEl.textContent = `VIETFORTURE chào buổi ${buoi}`;
+  }
+
+  // 2) Panel mở lần đầu: “Tôi là VIETBOT. Chọn: …”
+  const KEY = 'vf_panel_greet_styleA';
+  function addMsgA(text, actions){
+    const body = document.getElementById('vfChatBody'); if(!body) return;
+    const wrap = document.createElement('div'); wrap.className='msg bot';
+    const b = document.createElement('div'); b.className='bubble'; b.textContent = text;
+    wrap.appendChild(b);
+
+    if(actions && actions.length){
+      const sug = document.createElement('div'); sug.className='suggest';
+      actions.forEach(([label, fn])=>{
+        const bt = document.createElement('button'); bt.type='button'; bt.textContent=label;
+        bt.addEventListener('click', fn);
+        sug.appendChild(bt);
+      });
+      wrap.appendChild(sug);
+    }
+    body.appendChild(wrap); body.scrollTop = body.scrollHeight;
+  }
+
+  function routeStay(){ try{ window.show && window.show('luutru'); }catch(e){} if(location.hash!=='#stay') location.hash='#stay'; }
+  function routeCredit(){ try{ window.show && window.show('tindung'); }catch(e){} }
+  function routeJobs(){ try{ window.show && window.show('tuyendung'); }catch(e){} }
+  function openMessenger(){
+    try{ if(window.FB && FB.CustomerChat){ FB.CustomerChat.show(true); FB.CustomerChat.showDialog(); } }catch(e){}
+    window.open(`https://m.me/${MESSENGER_PAGE}?ref=vietbot`,'_blank','noopener');
+  }
+
+  function greetPanelOnce(){
+    if(sessionStorage.getItem(KEY)) return;
+    addMsgA('Tôi là VIETBOT. Chọn:', [
+      ['Tín dụng', routeCredit],
+      ['Lưu trú', routeStay],
+      ['Tuyển dụng', routeJobs],
+      ['Chat trực tiếp', openMessenger]
+    ]);
+    sessionStorage.setItem(KEY,'1');
+  }
+
+  btn && btn.addEventListener('click', ()=>setTimeout(()=>{
+    if(panel && panel.classList.contains('is-open')) greetPanelOnce();
+  },120));
+  panel && new MutationObserver(()=>{ if(panel.classList.contains('is-open')) greetPanelOnce(); })
+    .observe(panel,{attributes:true,attributeFilter:['class']});
+})();
+/* === VIETBOT v12: chào kiểu A, robot nâng cấp, halo+pháo sáng, bounce, chips, typing, handoff, intent === */
+(function vietbotV12(){
+  const intro = document.getElementById('vietbotIntro');
+  const svg   = document.getElementById('vietbotSVG');
+  const sayBox= document.getElementById('vietbotSay');
+  const greet = document.getElementById('vietbotGreet');
+  const skip  = document.getElementById('vbSkip');
+  const btn   = document.getElementById('vfChatBtn');
+  const panel = document.getElementById('vfChatPanel');
+  const stage = document.querySelector('.vietbot-stage');
+  const shadow= intro?.querySelector('.vietbot-shadow');
+  if(!intro || !svg || !sayBox || !greet || !btn || !shadow || !stage) return;
+
+  // cấu hình
+  const VERSION_KEY='vf_vietbot_seen_v12';
+  const RUN_MODE='drop'; // 'drop' hoặc 'run' (mini-run từ mép phải)
+  const MESSENGER_PAGE='61579142315521';
+  const ZALO_OAID='YOUR_ZALO_OAID'; // cập nhật khi có
+
+  // tránh FOUC tay
+  const hand = document.getElementById('vbHand');
+  try{ hand.setAttribute('transform','rotate(0 192 164)'); }catch(e){}
+
+  // 1) Bubble: chào kiểu A
+  function vnGreeting(){
+    const h = Number(new Intl.DateTimeFormat('vi-VN',{hour:'numeric',hour12:false,timeZone:'Asia/Ho_Chi_Minh'}).format(new Date()));
+    const buoi = h < 12 ? 'sáng' : (h < 18 ? 'chiều' : 'tối');
+    return `VIETFORTURE chào buổi ${buoi}`;
+  }
+  greet.textContent = vnGreeting();
+
+  // skip lần sau
+  skip.addEventListener('click', ()=>{ sessionStorage.setItem('vf_vietbot_skip','1'); closeIntro(); });
+
+  // hiển thị intro nếu không skip
+  if(!sessionStorage.getItem('vf_vietbot_skip')){
+    intro.removeAttribute('hidden');
+    runIntro();
+  }
+
+  function runIntro(){
+    sessionStorage.removeItem(VERSION_KEY);
+    intro.classList.add('is-on');
+
+    if(RUN_MODE==='run'){
+      // mini-run từ phải
+      svg.style.transform='translateX(160px) translateY(24px) scale(.9)';
+      svg.animate([
+        { transform:'translateX(160px) translateY(24px) scale(.9)', opacity:0 },
+        { transform:'translateX(40px) translateY(0) scale(1)', opacity:1, offset:.6 },
+        { transform:'translateX(0px) translateY(0) scale(1)' }
+      ], {duration:520, easing:'cubic-bezier(.2,.8,.2,1)', fill:'forwards'});
+    }else{
+      svg.classList.add('vb-in');
+    }
+
+    setTimeout(()=>{
+      svg.classList.remove('vb-in');
+      svg.classList.add('vb-hop','vb-wave','vb-beat'); // hop + wave 2 nhịp + anten beat
+      shadow.classList.add('vb-shadow-hop');
+      emitHalo(); emitSparks(8);
+    }, 520);
+
+    // Ẩn bubble trước khi dock
+    setTimeout(()=>{ sayBox.classList.add('hide'); }, 1050+580);
+
+    // Dock mượt + bounce
+    setTimeout(()=>{
+      svg.classList.remove('vb-hop','vb-wave','vb-beat');
+      shadow.classList.remove('vb-shadow-hop');
+
+      const bot = svg.getBoundingClientRect();
+      const tgt = btn.getBoundingClientRect();
+      const dx = (tgt.left + tgt.width/2) - (bot.left + bot.width/2);
+      const dy = (tgt.top  + tgt.height/2) - (bot.top  + bot.height/2);
+
+      if(svg.animate){
+        svg.animate([
+          { transform: 'translate(0,0) scale(1)' },
+          { transform: `translate(${dx*0.62}px,${dy*0.62}px) scale(.62)`, offset:.62 },
+          { transform: `translate(${dx}px,${dy}px) scale(.25)` }
+        ], { duration: 780, easing: 'cubic-bezier(.22,.9,.26,1)', fill: 'forwards' })
+        .addEventListener('finish', ()=>{
+          // bounce nhẹ sau khi tới nút
+          svg.animate([
+            { transform: `translate(${dx}px,${dy}px) scale(.25)` },
+            { transform: `translate(${dx}px,${dy-6}px) scale(.26)` , offset:.4 },
+            { transform: `translate(${dx}px,${dy}px) scale(.25)` }
+          ], { duration: 260, easing:'ease-out', fill:'forwards' }).addEventListener('finish', done);
+        });
+      }else{
+        svg.style.setProperty('--dx', dx+'px');
+        svg.style.setProperty('--dy', dy+'px');
+        svg.style.animation='vbDockEase .78s cubic-bezier(.22,.9,.26,1) forwards';
+        setTimeout(done, 800);
+      }
+    }, 520+580);
+
+    function done(){ closeIntro(); focusChatBtn(); sessionStorage.setItem(VERSION_KEY,'1'); }
+  }
+
+  function closeIntro(){ intro.classList.remove('is-on'); }
+  function focusChatBtn(){ try{ btn.focus(); }catch(e){} }
+
+  // Halo + sparks
+  function emitHalo(){
+    const halo = stage.querySelector('.vb-halo'); if(!halo) return;
+    halo.classList.remove('on'); void halo.offsetHeight; halo.classList.add('on');
+  }
+  function emitSparks(n){
+    const boxH = hand.getBoundingClientRect(); const boxS = stage.getBoundingClientRect();
+    const baseX = boxH.left + boxH.width/2 - boxS.left; const baseY = boxH.top + boxH.height/2 - boxS.top;
+    for(let i=0;i<n;i++){
+      const d = document.createElement('div'); d.className='vb-spark';
+      d.style.left = (baseX + (Math.random()*24-12))+'px';
+      d.style.top  = (baseY + (Math.random()*16-20))+'px';
+      const ang = (Math.random()*Math.PI/2 - Math.PI/6); const dist = 60 + Math.random()*40;
+      d.style.setProperty('--sx',  Math.cos(ang)*dist+'px'); d.style.setProperty('--sy', -Math.abs(Math.sin(ang))*dist - 30 +'px');
+      stage.appendChild(d); setTimeout(()=>d.remove(), 720);
+    }
+  }
+
+  /* ===== Chatbot enhancements ===== */
+  // Quick chips khi mở panel + typing + handoff + intent
+  const openMessenger=()=>{ try{ if(window.FB&&FB.CustomerChat){FB.CustomerChat.show(true);FB.CustomerChat.showDialog();} }catch(e){} window.open(`https://m.me/${MESSENGER_PAGE}?ref=vietbot`,'_blank','noopener'); };
+  const openZalo=()=>{ if(!ZALO_OAID||ZALO_OAID==='YOUR_ZALO_OAID'){alert('Chưa cấu hình Zalo OAID');return;} window.open(`https://zalo.me/${ZALO_OAID}`,'_blank','noopener'); };
+  const callHotline=()=>{ window.location.href='tel:+84000000000'; }; // cập nhật số thật nếu có
+
+  function addTyping(ms){
+    const body = document.getElementById('vfChatBody'); if(!body) return Promise.resolve();
+    const wrap = document.createElement('div'); wrap.className='msg bot';
+    const t = document.createElement('div'); t.className='typing'; t.innerHTML='<span class="dot"></span><span class="dot"></span><span class="dot"></span>';
+    wrap.appendChild(t); body.appendChild(wrap); body.scrollTop = body.scrollHeight;
+    return new Promise(res=>setTimeout(()=>{ wrap.remove(); res(); }, ms));
+  }
+  function addMsg(text){
+    const body = document.getElementById('vfChatBody'); if(!body) return;
+    const wrap = document.createElement('div'); wrap.className='msg bot';
+    const b = document.createElement('div'); b.className='bubble'; b.textContent=text; wrap.appendChild(b);
+    body.appendChild(wrap); body.scrollTop = body.scrollHeight;
+  }
+  function injectChips(){
+    const body = document.getElementById('vfChatBody'); if(!body) return;
+    if(body.querySelector('.chat-quickchips')) return;
+    const row = document.createElement('div'); row.className='chat-quickchips';
+    const chips = [
+      ['Tín dụng', ()=>route('tindung')],
+      ['Lưu trú', ()=>route('luutru','#stay')],
+      ['Tuyển dụng', ()=>route('tuyendung')],
+      ['Đăng ký', ()=>openMiniForm()],
+      ['Messenger', openMessenger],
+      ['Zalo', openZalo],
+      ['Gọi', callHotline]
+    ];
+    chips.forEach(([label,fn])=>{ const c=document.createElement('button'); c.type='button'; c.className='chip'; c.textContent=label; c.onclick=()=>{fn(); trackIntent(label.toLowerCase());}; row.appendChild(c); });
+    body.appendChild(row); body.scrollTop = body.scrollHeight;
+  }
+  function route(id, hash){
+    try{ if(typeof window.show==='function') window.show(id); }catch(e){}
+    if(hash && location.hash!==hash) location.hash=hash;
+    const sec = document.querySelector(`[data-view="${id}"], #${id}, section#${id}`);
+    sec && sec.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+
+  // greet panel lần đầu theo kiểu A + chips + gợi ý theo thời điểm
+  const PANEL_KEY='vf_panel_greet_styleA_v12';
+  document.getElementById('vfChatBtn')?.addEventListener('click', ()=>setTimeout(async ()=>{
+    if(!panel || !panel.classList.contains('is-open')) return;
+    if(sessionStorage.getItem(PANEL_KEY)) { injectChips(); return; }
+    const h = Number(new Intl.DateTimeFormat('vi-VN',{hour:'numeric',hour12:false,timeZone:'Asia/Ho_Chi_Minh'}).format(new Date()));
+    const hint = h>=18 ? 'Buổi tối thường xem phòng và đặt lịch tư vấn. Bạn cần gì?' : 'Tôi là VIETBOT. Chọn:';
+    await addTyping(600+Math.random()*300);
+    addMsg(hint);
+    injectChips();
+    sessionStorage.setItem(PANEL_KEY,'1');
+  },120));
+
+  // intent tracking + gửi về GAS theo lô
+  const INTENT_KEY='vf_intents';
+  function trackIntent(label){
+    const data = JSON.parse(localStorage.getItem(INTENT_KEY)||'{}');
+    data[label]=(data[label]||0)+1; data.__hits=(data.__hits||0)+1;
+    localStorage.setItem(INTENT_KEY, JSON.stringify(data));
+    if(data.__hits%8===0) sendStats();
+  }
+  function sendStats(){
+    try{
+      if(!window.GAS_URL) return;
+      const data = localStorage.getItem(INTENT_KEY); if(!data) return;
+      fetch(window.GAS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'},body:new URLSearchParams({type:'intent',data})});
+    }catch(e){}
+  }
+
+  // mini form 2 bước trong chat
+  function openMiniForm(){
+    const body = document.getElementById('vfChatBody'); if(!body) return;
+    const box = document.createElement('div'); box.className='msg bot'; const b=document.createElement('div'); b.className='bubble'; box.appendChild(b);
+    b.innerHTML = `
+      <form id="vbMiniForm" class="vb-mini">
+        <div style="display:grid;gap:8px">
+          <input required name="name" placeholder="Tên của bạn" />
+          <input required name="phone" placeholder="Số điện thoại" />
+          <select name="need">
+            <option value="credit">Tư vấn vay</option>
+            <option value="stay">Tìm phòng</option>
+            <option value="jobs">Ứng tuyển</option>
+          </select>
+          <div style="display:flex;gap:8px"><button class="btn" type="submit">Gửi</button><button class="btn ghost" type="button" id="vbMiniCancel">Hủy</button></div>
+        </div>
+      </form>`;
+    body.appendChild(box); body.scrollTop = body.scrollHeight;
+    document.getElementById('vbMiniCancel').onclick=()=>box.remove();
+    document.getElementById('vbMiniForm').onsubmit=(e)=>{
+      e.preventDefault();
+      const fd=new FormData(e.target);
+      try{
+        if(window.GAS_URL){
+          fetch(window.GAS_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'},body:new URLSearchParams({type:'lead',name:fd.get('name'),phone:fd.get('phone'),need:fd.get('need')})});
+        }
+      }catch(err){}
+      trackIntent('lead_'+fd.get('need'));
+      const thanks = document.createElement('div'); thanks.className='msg bot';
+      const bb=document.createElement('div'); bb.className='bubble'; bb.textContent='Đã nhận thông tin. Chúng tôi sẽ liên hệ sớm.'; thanks.appendChild(bb);
+      body.appendChild(thanks); box.remove(); body.scrollTop=body.scrollHeight;
+    };
+  }
+})();
+/* === VIETBOT v13: chào A căn giữa, bỏ nút Bỏ qua, UI chat tốt hơn, swim-dock mượt, liên kết Zalo/Messenger === */
+(function vietbotV13(){
+  const intro = document.getElementById('vietbotIntro');
+  const svg   = document.getElementById('vietbotSVG');
+  const sayBox= document.getElementById('vietbotSay');
+  const greet = document.getElementById('vietbotGreet');
+  const btn   = document.getElementById('vfChatBtn');
+  const panel = document.getElementById('vfChatPanel');
+  const stage = document.querySelector('.vietbot-stage');
+  const shadow= intro?.querySelector('.vietbot-shadow');
+  const hand  = document.getElementById('vbHand');
+  if(!intro || !svg || !sayBox || !greet || !btn || !shadow || !stage || !hand) return;
+
+  // cấu hình kênh liên hệ
+  const FB_HOME   = '61579142315521'; // VIETFORTURE HOME
+  const FB_CREDIT = '61579311806964'; // VIETFORTURE CREDIT
+  const ZALO_OAID = '2857015321649379174';
+
+  // chống FOUC tay
+  try{ hand.setAttribute('transform','rotate(0 192 164)'); }catch(e){}
+
+  // chào kiểu A
+  function vnGreeting(){
+    const h = Number(new Intl.DateTimeFormat('vi-VN',{hour:'numeric',hour12:false,timeZone:'Asia/Ho_Chi_Minh'}).format(new Date()));
+    const buoi = h < 12 ? 'sáng' : (h < 18 ? 'chiều' : 'tối');
+    return `VIETFORTURE chào buổi ${buoi}`;
+  }
+  greet.textContent = vnGreeting();
+
+  // Hiện intro lần này
+  intro.removeAttribute('hidden');
+  intro.classList.add('is-on');
+  svg.classList.add('vb-in');
+
+  // Hop + vẫy + anten beat + hiệu ứng đặc sắc
+  setTimeout(()=>{
+    svg.classList.remove('vb-in');
+    svg.classList.add('vb-hop','vb-wave','vb-beat');
+    shadow.classList.add('vb-shadow-hop');
+    emitHalo(); emitSparks(8);
+    placeBubble(); // đảm bảo bubble giữa, không đè robot
+  }, 520);
+
+  // Ẩn bubble trước khi chuyển động xuống
+  setTimeout(()=>{ sayBox.classList.add('hide'); }, 520+600);
+
+  // SWIM → DOCK: bơi lượn xuống nút chat (đường cong mượt)
+  setTimeout(()=>{
+    svg.classList.remove('vb-hop','vb-wave','vb-beat');
+    shadow.classList.remove('vb-shadow-hop');
+    swimDock();
+  }, 520+600+80);
+
+  function swimDock(){
+    const bot = svg.getBoundingClientRect();
+    const tgt = btn.getBoundingClientRect();
+    const dx = (tgt.left + tgt.width/2) - (bot.left + bot.width/2);
+    const dy = (tgt.top  + tgt.height/2) - (bot.top  + bot.height/2);
+
+    // tạo các điểm cong dạng sin cho cảm giác "bơi"
+    const kfs = [];
+    const steps = 6;
+    for(let i=0;i<=steps;i++){
+      const t = i/steps;
+      const x = dx * t + Math.sin(t*Math.PI*1.2) * 36; // lượn ngang
+      const y = dy * t - Math.sin(t*Math.PI) * 16;     // lượn dọc
+      const s = 1 - t*.75; // scale 1 → .25
+      kfs.push({ transform: `translate(${x}px,${y}px) scale(${s})` , offset: t });
+    }
+
+    if(svg.animate){
+      svg.animate(kfs, { duration: 900, easing: 'cubic-bezier(.22,.9,.26,1)', fill: 'forwards' })
+         .addEventListener('finish', bounceAndFinish);
+    }else{
+      svg.style.setProperty('--dx', dx+'px');
+      svg.style.setProperty('--dy', dy+'px');
+      svg.style.animation='vbDockEase .9s cubic-bezier(.22,.9,.26,1) forwards';
+      setTimeout(bounceAndFinish, 920);
+    }
+
+    function bounceAndFinish(){
+      // rebound nhỏ
+      if(svg.animate){
+        const end = kfs[kfs.length-1].transform;
+        svg.animate([
+          { transform: end },
+          { transform: end.replace(/scale\([^)]+\)/, 'scale(.27)') , offset:.4 },
+          { transform: end }
+        ], { duration: 240, easing:'ease-out', fill:'forwards' })
+        .addEventListener('finish', done);
+      }else{ done(); }
+    }
+    function done(){
+      intro.classList.remove('is-on');
+      btn.classList.add('has-vietbot');
+      btn.innerHTML = miniSVG();
+    }
+  }
+
+  // bubble vị trí thông minh, không chèn vào robot
+  function placeBubble(){
+    const sb = sayBox.getBoundingClientRect();
+    const head = document.getElementById('vbHead').getBoundingClientRect();
+    const collide = !(sb.right < head.left || sb.left > head.right || sb.bottom < head.top || sb.top > head.bottom);
+    sayBox.style.top = collide ? '6%' : '10%';
+  }
+
+  // Hiệu ứng halo + pháo sáng
+  function emitHalo(){
+    const halo = stage.querySelector('.vb-halo'); if(!halo) return;
+    halo.classList.remove('on'); void halo.offsetHeight; halo.classList.add('on');
+  }
+  function emitSparks(n){
+    const boxH = hand.getBoundingClientRect(); const boxS = stage.getBoundingClientRect();
+    const baseX = boxH.left + boxH.width/2 - boxS.left; const baseY = boxH.top + boxH.height/2 - boxS.top;
+    for(let i=0;i<n;i++){
+      const d = document.createElement('div'); d.className='vb-spark';
+      d.style.left = (baseX + (Math.random()*24-12))+'px';
+      d.style.top  = (baseY + (Math.random()*16-20))+'px';
+      const ang = (Math.random()*Math.PI/2 - Math.PI/6); const dist = 60 + Math.random()*40;
+      d.style.setProperty('--sx',  Math.cos(ang)*dist+'px'); d.style.setProperty('--sy', -Math.abs(Math.sin(ang))*dist - 30 +'px');
+      stage.appendChild(d); setTimeout(()=>d.remove(), 720);
+    }
+  }
+
+  /* ===== Chat UI: chips nhanh + typing + liên hệ trực tiếp ===== */
+  const openMessengerHome   = ()=>{ try{ if(window.FB&&FB.CustomerChat){FB.CustomerChat.show(true);FB.CustomerChat.showDialog();} }catch(e){} window.open(`https://m.me/${FB_HOME}?ref=vietbot-home`,'_blank','noopener'); };
+  const openMessengerCredit = ()=>{ try{ if(window.FB&&FB.CustomerChat){FB.CustomerChat.show(true);FB.CustomerChat.showDialog();} }catch(e){} window.open(`https://m.me/${FB_CREDIT}?ref=vietbot-credit`,'_blank','noopener'); };
+  const openZalo            = ()=>{ window.open(`https://zalo.me/${ZALO_OAID}`,'_blank','noopener'); };
+  const callHotline         = ()=>{ window.location.href='tel:+84000000000'; }; // thay số thật nếu có
+
+  function addTyping(ms){
+    const body = document.getElementById('vfChatBody'); if(!body) return Promise.resolve();
+    const wrap = document.createElement('div'); wrap.className='msg bot';
+    const t = document.createElement('div'); t.className='typing'; t.innerHTML='<span class="dot"></span><span class="dot"></span><span class="dot"></span>';
+    wrap.appendChild(t); body.appendChild(wrap); body.scrollTop = body.scrollHeight;
+    return new Promise(res=>setTimeout(()=>{ wrap.remove(); res(); }, ms));
+  }
+  function addMsg(text){
+    const body = document.getElementById('vfChatBody'); if(!body) return;
+    const wrap = document.createElement('div'); wrap.className='msg bot';
+    const b = document.createElement('div'); b.className='bubble'; b.textContent=text; wrap.appendChild(b);
+    body.appendChild(wrap); body.scrollTop = body.scrollHeight;
+  }
+  function injectChips(){
+    const body = document.getElementById('vfChatBody'); if(!body) return;
+    if(body.querySelector('.chat-quickchips')) return;
+    const row = document.createElement('div'); row.className='chat-quickchips';
+    const chips = [
+      ['Tín dụng', ()=>route('tindung')],
+      ['Lưu trú', ()=>route('luutru','#stay')],
+      ['Tuyển dụng', ()=>route('tuyendung')],
+      ['Messenger HOME', openMessengerHome],
+      ['Messenger CREDIT', openMessengerCredit],
+      ['Zalo', openZalo],
+      ['Gọi', callHotline]
+    ];
+    chips.forEach(([label,fn])=>{ const c=document.createElement('button'); c.type='button'; c.className='chip'; c.textContent=label; c.onclick=fn; row.appendChild(c); });
+    body.appendChild(row); body.scrollTop = body.scrollHeight;
+  }
+  function route(id, hash){
+    try{ if(typeof window.show==='function') window.show(id); }catch(e){}
+    if(hash && location.hash!==hash) location.hash=hash;
+    const sec = document.querySelector(`[data-view="${id}"], #${id}, section#${id}`);
+    sec && sec.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+
+  // Greet panel lần đầu theo kiểu A + chips
+  const PANEL_KEY='vf_panel_greet_styleA_v13';
+  document.getElementById('vfChatBtn')?.addEventListener('click', ()=>setTimeout(async ()=>{
+    if(!panel || !panel.classList.contains('is-open')) return;
+    if(sessionStorage.getItem(PANEL_KEY)) { injectChips(); return; }
+    await addTyping(650);
+    addMsg('Tôi là VIETBOT. Chọn: Tín dụng · Lưu trú · Tuyển dụng · Chat trực tiếp');
+    injectChips();
+    sessionStorage.setItem(PANEL_KEY,'1');
+  },120));
+})();
+
+
+// === BEGIN: Site handoff config injected ===
+window.SITE_HANDOFF = {
+  messenger: "https://m.me/vietfunds",
+  zalo: "https://zalo.me/2857015321649379174"
+};
+
+function openMessenger() {
+  try {
+    const url = (window.SITE_HANDOFF && window.SITE_HANDOFF.messenger) || "https://m.me/vietfunds";
+    window.open(url, "_blank", "noopener");
+    if (typeof gtag === "function") gtag('event', 'handoff_messenger', {method:'chatbot'});
+  } catch (e) {}
+}
+
+function openZaloOA() {
+  try {
+    const url = (window.SITE_HANDOFF && window.SITE_HANDOFF.zalo) || "https://zalo.me/2857015321649379174";
+    window.open(url, "_blank", "noopener");
+    if (typeof gtag === "function") gtag('event', 'handoff_zalo', {method:'chatbot'});
+  } catch (e) {}
+}
+// === END: Site handoff config injected ===
