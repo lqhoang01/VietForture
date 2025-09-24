@@ -1,4 +1,4 @@
-name: Deploy Pages
+name: Deploy to GitHub Pages
 on:
   push:
     branches: [ main ]
@@ -10,17 +10,37 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
+  group: "pages"
   cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/upload-pages-artifact@v3
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Build static artifact
+        run: |
+          set -e
+          mkdir -p dist
+          rsync -a --delete \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='dist' \
+            ./ dist/
+  
+          if [ -f "dist/index (1).html" ] && [ ! -f "dist/index.html" ]; then
+            mv "dist/index (1).html" dist/index.html
+          fi
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          path: .   # chứa index.html, style.css, script.js
+          path: dist
 
   deploy:
     needs: build
@@ -29,5 +49,6 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - id: deployment
+      - name: Deploy to GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v4
