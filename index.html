@@ -10,7 +10,18 @@
   <link rel="icon" href="favicon.ico">
   <link rel="stylesheet" href="style.css" />
   <noscript><style>.view{display:block!important;opacity:1!important}</style></noscript>
+
+  <link rel="canonical" href="https://www.vietforture.com.vn/">
+  <meta property="og:site_name" content="CÔNG TY CỔ PHẦN VIỆT THỊNH VƯỢNG">
+  <meta property="og:title" content="CÔNG TY CỔ PHẦN VIỆT THỊNH VƯỢNG">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.vietforture.com.vn/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="CÔNG TY CỔ PHẦN VIỆT THỊNH VƯỢNG">
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Organization", "name": "CÔNG TY CỔ PHẦN VIỆT THỊNH VƯỢNG", "url": "https://www.vietforture.com.vn/", "email": "vietforture@gmail.com", "telephone": "028 3782 2239", "address": {"@type": "PostalAddress", "streetAddress": "Lô Số A18-22, Số 10, Đường Số 13, Kdc Nhơn Đức, Xã Nhà Bè, Huyện Nhà Bè, Thành phố Hồ Chí Minh, Việt Nam"}}</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FinancialService", "name": "CÔNG TY CỔ PHẦN VIỆT THỊNH VƯỢNG", "url": "https://www.vietforture.com.vn/", "areaServed": "Vietnam", "telephone": "028 3782 2239", "address": {"@type": "PostalAddress", "streetAddress": "Lô Số A18-22, Số 10, Đường Số 13, Kdc Nhơn Đức, Xã Nhà Bè, Huyện Nhà Bè, Thành phố Hồ Chí Minh, Việt Nam"}}</script>
 </head>
+
 <body>
   <!-- Header -->
   <header class="site-header" role="banner">
@@ -1067,11 +1078,99 @@
         <div class="social-2">
           <a class="fb fb-home" href="https://www.facebook.com/profile.php?id=61579142315521" target="_blank" rel="me noopener" aria-label="VietForture Home"><span class="label">Home</span></a><a class="social-link zalo" href="https://zalo.me/2857015321649379174" target="_blank" rel="noopener" aria-label="Zalo"><img src="zalo-icon.png" alt="Zalo" loading="lazy"></a>
           <a class="fb fb-credit" href="https://www.facebook.com/profile.php?id=61579311806964" target="_blank" rel="me noopener" aria-label="VietForture Credit"><span class="label">Credit</span></a>
+        
         </div>
       </div>
     </div>
   </footer>
 
   <script src="script.js" defer></script>
+  <!-- Floating Chatbot -->
+<div id="vfChat" class="vfchat" aria-live="polite" aria-label="Chatbot VietForture">
+  <button id="vfChatBtn" class="vfchat-btn" aria-expanded="false" aria-controls="vfChatPanel">💬</button>
+  <div id="vfChatPanel" class="vfchat-panel" role="dialog" aria-modal="false" aria-hidden="true">
+    <header class="vfchat-head">
+      <strong>VietForture Chat</strong>
+      <button id="vfChatClose" class="vfchat-close" type="button" aria-label="Đóng">✕</button>
+    </header>
+    <div id="vfChatBody" class="vfchat-body" tabindex="0" aria-label="Lịch sử trao đổi"></div>
+    <form id="vfChatForm" class="vfchat-form" autocomplete="off">
+      <input id="vfChatInput" class="vfchat-input" type="text" placeholder="Hỏi về tín dụng, lưu trú, tuyển dụng..." aria-label="Nhập câu hỏi">
+      <button class="btn" type="submit">Gửi</button>
+    </form>
+  </div>
+</div>
+<!-- ========== VIETBOT Intro v12: overlay tối + chào kiểu A ========== -->
+<div id="vietbotIntro" class="vietbot-intro" aria-hidden="true" hidden>
+  <div class="vietbot-backdrop" aria-hidden="true"></div>
+
+  <div class="vietbot-stage" aria-hidden="true">
+    <!-- Bubble chào giữa, nút bỏ qua -->
+    <div class="vietbot-say" id="vietbotSay" role="status" aria-live="polite">
+      <span id="vietbotGreet">...</span>
+      <button id="vbSkip" class="vb-skip" type="button" aria-label="Vietforture">Vietforture</button>
+    </div>
+
+    <!-- Robot SVG: chibi, viền đôi, mắt to, tay vẫy lên -->
+    <svg id="vietbotSVG" class="vietbot" width="260" height="280" viewBox="0 0 240 260" role="img" aria-label="VIETBOT">
+      <defs>
+        <linearGradient id="vbRed" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#ff9aa6"/><stop offset="1" stop-color="#c1121f"/>
+        </linearGradient>
+        <filter id="vbShadow" x="-50%" y="-50%" width="200%" height="200%">
+          <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#000" flood-opacity=".22"/>
+        </filter>
+      </defs>
+
+      <!-- Antenna -->
+      <g id="vbAnt" transform="translate(120,24)">
+        <rect x="-3" y="-16" rx="3" ry="3" width="6" height="18" fill="url(#vbRed)"/>
+        <circle r="8" cy="-20" fill="url(#vbRed)"/>
+      </g>
+
+      <!-- Head -->
+      <g id="vbHead" filter="url(#vbShadow)">
+        <!-- viền đôi -->
+        <rect x="32" y="36" rx="28" ry="28" width="176" height="120" fill="#fff" stroke="#c1121f" stroke-width="10"/>
+        <rect x="42" y="46" rx="22" ry="22" width="156" height="100" fill="#fff" stroke="#fff" stroke-width="8"/>
+        <rect x="56" y="58" rx="22" ry="22" width="128" height="76" fill="#0b1220"/>
+        <!-- Face -->
+        <circle class="vb-eye" cx="96"  cy="92" r="10" fill="#36d399"/>
+        <circle class="vb-eye" cx="144" cy="92" r="10" fill="#36d399"/>
+        <circle cx="82"  cy="110" r="6" fill="#ffb3bd" opacity=".7"/>
+        <circle cx="158" cy="110" r="6" fill="#ffb3bd" opacity=".7"/>
+        <path d="M86 114 Q120 132 154 114" stroke="#36d399" stroke-width="7" fill="none" stroke-linecap="round"/>
+      </g>
+
+      <!-- Body -->
+      <g filter="url(#vbShadow)">
+        <rect x="70" y="154" rx="26" ry="26" width="100" height="70" fill="#fff" stroke="#c1121f" stroke-width="8"/>
+        <circle cx="120" cy="190" r="16" fill="url(#vbRed)"/>
+      </g>
+
+      <!-- Arms -->
+      <g>
+        <rect x="28"  y="162" rx="12" ry="12" width="30" height="52" fill="#fff" stroke="#c1121f" stroke-width="8"/>
+        <!-- Tay phải vẫy LÊN -->
+        <g id="vbHand" transform="rotate(0 192 164)">
+          <rect x="178" y="162" rx="12" ry="12" width="30" height="52" fill="#fff" stroke="#c1121f" stroke-width="8"/>
+          <circle cx="192" cy="158" r="9" fill="url(#vbRed)" stroke="#c1121f" stroke-width="4"/>
+        </g>
+      </g>
+
+      <!-- Feet -->
+      <g>
+        <rect x="90"  y="226" rx="10" ry="10" width="34" height="16" fill="url(#vbRed)"/>
+        <rect x="136" y="226" rx="10" ry="10" width="34" height="16" fill="url(#vbRed)"/>
+      </g>
+    </svg>
+
+    <div class="vietbot-shadow"></div>
+    <div class="vb-halo" aria-hidden="true"></div>
+  </div>
+</div>
+<!-- ========== /VIETBOT Intro v12 ========== -->
+
+
 </body>
 </html>
