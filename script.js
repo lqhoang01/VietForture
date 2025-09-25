@@ -1986,3 +1986,440 @@ function openZaloOA() {
   } catch (e) {}
 }
 // === END: Site handoff config injected ===
+
+
+/* ==== Credit v16: DOM-ready, purge text, hero autoplay, cards align, calc + contact ==== */
+(function(){ 
+  function onReady(fn){ if(document.readyState!=='loading') fn(); else document.addEventListener('DOMContentLoaded', fn); }
+  onReady(function(){
+    const root = document.getElementById('view-tindung'); if(!root) return;
+    const $ = (s,c=document)=>c.querySelector(s);
+    const $$ = (s,c=document)=>Array.from(c.querySelectorAll(s));
+
+    // Purge listed legacy phrases
+    const kill = ["Kh\u00f4ng c\u1ea7n t\u00e0i s\u1ea3n b\u1ea3o \u0111\u1ea3m. H\u1ed3 s\u01a1 g\u1ecdn. Gi\u1ea3i ng\u00e2n nhanh.", "1C\u00e1c g\u00f3i vay ph\u00f9 h\u1ee3p nhi\u1ec1u \u0111\u1ed1i t\u01b0\u1ee3ng", "Thu nh\u1eadp t\u1eeb l\u01b0\u01a1ng", "C\u00e1n b\u1ed9 c\u00f4ng ch\u1ee9c, vi\u00ean ch\u1ee9c", "Kh\u00e1ch h\u00e0ng l\u00e0 ph\u1ee5 n\u1eef", "H\u1ee3p \u0111\u1ed3ng b\u1ea3o hi\u1ec3m nh\u00e2n th\u1ecd", "L\u1ecbch s\u1eed vay t\u1ea1i TCTD", "Ch\u1ee7 kinh doanh", "Vay theo CCCD", "2\u0110i\u1ec1u ki\u1ec7n & thanh to\u00e1n", "Th\u1eddi h\u1ea1n6\u201360 th\u00e1ng", "L\u00e3i su\u1ea5tC\u1ea1nh tranh", "Thanh to\u00e1n\u0110MX/TGD\u0110 \u00b7 Momo \u00b7 Viettel \u00b7 chuy\u1ec3n kho\u1ea3n", "3\u0110\u1ed1i t\u00e1c", "SHBFinance LOTTE Finance FE Credit", "\u0110\u0103ng k\u00fd", "V\u1ec1 \u0111\u1ea7u m\u1ee5c", "Kho\u1ea3n vay l\u1edbn. K\u1ef3 h\u1ea1n d\u00e0i. Tr\u1ea3 n\u1ee3 linh ho\u1ea1t.", "B\u00e0i 1: Vay mua nh\u00e0, x\u00e2y s\u1eeda nh\u00e0 t\u1edbi 35 n\u0103m", "B\u00e0i 2: Vay mua \u00f4 t\u00f4 ph\u00ea duy\u1ec7t nhanh", "B\u00e0i 3: Vay SXKD & B\u1ed5 sung VL\u0110", "T\u0103ng v\u1ed1n l\u01b0u \u0111\u1ed9ng", "Chi ph\u00ed v\u1eadn h\u00e0nh: l\u01b0\u01a1ng, nguy\u00ean li\u1ec7u, thu\u00ea m\u1eb7t b\u1eb1ng.", "\u0110\u1ea7u t\u01b0 m\u1edf r\u1ed9ng", "M\u1edf quy m\u00f4, mua thi\u1ebft b\u1ecb, tri\u1ec3n khai d\u1ef1 \u00e1n.", "Gi\u1ea3i quy\u1ebft t\u1ea1m th\u1eddi", "D\u00f2ng ti\u1ec1n thi\u1ebfu h\u1ee5t ng\u1eafn h\u1ea1n.", "H\u1ea1n m\u1ee9c t\u1edbi 100 t\u1ef7 \u0111\u1ed3ng", "Th\u1ea9m \u0111\u1ecbnh d\u1ef1a tr\u00ean 100% b\u00e1o c\u00e1o t\u00e0i ch\u00ednh", "H\u1ed7 tr\u1ee3 to\u00e0n qu\u1ed1c", "Vay mua \u00f4 t\u00f4", "M\u1edbi ho\u1eb7c \u0111\u00e3 qua s\u1eed d\u1ee5ng.", "B\u1ed5 sung VL\u0110", "T\u1ed1i \u01b0u d\u00f2ng ti\u1ec1n theo m\u00f9a v\u1ee5.", "Vay mua B\u0110S", "M\u1eb7t b\u1eb1ng, kho b\u00e3i, nh\u00e0 x\u01b0\u1edfng.", "\u0110\u1eb7c \u0111i\u1ec3m", "Ph\u01b0\u01a1ng th\u1ee9c tr\u1ea3 n\u1ee3 linh ho\u1ea1t", "T\u00e0i s\u1ea3n b\u1ea3o \u0111\u1ea3m \u0111a d\u1ea1ng", "T\u1ef7 l\u1ec7 cho vay t\u1edbi 85% gi\u00e1 tr\u1ecb t\u00e0i s\u1ea3n", "H\u1ed7 tr\u1ee3 c\u1ea5p h\u1ea1n m\u1ee9c doanh nghi\u1ec7p"];
+    $$('#view-tindung *').forEach(el=>{ const t=(el.textContent||'').trim(); if(kill.includes(t)) el.remove(); });
+
+    // Build cards from CREDIT_CONTENT fallback or embedded DATA
+    const DATA = window.CREDIT_CONTENT || {"per": [{"title": "Vay tín chấp tiêu dùng cá nhân", "sub": "Giải pháp nhanh, không yêu cầu tài sản bảo đảm.", "img": "img/credit-personal-unsecured.jpg", "points": ["Nguồn thu nhập phù hợp nhiều hồ sơ", "Kỳ hạn 6–60 tháng", "Lãi suất cạnh tranh", "Thanh toán ví điện tử và hệ thống đối tác"]}, {"title": "Vay mua nhà, xây sửa nhà", "sub": "Kỳ hạn dài, tỷ lệ tài trợ cao.", "img": "img/credit-mortgage-home.jpg", "points": ["Tối đa ~85% giá trị tài sản", "Thời hạn tới 35 năm", "Chứng minh thu nhập linh hoạt"]}, {"title": "Vay mua ô tô", "sub": "Hỗ trợ xe mới và đã qua sử dụng.", "img": "img/credit-mortgage-auto.jpg", "points": ["Tài trợ đến ~80% giá trị xe", "Phê duyệt nhanh", "Kỳ hạn đến 72 tháng"]}, {"title": "Vay SXKD & Bổ sung VLĐ", "sub": "Cho hộ và cá nhân kinh doanh.", "img": "img/credit-sme-workingcap.jpg", "points": ["Hạn mức 50 triệu – 10 tỷ", "TSBĐ BĐS tối đa ~80%", "Chu kỳ vốn lưu động 24 tháng"]}], "biz": [{"title": "Vay tín chấp doanh nghiệp", "sub": "Bổ sung vốn lưu động, đầu tư nhanh.", "img": "img/credit-biz-unsecured.jpg", "points": ["Dựa trên báo cáo tài chính", "Hạn mức đến ~100 tỷ", "Giải quyết thiếu hụt dòng tiền ngắn hạn"]}, {"title": "Vay thế chấp doanh nghiệp", "sub": "Vay mua ô tô · Bổ sung VLĐ · Vay mua BĐS", "img": "img/credit-biz-secured.jpg", "points": ["Tài sản bảo đảm đa dạng", "Tỷ lệ vay tới ~85%", "Phương thức trả nợ linh hoạt"]}]};
+    function cardHTML(it){
+      const lis = (it.points||[]).map(pt=>`<li class="cc-li anim">${pt}</li>`).join('');
+      return `<article class="ccard anim"><div class="ccard__inner">
+        <div class="cc-media" style="--img:url('${it.img||""}')"></div>
+        <div class="cc-body">
+          <h3 class="cc-title anim">${it.title||""}</h3>
+          <p class="cc-sub anim">${it.sub||""}</p>
+          <ul class="cc-list">${lis}</ul>
+          <div class="cc-cta">
+            <button class="btn primary act-apply" data-title="${it.title||""}">Đăng ký</button>
+            <button class="btn ghost act-consult" data-title="${it.title||""}">Hỏi tư vấn</button>
+          </div>
+        </div></div>
+      </article>`;
+    }
+    function render(group){
+      const grid = document.getElementById('cc-grid-'+group); if(!grid) return;
+      grid.innerHTML = (DATA[group]||[]).map(cardHTML).join('');
+    }
+    render('per'); render('biz');
+
+    // Reveal
+    const io = new IntersectionObserver((ents)=>{ ents.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); }, {threshold:.15});
+    $$('.anim', root).forEach(el=>io.observe(el));
+
+    // Hero slider autoplay
+    (function(){
+      const stage = $('.cr-hero__stage', root); if(!stage) return;
+      const slides = $$('.slide', stage); const dots = $$('.cr-hero__dots .dot', root);
+      if(!slides.length) return;
+      let idx = 0, t=null;
+      function go(i){ slides[idx]?.classList.remove('is-active'); dots[idx]?.classList.remove('is-active'); idx=(i+slides.length)%slides.length; slides[idx]?.classList.add('is-active'); dots[idx]?.classList.add('is-active'); }
+      function next(){ go(idx+1); }
+      function play(){ stop(); t=setInterval(next, 4000); }
+      function stop(){ if(t) clearInterval(t), t=null; }
+      dots.forEach((d,i)=>d.addEventListener('click', ()=>{ go(i); play(); }));
+      stage.addEventListener('mouseenter', stop); stage.addEventListener('mouseleave', play);
+      go(0); play();
+    })();
+
+    // Calculator
+    function bindCalc(gid){
+      const p = document.getElementById('calc_'+gid+'_p'),
+            r = document.getElementById('calc_'+gid+'_r'),
+            n = document.getElementById('calc_'+gid+'_n'),
+            b = document.getElementById('calc_'+gid+'_btn'),
+            out = document.getElementById('calc_'+gid+'_out');
+      if(!p||!r||!n||!b||!out) return;
+      function fmt(x){ return x.toLocaleString('vi-VN'); }
+      function calc(){ 
+        const P=+p.value||0, R=(+r.value||0)/100/12, N=+n.value||0;
+        if(P<=0||R<=0||N<=0){ out.textContent=''; return; }
+        const A = P*R*Math.pow(1+R,N)/(Math.pow(1+R,N)-1);
+        const total = A*N, interest = total-P;
+        out.innerHTML = `Trả mỗi tháng: <b>${fmt(Math.round(A))} đ</b> · Tổng lãi: <b>${fmt(Math.round(interest))} đ</b> · Tổng trả: <b>${fmt(Math.round(total))} đ</b>`;
+      }
+      b.addEventListener('click', calc);
+    }
+    bindCalc('per'); bindCalc('biz');
+
+    // Contact form -> GAS
+    const GAS_URL = window.GAS_URL || "https://script.google.com/macros/s/AKfycbxAWC...placeholder/exec";
+    function postFormUrlEncoded(url, data) {
+      const body = new URLSearchParams(data).toString();
+      return fetch(url, { method:'POST', mode:'no-cors', headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'}, body });
+    }
+    ;['per','biz'].forEach(gid=>{
+      const form = document.getElementById('creditContactForm_'+gid);
+      if(!form) return;
+      form.addEventListener('submit', (e)=>{
+        e.preventDefault();
+        const data = Object.fromEntries(new FormData(form).entries());
+        data.type = 'credit_contact_'+gid; data.source = 'credit_view';
+        postFormUrlEncoded(GAS_URL, data);
+        form.reset();
+        alert('Đã gửi. Chúng tôi sẽ liên hệ.');
+      });
+    });
+
+    // Tab sync
+    const segBtns = $$('.bk-seg__btn', root);
+    function sync(){
+      const k = (root.querySelector('.bk-seg__btn.is-active')?.dataset.tab)||'per';
+      ['per','biz'].forEach(g=>document.getElementById('cc-grid-'+g)?.toggleAttribute('hidden', g!==k));
+      ['faq','calc','contact'].forEach(s=>['per','biz'].forEach(g=>document.getElementById(`cr-${s}-${g}`)?.toggleAttribute('hidden', g!==k)));
+    }
+    segBtns.forEach(b=>b.addEventListener('click', sync));
+    sync();
+  });
+})();
+
+
+/* ==== Credit v17: kill hero, directional anim, calc sliders, slogan actions ==== */
+(function(){
+  function onReady(fn){ if(document.readyState!=='loading') fn(); else document.addEventListener('DOMContentLoaded', fn); }
+  onReady(function(){
+    const root = document.getElementById('view-tindung'); if(!root) return;
+    const $ = (s,c=document)=>c.querySelector(s);
+    const $$ = (s,c=document)=>Array.from(c.querySelectorAll(s));
+
+    // Directional anim: tag media/body
+    $$('.ccard').forEach(card=>{
+      card.querySelector('.cc-media')?.classList.add('anim','fi-left');
+      card.querySelector('.cc-body')?.classList.add('anim','fi-right');
+    });
+    // Intersection reveal
+    const io = new IntersectionObserver((ents)=>{
+      ents.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+    }, {threshold:.15});
+    $$('.anim', root).forEach(el=>io.observe(el));
+
+    // Enhance calculator with sliders + live calc
+    function enhanceCalc(gid){
+      const p = $('#calc_'+gid+'_p'), r = $('#calc_'+gid+'_r'), n = $('#calc_'+gid+'_n'), out = $('#calc_'+gid+'_out'), btn = $('#calc_'+gid+'_btn');
+      if(!p||!r||!n||!out||!btn) return;
+      // Add sliders row
+      let sliders = $('.sliders', p.closest('.cr-calc'));
+      if(!sliders){
+        sliders = document.createElement('div'); sliders.className='sliders anim fi-up';
+        sliders.innerHTML = `
+          <input type="range" class="slider" id="s_${gid}_p" min="10000000" max="2000000000" step="1000000" value="200000000">
+          <input type="range" class="slider" id="s_${gid}_r" min="4" max="30" step="0.1" value="12">
+          <input type="range" class="slider" id="s_${gid}_n" min="6" max="360" step="1" value="24">
+        `;
+        btn.closest('.calc-row').after(sliders);
+        io.observe(sliders);
+      }
+      const sp = $('#s_'+gid+'_p'), sr = $('#s_'+gid+'_r'), sn = $('#s_'+gid+'_n');
+      function sync(from){
+        if(from==='num'){ sp.value = p.value||0; sr.value = r.value||0; sn.value = n.value||0; }
+        else { p.value = sp.value; r.value = sr.value; n.value = sn.value; }
+        calc();
+      }
+      function fmt(x){ return (+x).toLocaleString('vi-VN'); }
+      function calc(){
+        const P=+p.value||0, R=(+r.value||0)/100/12, N=+n.value||0;
+        if(P<=0||R<=0||N<=0){ out.textContent=''; return; }
+        const A = P*R*Math.pow(1+R,N)/(Math.pow(1+R,N)-1);
+        const total = A*N, interest = total-P;
+        out.innerHTML = `
+          <div>Trả mỗi tháng: <b>${fmt(Math.round(A))} đ</b></div>
+          <div>Tổng lãi ước tính: <b>${fmt(Math.round(interest))} đ</b> · Tổng phải trả: <b>${fmt(Math.round(total))} đ</b></div>
+        `;
+        out.classList.remove('pop'); void out.offsetWidth; out.classList.add('pop');
+      }
+      ;[p,r,n].forEach(el=>el.addEventListener('input', ()=>sync('num')));
+      ;[sp,sr,sn].forEach(el=>el.addEventListener('input', ()=>sync('range')));
+      btn.addEventListener('click', calc);
+      sync('range');
+    }
+    enhanceCalc('per'); enhanceCalc('biz');
+
+    // Slogan actions: seg buttons and detail links
+    const slog = $('#credit-slogan', root);
+    if(slog){
+      slog.querySelectorAll('.seg-btn').forEach(b=>b.addEventListener('click', ()=>{
+        const t = b.getAttribute('data-tab');
+        const tabBtn = root.querySelector(`.bk-seg__btn[data-tab="${t}"]`);
+        tabBtn?.click();
+        root.scrollIntoView({behavior:'smooth'});
+      }));
+      slog.querySelectorAll('.link-btn').forEach(b=>b.addEventListener('click', ()=>{
+        const sel = b.getAttribute('data-scroll'); const tgt = sel && document.querySelector(sel);
+        tgt?.scrollIntoView({behavior:'smooth', block:'start'});
+      }));
+    }
+  });
+})();
+
+
+/* ==== Credit v18: ensure single hero, reveal trust ==== */
+(function(){
+  function ready(fn){ if(document.readyState!=='loading') fn(); else document.addEventListener('DOMContentLoaded', fn); }
+  ready(function(){
+    const root = document.getElementById('view-tindung'); if(!root) return;
+    const $$ = (s,c=document)=>Array.from(c.querySelectorAll(s));
+    // Remove extra heroes accidentally injected by caches
+    const heroes = $$('.cr-hero', root);
+    if(heroes.length>1){ heroes.slice(1).forEach(h=>h.remove()); }
+    // Animate trust items
+    const io = new IntersectionObserver((ents)=>{
+      ents.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+    }, {threshold:.15});
+    $$('.cr-trust .trust-item, .cr-trust, .credit-slogan', root).forEach(el=>io.observe(el));
+  });
+})();
+
+
+/* ==== Credit v19: calc ring + breakdown ==== */
+(function(){
+  function ready(fn){ if(document.readyState!=='loading') fn(); else document.addEventListener('DOMContentLoaded', fn); }
+  ready(function(){
+    const root = document.getElementById('view-tindung'); if(!root) return;
+    const $ = (s,c=document)=>c.querySelector(s);
+    const $$ = (s,c=document)=>Array.from(c.querySelectorAll(s));
+
+    function mountRing(gid){
+      const calc = $('#cr-calc-'+gid);
+      if(!calc) return;
+      if(calc.querySelector('.wrap')) return;
+      const row = calc.querySelector('.calc-row');
+      const wrap = document.createElement('div'); wrap.className='wrap';
+      const panel1 = document.createElement('div'); panel1.className='panel'; panel1.appendChild(row);
+      const panel2 = document.createElement('div'); panel2.className='panel meter';
+      panel2.innerHTML = `<div class="ring" id="ring_${gid}" style="--p:0%"></div><div class="ring-label" id="ringlbl_${gid}">0 đ/tháng</div>`;
+      const panel3 = document.createElement('div'); panel3.className='panel breakdown';
+      panel3.innerHTML = `<div class="line"><span>Gốc phải trả</span><b id="bk_p_${gid}">0 đ</b></div>
+                          <div class="line"><span>Tổng lãi</span><b id="bk_i_${gid}">0 đ</b></div>
+                          <div class="line"><span>Tổng phải trả</span><b id="bk_t_${gid}">0 đ</b></div>`;
+      wrap.append(panel1, panel2, panel3);
+      calc.appendChild(wrap);
+      const out = $('#calc_'+gid+'_out'); if(out){ out.remove(); }
+    }
+
+    function fmt(x){ return (+x).toLocaleString('vi-VN'); }
+
+    function bindRingUpdate(gid){
+      const p = $('#calc_'+gid+'_p'), r = $('#calc_'+gid+'_r'), n = $('#calc_'+gid+'_n');
+      const ring = $('#ring_'+gid), lbl = $('#ringlbl_'+gid);
+      const bkp = $('#bk_p_'+gid), bki = $('#bk_i_'+gid), bkt = $('#bk_t_'+gid);
+      if(!p||!r||!n||!ring||!lbl) return;
+      function calc(){
+        const P=+p.value||0, R=(+r.value||0)/100/12, N=+n.value||0;
+        if(P<=0||R<=0||N<=0){ ring.style.setProperty('--p','0%'); lbl.textContent='0 đ/tháng'; bkp.textContent=bki.textContent=bkt.textContent='0 đ'; return; }
+        const A = P*R*Math.pow(1+R,N)/(Math.pow(1+R,N)-1);
+        const total = A*N, I = total-P;
+        lbl.textContent = fmt(Math.round(A))+' đ/tháng';
+        bkp.textContent = fmt(Math.round(P))+' đ';
+        bki.textContent = fmt(Math.round(I))+' đ';
+        bkt.textContent = fmt(Math.round(total))+' đ';
+        const pcent = Math.min(99, Math.max(1, Math.round((I/total)*100)));
+        ring.style.setProperty('--p', pcent+'%');
+      }
+      ['input','change'].forEach(ev=>{ p.addEventListener(ev, calc); r.addEventListener(ev, calc); n.addEventListener(ev, calc); });
+      calc();
+    }
+
+    ['per','biz'].forEach(g=>{ mountRing(g); bindRingUpdate(g); });
+
+    // Trust & slogan reveal
+    const io = new IntersectionObserver((ents)=>{
+      ents.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+    }, {threshold:.15});
+    $$('.cr-trust .trust-item, #cr-trust, #credit-slogan', root).forEach(el=>io.observe(el));
+  });
+})();
+
+
+/* ==== Credit v27: zigzag cards with <img>, alt animations ==== */
+(function(){
+  function ready(fn){ if(document.readyState!=='loading') fn(); else document.addEventListener('DOMContentLoaded', fn); }
+  ready(function(){
+    const root = document.getElementById('view-tindung'); if(!root) return;
+    const $ = (s,c=document)=>c.querySelector(s);
+    const $$ = (s,c=document)=>Array.from(c.querySelectorAll(s));
+
+    const DATA = window.CREDIT_CONTENT;
+    function cardHTML(it, idx){
+      const mediaDir = (idx%2===0) ? 'fi-left' : 'fi-right';
+      const bodyDir  = (idx%2===0) ? 'fi-right' : 'fi-left';
+      const altClass = (idx%2===0) ? '' : ' is-alt';
+      const img = it.img || '';
+      const lis = (it.points||[]).map(pt=>`<li class="cc-li anim">${pt}</li>`).join('');
+      return `<article class="ccard anim${altClass}"><div class="ccard__inner">
+        <div class="cc-media anim ${mediaDir}" style="--img:url('${img}')">${img?`<img src="${img}" alt="">`:''}</div>
+        <div class="cc-body anim ${bodyDir}">
+          <h3 class="cc-title anim">${it.title||""}</h3>
+          <p class="cc-sub anim">${it.sub||""}</p>
+          <ul class="cc-list">${lis}</ul>
+          <div class="cc-cta">
+            <button class="btn primary act-apply" data-title="${it.title||""}">Đăng ký</button>
+            <button class="btn ghost act-consult" data-title="${it.title||""}">Hỏi tư vấn</button>
+          </div>
+        </div></div>
+      </article>`;
+    }
+    function renderZ(group){
+      const grid = document.getElementById('cc-grid-'+group);
+      if(!grid) return;
+      const src = (DATA && DATA[group]) || grid.__fallback;
+      if(!src) return;
+      grid.innerHTML = src.map((it,idx)=>cardHTML(it, idx)).join('');
+      const io = new IntersectionObserver((ents)=>{ ents.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); } }); }, {threshold:.15});
+      $$('.anim', grid).forEach(el=>io.observe(el));
+    }
+    ['per','biz'].forEach(g=>{
+      const grid = document.getElementById('cc-grid-'+g);
+      if(!grid) return;
+      if(!DATA){
+        const cards = $$('.ccard', grid);
+        if(cards.length){
+          grid.__fallback = cards.map(c=>{
+            return { title: c.querySelector('.cc-title')?.textContent.trim() || '',
+                     sub:   c.querySelector('.cc-sub')?.textContent.trim() || '',
+                     img:   c.querySelector('.cc-media img')?.getAttribute('src') || '' ,
+                     points: $$('.cc-li', c).map(li=>li.textContent.trim()) };
+          });
+        }
+      }
+      renderZ(g);
+    });
+  });
+})();
+
+
+/* v29: animate trust/slogan + chatbot + smooth scroll */
+(function(){
+  // animations
+  const root = document.getElementById('view-tindung'); if(root){
+    const $$ = (s,c=document)=>Array.from(c.querySelectorAll(s));
+    const io = new IntersectionObserver((ents)=>ents.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('is-in'); io.unobserve(e.target); }}), {threshold:.2});
+    $$('.anim', root).forEach(el=>io.observe(el));
+    root.addEventListener('click',(e)=>{
+      const b = e.target.closest('.link-btn[data-scroll]'); if(!b) return;
+      const t = document.querySelector(b.dataset.scroll); if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth', block:'start'}); }
+    });
+  }
+
+  // chatbot newbie
+  const w = document.querySelector('.chatbot-widget');
+  if(w && !w.querySelector('.welcome')){
+    w.insertAdjacentHTML('afterbegin', '<div class="welcome">Xin chào! Tôi có thể hỗ trợ gì?<div class="actions"><button class="btn" data-go="#view-tindung">Xem Tín dụng</button><button class="btn" data-go="#contact">Liên hệ</button><button class="btn" data-go="#faq">FAQ</button></div></div>');
+    w.addEventListener('click', (e)=>{
+      const b = e.target.closest('.actions .btn'); if(!b) return;
+      const t = document.querySelector(b.dataset.go); if(t){ t.scrollIntoView({behavior:"smooth", block:"start"}); }
+    });
+  }
+})();
+
+
+/* v29.1: animations + dedupe images + single hero, and chatbot gap fix */
+(function(){
+  const root = document.getElementById('view-tindung'); if(root){
+    const $$ = (s,c=document)=>Array.from(c.querySelectorAll(s));
+    // reveal
+    const io = new IntersectionObserver((ents)=>ents.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('is-in'); io.unobserve(e.target); }}), {threshold:.2});
+    $$('.anim', root).forEach(el=>io.observe(el));
+
+    // keep only first hero
+    const heroes = $$('.cr-hero', root);
+    heroes.slice(1).forEach(h=>h.remove());
+
+    // dedupe images inside each card by src
+    ['per','biz'].forEach(g=>{
+      const grid = document.getElementById('cc-grid-'+g);
+      if(!grid) return;
+      $$('.ccard', grid).forEach(card=>{
+        const imgs = $$('.cc-media img', card);
+        const seen = new Set();
+        imgs.forEach((im, idx)=>{
+          const s = im.getAttribute('src')||'__none';
+          if(seen.has(s) || idx>0){ im.remove(); } else { seen.add(s); }
+        });
+      });
+    });
+  }
+
+  // chatbot: nuke white spacer blocks
+  const chat = document.querySelector('.chatbot-widget');
+  if(chat){
+    chat.querySelectorAll('.gap,.spacer,.empty, :empty').forEach(n=>{ if(n && n.className && /gap|spacer|empty/i.test(n.className)) n.remove(); });
+    // ensure single welcome
+    if(!chat.querySelector('.welcome')){
+      chat.insertAdjacentHTML('afterbegin','<div class="welcome">Xin chào! Tôi có thể hỗ trợ gì?<div class="actions"><button class="btn" data-go="#view-tindung">Xem Tín dụng</button><button class="btn" data-go="#contact">Liên hệ</button><button class="btn" data-go="#faq">FAQ</button></div></div>');
+    }
+    chat.addEventListener('click', (e)=>{
+      const b = e.target.closest('.actions .btn'); if(!b) return;
+      const t = document.querySelector(b.dataset.go); if(t){ t.scrollIntoView({behavior:"smooth", block:"start"}); }
+    });
+  }
+})();
+
+
+/* v30: reveal anim, dedupe images, chatbot compact, ensure Zalo icon, single hero */
+(function(){
+  const root = document.getElementById('view-tindung');
+  const $$ = (s,c=document)=>Array.from(c.querySelectorAll(s));
+
+  if(root){
+    // reveal
+    const io = new IntersectionObserver((ents)=>ents.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('is-in'); io.unobserve(e.target); }}), {threshold:.2});
+    $$('.anim', root).forEach(el=>io.observe(el));
+
+    // keep single hero
+    const heroes = $$('.cr-hero', root); heroes.slice(1).forEach(h=>h.remove());
+
+    // dedupe imgs in both grids
+    ['per','biz'].forEach(g=>{
+      const grid = document.getElementById('cc-grid-'+g); if(!grid) return;
+      $$('.ccard', grid).forEach(card=>{
+        const imgs = $$('.cc-media img', card);
+        const seen = new Set();
+        imgs.forEach((im, idx)=>{
+          const s = im.getAttribute('src')||'__none';
+          if(seen.has(s) || idx>0){ im.remove(); } else { seen.add(s); }
+        });
+      });
+    });
+  }
+
+  // Chatbot: remove white gaps and set compact welcome + actions
+  const chat = document.querySelector('.chatbot-widget, #chatbot, [class*="chatbot"]');
+  if(chat){
+    // remove tiny/empty nodes
+    Array.from(chat.querySelectorAll('*')).forEach(n=>{
+      const h = n.getBoundingClientRect ? n.getBoundingClientRect().height : 0;
+      if(!n.firstElementChild && !n.textContent.trim() && h < 8) n.remove();
+      if(/gap|spacer|empty/i.test(n.className||'')) n.remove();
+    });
+    if(!chat.querySelector('.welcome')){
+      chat.insertAdjacentHTML('afterbegin','<div class="welcome">Xin chào! Tôi có thể hỗ trợ gì?<div class="actions"><button class="btn" data-go="#view-tindung">Xem Tín dụng</button><button class="btn" data-go="#contact">Liên hệ</button><button class="btn" data-go="#faq">FAQ</button></div></div>');
+    }
+    chat.addEventListener('click', (e)=>{
+      const b = e.target.closest('.actions .btn'); if(!b) return;
+      const t = document.querySelector(b.dataset.go); if(t){ t.scrollIntoView({behavior:"smooth", block:"start"}); }
+    });
+  }
+
+  // Footer: ensure Z icon inner content and push right
+  document.querySelectorAll('.footer a.zalo').forEach(a=>{ a.textContent='Z'; });
+})(); 
