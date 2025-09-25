@@ -1,54 +1,40 @@
-name: Deploy to GitHub Pages
+name: Deploy Website v31
+
 on:
   push:
-    branches: [ main ]
-  workflow_dispatch:
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: true
+    branches:
+      - main   # deploy khi push lên nhánh main
+  pull_request:
 
 jobs:
-  build:
+  build-deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
+      - name: Checkout source
         uses: actions/checkout@v4
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-
-      - name: Build static artifact
-        run: |
-          set -e
-          mkdir -p dist
-          rsync -a --delete \
-            --exclude='.git' \
-            --exclude='.github' \
-            --exclude='dist' \
-            ./ dist/
-  
-          if [ -f "dist/index (1).html" ] && [ ! -f "dist/index.html" ]; then
-            mv "dist/index (1).html" dist/index.html
-          fi
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          path: dist
+          node-version: 20
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
+      - name: Install dependencies
+        run: |
+          npm install -g serve
+          echo "No deps for static site, just HTML/CSS/JS"
+
+      - name: Build (optional)
+        run: |
+          mkdir dist
+          cp index.v31.html dist/index.html
+          cp style.v31.css dist/style.css
+          cp script.v31.js dist/script.js
+          cp -r img dist/img
+
       - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          publish_branch: gh-pages
