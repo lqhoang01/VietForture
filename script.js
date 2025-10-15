@@ -1,3 +1,5 @@
+// Auto-injected config
+window.GAS_MEALS_URL = "https://script.google.com/macros/s/AKfycbyqRIyJrD5zrwyzZ4Idd3_RzlWiCUHooUsjbqS7jG7Tzk3xMrVO7om0xfM3lbvUpd-hwg/exec";
 
 (function () {
   const $  = (sel, ctx=document) => ctx.querySelector(sel);
@@ -275,6 +277,7 @@
       };
       function handleHashForServices(){
         const h = (location.hash||'').replace(/^#/,'');
+        if(h==='buaan'){ try{ openFull(); }catch(_){ } return; }
         if(h==='services' || h==='credit'){ show('tindung'); return; }
         if(h==='stay'){ show('luutru'); return; }
         if(h==='news'){ show('tintuc'); return; }
@@ -396,7 +399,8 @@
     // Hash router (modal)
     function handleHashForServices(){
       const h = (location.hash||'').replace(/^#/,'');
-      if(h==='services'){ openSvc('credit'); return; }
+      if(h==='buaan'){ try{ openFull(); }catch(_){ } return; }
+        if(h==='services'){ openSvc('credit'); return; }
       if(h==='credit'){ openSvc('credit'); return; }
       if(h==='stay'){ openSvc('stay'); return; }
       if(h==='news'){ show('tintuc'); return; }
@@ -2423,3 +2427,244 @@ function openZaloOA() {
   // Footer: ensure Z icon inner content and push right
   document.querySelectorAll('.footer a.zalo').forEach(a=>{ a.textContent='Z'; });
 })(); 
+
+
+// ===== MEAL CANVAS FULL =====
+(function(){
+  function money(v){ return (v||0).toLocaleString('vi-VN'); }
+  function slug(s){ try{s=s.normalize('NFD');}catch(_){ } return s.replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-'); }
+  function $(id){ return document.getElementById(id); }
+
+  var MENU=[
+    {name:'Cá nục chiên',type:'Chiên',price:30000},
+    {name:'Thịt heo chiên',type:'Chiên',price:30000},
+    {name:'Gà chiên nước mắm',type:'Chiên',price:30000},
+    {name:'Đùi gà chiên nước mắm',type:'Chiên',price:30000},
+    {name:'Cá chiên',type:'Chiên',price:30000},
+    {name:'Trứng chiên thịt bằm',type:'Chiên',price:30000},
+    {name:'Gà kho sả ớt',type:'Kho',price:30000},
+    {name:'Thịt kho trứng',type:'Kho',price:30000},
+    {name:'Thịt kho măng',type:'Kho',price:30000},
+    {name:'Sườn heo kho',type:'Kho',price:30000},
+    {name:'Sườn ram',type:'Ram',price:30000},
+    {name:'Đậu hũ kho',type:'Kho',price:30000},
+    {name:'Đậu hũ dồn thịt',type:'Nhồi',price:30000},
+    {name:'Khổ qua nhồi thịt',type:'Nhồi',price:30000},
+    {name:'Cá hú kho',type:'Kho',price:30000},
+    {name:'Cá ngừ kho',type:'Kho',price:30000},
+    {name:'Cá ngừ kho thơm',type:'Kho',price:30000},
+    {name:'Cá lóc kho tiêu',type:'Kho',price:30000},
+    {name:'Gà kho gừng',type:'Kho',price:30000},
+    {name:'Lòng gà kho gừng',type:'Kho',price:30000},
+    {name:'Gà luộc chấm muối tiêu',type:'Luộc',price:30000},
+    {name:'Canh chua',type:'Canh',price:10000},
+    {name:'Canh chua cá',type:'Canh',price:10000}
+  ];
+
+  var cart = {};
+  var full = $('meal-fullpage');
+
+  function renderSummary(){
+    var by = {}, pills = [], map = ['Chiên','Kho','Ram','Nhồi','Luộc','Canh'];
+    for(var i=0;i<MENU.length;i++){ var t=MENU[i].type; by[t]=(by[t]||0)+1; }
+    for(var j=0;j<map.length;j++){ var k=map[j]; if(by[k]) pills.push('<span class="pill">'+k+': '+by[k]+'/'+by[k]+'</span>'); }
+    $('m-summary').innerHTML = '<strong>Tình trạng:</strong> '+pills.join(' ');
+  }
+
+  function buildCard(it, idx){
+    var seed = slug(it.name);
+    var html = ''
+      +'<div class="item" data-i="'+idx+'">'
+      +'  <img alt="'+it.name+'" src="https://picsum.photos/seed/'+seed+'/600/400" style="width:100%;border-radius:12px" />'
+      +'  <h4>'+it.name+'</h4>'
+      +'  <div class="controls">'
+      +'    <span class="price">'+money(it.price)+'</span>'
+      +'    <input class="input" id="m-q-'+idx+'" type="number" min="1" value="1" style="width:80px;margin-left:auto" />'
+      +'    <button class="btn add" data-i="'+idx+'">Thêm</button>'
+      +'  </div>'
+      +'</div>';
+    return html;
+  }
+
+  function renderMenu(filter){
+    var grid = $('m-grid'); var html='';
+    for(var i=0;i<MENU.length;i++){
+      var it = MENU[i]; var name = it.name.toLowerCase();
+      if(filter && name.indexOf(filter)<0) continue;
+      html += buildCard(it,i);
+    }
+    grid.innerHTML = html;
+    renderSummary();
+  }
+
+  function renderCart(){
+    var list=$('m-cartList'), total=0, rows='';
+    for(var name in cart){
+      if(!Object.prototype.hasOwnProperty.call(cart,name)) continue;
+      var v=cart[name]; total+=v.price*v.qty;
+      rows+='<div style="display:flex;gap:8px;justify-content:space-between;align-items:center">'
+           +  '<span>'+name+' ×'+v.qty+'</span>'
+           +  '<b>'+money(v.price*v.qty)+'</b>'
+           +'</div>';
+    }
+    list.innerHTML=rows; $('m-cartTotal').textContent=money(total);
+    var d=$('m-dorm'); $('m-pickup').textContent='Nhận tại quầy '+(d?d.value:'KTX A');
+    var cD=$('m-ctaDorm'), cP=$('m-ctaPhone'); if(cD) cD.textContent=(d&&d.value||'KTX A').replace('KTX ','')||'A'; if(cP) cP.textContent=($('m-phone')&&$('m-phone').value)||'—';
+  }
+
+  function openFull(){
+    var hostMain = document.querySelector('main'); if(hostMain) hostMain.style.display='none';
+    full.hidden=false;
+    window.scrollTo(0,0);
+  }
+  function closeFull(){
+    full.hidden=true;
+    var hostMain = document.querySelector('main'); if(hostMain) hostMain.style.display='';
+  }
+
+  function validateAddress(a){ return /^Lô\s+[A-Za-z]\d{1,2}-\d{2}$/.test((a||'').trim()); }
+  function validatePhone(p){ p=(p||'').trim(); var d=p.replace(/\D/g,''); if(p.indexOf('+84')===0) return d.length===11||d.length===12; if(p.charAt(0)==='0') return d.length===10||d.length===11; return false; }
+  function encodeForm(o){ var s=[]; for(var k in o){ if(Object.prototype.hasOwnProperty.call(o,k)) s.push(encodeURIComponent(k)+'='+encodeURIComponent(o[k])); } return s.join('&'); }
+
+  function submit(){
+    var name=$('m-name'), addr=$('m-addr'), phone=$('m-phone'), dorm=$('m-dorm'), day=$('m-day');
+    name.classList.remove('invalid'); addr.classList.remove('invalid'); phone.classList.remove('invalid');
+    var ok=true;
+    if(!name.value||!name.value.trim()){ name.classList.add('invalid'); ok=false; }
+    if(!validateAddress(addr.value)){ addr.classList.add('invalid'); ok=false; alert('Sai định dạng Lô. Ví dụ: Lô A10-26'); }
+    if(!validatePhone(phone.value)){ phone.classList.add('invalid'); ok=false; alert('SĐT không hợp lệ'); }
+    if(!ok) return;
+    var url=window.GAS_MEALS_URL||''; if(!url){ alert('https://script.google.com/macros/s/AKfycbzejUFmKCoE_R6qXF5KUyl4If1h_4Qd7YZoh9hUdKOtOvqhNcY75p14QAe55fdpp2msfA/exec'); return; }
+    var payload={ type:'meals', day:(day.value==='0'?'today':'tomorrow'), dorm:dorm.value, name:name.value.trim(), address:addr.value.trim(), phone:phone.value.trim(), items:JSON.stringify(cart), notify:'email,telegram' };
+    try{ fetch(url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'},body:new URLSearchParams(payload).toString()}); alert('Đã gửi đơn.'); }catch(e){ alert('Lỗi: '+e); }
+  }
+
+  // Delegated listeners
+  document.addEventListener('click', function(e){
+    var t=e.target;
+    // mở trang
+    if(t && (t.id==='meal-open' || (t.closest && t.closest('.svc-act[data-kind="buaan"]')))){
+      try{ e.preventDefault(); e.stopImmediatePropagation(); e.stopPropagation(); }catch(_){}
+      location.hash='#buaan'; openFull(); return;
+    }
+    // quay lại
+    if(t && t.id==='meal-back'){ try{ e.preventDefault(); e.stopImmediatePropagation(); e.stopPropagation(); }catch(_){ } closeFull(); return; }
+    // thêm món
+    if(t && (t.matches && t.matches('.btn.add'))){
+      var i = parseInt(t.getAttribute('data-i'),10); var it = MENU[i]; var qEl=$('m-q-'+i); var q=Math.max(1, parseInt(qEl && qEl.value || '1',10));
+      if(!cart[it.name]) cart[it.name]={price:it.price, qty:0}; cart[it.name].qty+=q; renderCart();
+      return;
+    }
+  }, true);
+
+  // search
+  document.addEventListener('input', function(e){
+    if(e.target && e.target.id==='m-search'){
+      var f=(e.target.value||'').trim().toLowerCase(); renderMenu(f);
+    }
+    if(e.target && e.target.id==='m-phone'){ renderCart(); }
+  }, false);
+
+  // toggler + cart actions + day/dorm change
+  document.addEventListener('click', function(e){
+    if(e.target && e.target.id==='m-toggle'){
+      var g=$('m-grid'); if(g.classList.contains('hidden')){ g.classList.remove('hidden'); e.target.textContent='Thu gọn'; } else { g.classList.add('hidden'); e.target.textContent='Hiện menu'; }
+    }
+    if(e.target && e.target.id==='m-clear'){ cart={}; renderCart(); }
+    if(e.target && (e.target.id==='m-order' || e.target.id==='m-order2')){ submit(); }
+  }, false);
+
+  document.addEventListener('change', function(e){
+    if(e.target && (e.target.id==='m-dorm' || e.target.id==='m-day')){
+      renderMenu(); renderCart();
+    }
+  }, false);
+
+  // initial
+  function init(){ renderMenu(); renderCart(); }
+  if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', init); } else { init(); }
+})();
+
+
+// ===== MEAL ANIM ENHANCER =====
+(function(){
+  var full = document.getElementById('meal-fullpage');
+  if(!full) return;
+
+  function onShown(){
+    try{ full.classList.add('anim-enter'); setTimeout(function(){ full.classList.remove('anim-enter'); }, 500); }catch(_){}
+    // Mark major blocks as io targets
+    var targets = full.querySelectorAll('.card, .meal-hero.card, .item');
+    for(var i=0;i<targets.length;i++){ targets[i].classList.add('io'); }
+    // Intersection observer
+    var io;
+    try{
+      io = new IntersectionObserver(function(entries){
+        for(var j=0;j<entries.length;j++){
+          if(entries[j].isIntersecting){
+            entries[j].target.classList.add('in');
+            io.unobserve(entries[j].target);
+          }
+        }
+      },{ root:null, threshold:.08 });
+      var list = full.querySelectorAll('.io');
+      for(var k=0;k<list.length;k++){ io.observe(list[k]); }
+    }catch(_){ // fallback: just reveal
+      var list2 = full.querySelectorAll('.io'); for(var x=0;x<list2.length;x++){ list2[x].classList.add('in'); }
+    }
+
+    // Fade-in images
+    var imgs = full.querySelectorAll('img');
+    for(var m=0;m<imgs.length;m++){
+      (function(img){
+        img.classList.add('fade-img');
+        if(img.complete){ img.classList.add('img-in'); return; }
+        img.addEventListener('load', function(){ img.classList.add('img-in'); }, {once:true});
+        img.addEventListener('error', function(){ img.classList.add('img-in'); }, {once:true});
+      })(imgs[m]);
+    }
+  }
+
+  // Run when the page becomes visible (hidden=false)
+  var mo;
+  try{
+    mo = new MutationObserver(function(muts){
+      for(var i=0;i<muts.length;i++){
+        if(muts[i].attributeName==='hidden'){
+          var isHidden = full.hasAttribute('hidden');
+          if(!isHidden){ onShown(); }
+        }
+      }
+    });
+    mo.observe(full, { attributes:true });
+  }catch(_){}
+
+  // In case it's already visible
+  if(!full.hasAttribute('hidden')) onShown();
+
+  // When menu re-renders, attach io and fade to new items
+  var grid = document.getElementById('m-grid');
+  if(grid){
+    try{
+      var mo2 = new MutationObserver(function(muts){
+        for(var i=0;i<muts.length;i++){
+          var nodes = muts[i].addedNodes || [];
+          for(var j=0;j<nodes.length;j++){
+            var n = nodes[j];
+            if(n.nodeType===1){
+              if(n.classList.contains('item')){
+                n.classList.add('io');
+                if(typeof IntersectionObserver!=='undefined'){
+                  var obs = new IntersectionObserver(function(es,ob){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); ob.unobserve(e.target); } }); }, {threshold:.08});
+                  obs.observe(n);
+                }else{ n.classList.add('in'); }
+                var img = n.querySelector('img'); if(img){ img.classList.add('fade-img'); if(img.complete){ img.classList.add('img-in'); } else { img.addEventListener('load', function(){ img.classList.add('img-in'); }, {once:true}); } }
+              }
+            }
+          }
+        }
+      });
+      mo2.observe(grid, { childList:true });
+    }catch(_){}
+  }
+})();
