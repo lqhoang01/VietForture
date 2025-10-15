@@ -11,7 +11,7 @@ window.GAS_MEALS_URL = "https://script.google.com/macros/s/AKfycbyqRIyJrD5zrwyzZ
     home: $('#view-home'),
     about: $('#view-about'),
     dichvu: $('#view-dichvu'),
-    luutru: $('#view-luutru'),           // ✅ thêm để router tới Lưu trú v2
+    luutru: $('#view-luutru'),           
     tuyendung: $('#view-tuyendung'),
     tintuc: $('#view-tintuc'),
     tindung: $('#view-tindung'),
@@ -277,6 +277,8 @@ window.GAS_MEALS_URL = "https://script.google.com/macros/s/AKfycbyqRIyJrD5zrwyzZ
       };
       function handleHashForServices(){
         const h = (location.hash||'').replace(/^#/,'');
+        if(h==='buaan'){ try{ openFull(); }catch(_){ } return; }
+        try{ if(typeof closeFull==='function') closeFull(); }catch(_){ }
         if(h==='buaan'){ try{ openFull(); }catch(_){ } return; }
         if(h==='services' || h==='credit'){ show('tindung'); return; }
         if(h==='stay'){ show('luutru'); return; }
@@ -2545,7 +2547,7 @@ function openZaloOA() {
     // mở trang
     if(t && (t.id==='meal-open' || (t.closest && t.closest('.svc-act[data-kind="buaan"]')))){
       try{ e.preventDefault(); e.stopImmediatePropagation(); e.stopPropagation(); }catch(_){}
-      location.hash='#buaan'; openFull(); return;
+      location.hash='#buaan'; location.hash='#buaan'; openFull(); return;
     }
     // quay lại
     if(t && t.id==='meal-back'){ try{ e.preventDefault(); e.stopImmediatePropagation(); e.stopPropagation(); }catch(_){ } closeFull(); return; }
