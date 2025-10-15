@@ -1,3 +1,22 @@
+
+/* ==== FORCE #buaan ON DIRECT LOAD ==== */
+(function(){
+  function openIfBuaAn(){
+    if ((location.hash||'').replace(/^#/,'') !== 'buaan') return false;
+    var host = document.getElementById('meal-fullpage');
+    if (!host) return false;
+    try { if (typeof openFull === 'function') openFull(); } catch(_){}
+    return true;
+  }
+  if ((location.hash||'').replace(/^#/,'') === 'buaan') {
+    var t0 = Date.now();
+    var timer = setInterval(function(){
+      if (openIfBuaAn() || Date.now() - t0 > 3000) clearInterval(timer);
+    }, 60);
+    document.addEventListener('DOMContentLoaded', openIfBuaAn, {once:true});
+  }
+})();
+
 // Auto-injected config
 window.GAS_MEALS_URL = "https://script.google.com/macros/s/AKfycbyqRIyJrD5zrwyzZ4Idd3_RzlWiCUHooUsjbqS7jG7Tzk3xMrVO7om0xfM3lbvUpd-hwg/exec";
 
@@ -11,7 +30,7 @@ window.GAS_MEALS_URL = "https://script.google.com/macros/s/AKfycbyqRIyJrD5zrwyzZ
     home: $('#view-home'),
     about: $('#view-about'),
     dichvu: $('#view-dichvu'),
-    luutru: $('#view-luutru'),           
+    luutru: $('#view-luutru'),           // ✅ thêm để router tới Lưu trú v2
     tuyendung: $('#view-tuyendung'),
     tintuc: $('#view-tintuc'),
     tindung: $('#view-tindung'),
