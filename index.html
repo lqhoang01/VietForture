@@ -20,6 +20,8 @@
   <meta name="twitter:title" content="CÔNG TY CỔ PHẦN VIỆT THỊNH VƯỢNG">
   <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Organization", "name": "CÔNG TY CỔ PHẦN VIỆT THỊNH VƯỢNG", "url": "https://www.vietforture.com.vn/", "email": "vietforture@gmail.com", "telephone": "028 3782 2239", "address": {"@type": "PostalAddress", "streetAddress": "Lô Số A18-22, Số 10, Đường Số 13, Kdc Nhơn Đức, Xã Nhà Bè, Huyện Nhà Bè, Thành phố Hồ Chí Minh, Việt Nam"}}</script>
   <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FinancialService", "name": "CÔNG TY CỔ PHẦN VIỆT THỊNH VƯỢNG", "url": "https://www.vietforture.com.vn/", "areaServed": "Vietnam", "telephone": "028 3782 2239", "address": {"@type": "PostalAddress", "streetAddress": "Lô Số A18-22, Số 10, Đường Số 13, Kdc Nhơn Đức, Xã Nhà Bè, Huyện Nhà Bè, Thành phố Hồ Chí Minh, Việt Nam"}}</script>
+
+  <script>window.GAS_MEALS_URL="https://script.google.com/macros/s/AKfycbzejUFmKCoE_R6qXF5KUyl4If1h_4Qd7YZoh9hUdKOtOvqhNcY75p14QAe55fdpp2msfA/exec"</script>
 </head>
 
 <body>
@@ -250,13 +252,13 @@
             </div>
           </article>
 
-          <article class="svc-tile" data-nav="thongbao" tabindex="0" role="button" aria-label="Mở Thông báo">
-            <div class="svc-tile__ico">🔔</div>
-            <h3 class="svc-tile__title">Thông Báo</h3>
-            <p class="svc-tile__sub">Lãi suất hôm nay · Phòng trống · Tin mới</p>
+          <article class="svc-tile" data-nav="buaan" tabindex="0" role="button" aria-label="Mở Thông báo">
+            <div class="svc-tile__ico">🍱</div>
+            <h3 class="svc-tile__title">Bữa Ăn</h3>
+            <p class="svc-tile__sub">Đặt suất ăn cho KTX</p>
             <div class="svc-acts">
-              <button class="btn primary svc-act" type="button" data-action="news">Xem tin</button>
-            </div>
+<a id="meal-open" class="btn primary svc-act" data-kind="buaan" type="button" href="#buaan">Vào menu</a>
+</div>
           </article>
         </div>
       </div>
@@ -1588,6 +1590,103 @@
 </div>
 <!-- ========== /VIETBOT Intro v12 ========== -->
 
+
+
+
+<!-- ===== FULLPAGE: BỮA ĂN (Canvas Demo) ===== -->
+    <div id="meal-fullpage" hidden>
+      <header class="mealbar">
+        <div class="mealbar__left">
+          <button id="meal-back" class="btn ghost" type="button">← Quay lại</button>
+        </div>
+        <h1 class="mealbar__title">Bữa Ăn KTX</h1>
+        <div class="mealbar__right"></div>
+      </header>
+
+      <main class="mealwrap">
+        <!-- Hero + Toolbar -->
+        
+<section class="meal-hero card hero-red io card">
+  <div class="hero-left">
+    <span class="eyebrow">Đặt suất ăn</span>
+    <h2 class="hero-title">Bữa Ăn KTX</h2>
+    <p class="hero-sub">Chọn món nhanh · Nhận tại quầy · Thanh toán QR</p>
+    <div class="meal-badges">
+      <span class="badge">Suất chuẩn 30k</span>
+      <span class="badge">Có thực đơn chay</span>
+      <span class="badge">Theo ngày</span>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="tools">
+      <select id="m-day" class="input"><option value="0">Hôm nay</option><option value="1">Ngày mai</option></select>
+      <select id="m-dorm" class="input"><option>KTX A</option><option>KTX B</option></select>
+      <button id="m-toggle" class="btn ghost" type="button">Hiện menu</button>
+    </div>
+  </div>
+</section>
+
+
+        <!-- Summary -->
+        <section class="card">
+          <div class="head">
+            <h3>Tình trạng món</h3>
+          </div>
+          <div id="m-summary" class="summary"></div>
+        </section>
+
+        <!-- Menu Grid -->
+        <section class="card">
+          <div class="head">
+            <h3>Menu hôm nay</h3>
+            <div class="right">
+              <input id="m-search" class="input" placeholder="Tìm món…">
+            </div>
+          </div>
+          <div id="m-grid" class="grid hidden"></div>
+        </section>
+
+        <!-- Cart -->
+        <section class="card">
+          <div class="head">
+            <h3>Giỏ hàng</h3>
+            <div class="right">
+              <button id="m-clear" class="btn ghost" type="button">Xóa giỏ</button>
+              <button id="m-order" class="btn" type="button">Đặt món</button>
+            </div>
+          </div>
+          <div class="cart">
+            <div id="m-cartList" class="cart-list"></div>
+            <div class="cart-total"><span>Tổng</span><span id="m-cartTotal">0</span></div>
+            <p id="m-pickup" class="sub">Nhận tại quầy KTX A</p>
+          </div>
+        </section>
+
+        <!-- Info -->
+        <section class="card">
+          <div class="head"><h3>Thông tin nhận</h3></div>
+          <div class="form-grid">
+            <label>Họ và tên <span class="req">*</span><input id="m-name" class="input" placeholder="Nguyễn Văn A"></label>
+            <label>Số nhà / Lô <span class="req">*</span><input id="m-addr" class="input" placeholder="Lô A10-26"><small class="hint">Định dạng bắt buộc: Lô A10-26</small></label>
+            <label>Số điện thoại <span class="req">*</span><input id="m-phone" class="input" placeholder="0901234567"></label>
+          </div>
+          <div class="cta">
+            <div>
+              <div class="cta-title">Xác nhận thông tin nhận</div>
+              <div class="sub">KTX <span id="m-ctaDorm">A</span> · SĐT <span id="m-ctaPhone">—</span></div>
+            </div>
+            <div class="cta-actions">
+              <button id="m-order2" class="btn" type="button">Xác nhận &amp; Đặt món</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Footer notes -->
+        <section class="footnote">
+          <p class="sub">Lưu ý: Tất cả món mặn 30.000. Canh giữ nguyên giá. Nếu hết món, bếp sẽ liên hệ trực tiếp.</p>
+        </section>
+      </main>
+    </div>
 
 </body>
 </html>
