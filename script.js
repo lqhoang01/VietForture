@@ -1,22 +1,3 @@
-
-/* ==== FORCE #buaan ON DIRECT LOAD ==== */
-(function(){
-  function openIfBuaAn(){
-    if ((location.hash||'').replace(/^#/,'') !== 'buaan') return false;
-    var host = document.getElementById('meal-fullpage');
-    if (!host) return false;
-    try { if (typeof openFull === 'function') openFull(); } catch(_){}
-    return true;
-  }
-  if ((location.hash||'').replace(/^#/,'') === 'buaan') {
-    var t0 = Date.now();
-    var timer = setInterval(function(){
-      if (openIfBuaAn() || Date.now() - t0 > 3000) clearInterval(timer);
-    }, 60);
-    document.addEventListener('DOMContentLoaded', openIfBuaAn, {once:true});
-  }
-})();
-
 // Auto-injected config
 window.GAS_MEALS_URL = "https://script.google.com/macros/s/AKfycbyqRIyJrD5zrwyzZ4Idd3_RzlWiCUHooUsjbqS7jG7Tzk3xMrVO7om0xfM3lbvUpd-hwg/exec";
 
@@ -296,27 +277,6 @@ window.GAS_MEALS_URL = "https://script.google.com/macros/s/AKfycbyqRIyJrD5zrwyzZ
       };
       function handleHashForServices(){
         const h = (location.hash||'').replace(/^#/,'');
-        if(h==='buaan'){ try{ openFull(); }catch(_){ } return; }
-if(/^credit(\/|$)/.test(h)){
-  try{ show('tindung'); }catch(_){}
-  if(h!=='credit'){ try{ renderDetail(h); }catch(_){} }
-  return;
-}
-if(/^stay(\/|$)/.test(h)){
-  try{ show('luutru'); }catch(_){}
-  if(h!=='stay'){ try{ renderDetail(h); }catch(_){} }
-  return;
-}
-if(h==='services'){ show('tindung'); return; }
-if(h==='credit'){ show('tindung'); return; }
-if(h==='stay'){ show('luutru'); return; }
-if(h==='news'){ show('tintuc'); return; }
-try{ if(typeof closeFull==='function') closeFull(); }catch(_){ }}catch(_){ } return; }
-try{ if(typeof closeFull==='function') closeFull(); }catch(_){ }
-if(h==='services' || h==='credit'){ show('tindung'); return; }
-if(h==='stay'){ show('luutru'); return; }
-if(h==='news'){ show('tintuc'); return; }}catch(_){ } return; }
-        try{ if(typeof closeFull==='function') closeFull(); }catch(_){ }
         if(h==='buaan'){ try{ openFull(); }catch(_){ } return; }
         if(h==='services' || h==='credit'){ show('tindung'); return; }
         if(h==='stay'){ show('luutru'); return; }
@@ -2585,7 +2545,7 @@ function openZaloOA() {
     // mở trang
     if(t && (t.id==='meal-open' || (t.closest && t.closest('.svc-act[data-kind="buaan"]')))){
       try{ e.preventDefault(); e.stopImmediatePropagation(); e.stopPropagation(); }catch(_){}
-      location.hash='#buaan'; location.hash='#buaan'; openFull(); return;
+      location.hash='#buaan'; openFull(); return;
     }
     // quay lại
     if(t && t.id==='meal-back'){ try{ e.preventDefault(); e.stopImmediatePropagation(); e.stopPropagation(); }catch(_){ } closeFull(); return; }
