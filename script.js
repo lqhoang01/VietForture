@@ -297,6 +297,25 @@ window.GAS_MEALS_URL = "https://script.google.com/macros/s/AKfycbyqRIyJrD5zrwyzZ
       function handleHashForServices(){
         const h = (location.hash||'').replace(/^#/,'');
         if(h==='buaan'){ try{ openFull(); }catch(_){ } return; }
+if(/^credit(\/|$)/.test(h)){
+  try{ show('tindung'); }catch(_){}
+  if(h!=='credit'){ try{ renderDetail(h); }catch(_){} }
+  return;
+}
+if(/^stay(\/|$)/.test(h)){
+  try{ show('luutru'); }catch(_){}
+  if(h!=='stay'){ try{ renderDetail(h); }catch(_){} }
+  return;
+}
+if(h==='services'){ show('tindung'); return; }
+if(h==='credit'){ show('tindung'); return; }
+if(h==='stay'){ show('luutru'); return; }
+if(h==='news'){ show('tintuc'); return; }
+try{ if(typeof closeFull==='function') closeFull(); }catch(_){ }}catch(_){ } return; }
+try{ if(typeof closeFull==='function') closeFull(); }catch(_){ }
+if(h==='services' || h==='credit'){ show('tindung'); return; }
+if(h==='stay'){ show('luutru'); return; }
+if(h==='news'){ show('tintuc'); return; }}catch(_){ } return; }
         try{ if(typeof closeFull==='function') closeFull(); }catch(_){ }
         if(h==='buaan'){ try{ openFull(); }catch(_){ } return; }
         if(h==='services' || h==='credit'){ show('tindung'); return; }
