@@ -1,40 +1,31 @@
-name: Deploy Website v31
+name: Deploy to GitHub Pages
 
 on:
   push:
-    branches:
-      - main   # deploy khi push lên nhánh main
-  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
-  build-deploy:
+  deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout source
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      # Nếu có thư mục build khác, đổi path ở bước upload
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          node-version: 20
-
-      - name: Install dependencies
-        run: |
-          npm install -g serve
-          echo "No deps for static site, just HTML/CSS/JS"
-
-      - name: Build (optional)
-        run: |
-          mkdir dist
-          cp index.v31.html dist/index.html
-          cp style.v31.css dist/style.css
-          cp script.v31.js dist/script.js
-          cp -r img dist/img
+          path: "."
 
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-          publish_branch: gh-pages
+        uses: actions/deploy-pages@v4
