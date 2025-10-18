@@ -1,5 +1,3 @@
-// Auto-injected config
-window.GAS_MEALS_URL = "https://script.google.com/macros/s/AKfycbyqRIyJrD5zrwyzZ4Idd3_RzlWiCUHooUsjbqS7jG7Tzk3xMrVO7om0xfM3lbvUpd-hwg/exec";
 
 (function () {
   const $  = (sel, ctx=document) => ctx.querySelector(sel);
@@ -277,7 +275,6 @@ window.GAS_MEALS_URL = "https://script.google.com/macros/s/AKfycbyqRIyJrD5zrwyzZ
       };
       function handleHashForServices(){
         const h = (location.hash||'').replace(/^#/,'');
-        if(h==='buaan'){ try{ openFull(); }catch(_){ } return; }
         if(h==='services' || h==='credit'){ show('tindung'); return; }
         if(h==='stay'){ show('luutru'); return; }
         if(h==='news'){ show('tintuc'); return; }
@@ -399,8 +396,7 @@ window.GAS_MEALS_URL = "https://script.google.com/macros/s/AKfycbyqRIyJrD5zrwyzZ
     // Hash router (modal)
     function handleHashForServices(){
       const h = (location.hash||'').replace(/^#/,'');
-      if(h==='buaan'){ try{ openFull(); }catch(_){ } return; }
-        if(h==='services'){ openSvc('credit'); return; }
+      if(h==='services'){ openSvc('credit'); return; }
       if(h==='credit'){ openSvc('credit'); return; }
       if(h==='stay'){ openSvc('stay'); return; }
       if(h==='news'){ show('tintuc'); return; }
@@ -1078,8 +1074,7 @@ window.GAS_MEALS_URL = "https://script.google.com/macros/s/AKfycbyqRIyJrD5zrwyzZ
 
   // hiển thị intro 1 lần mỗi phiên
   const KEY = 'vf_vietbot_seen';
-  if(sessionStorage.getItem(KEY)) { attachMiniIcon(); return; }
-
+  try{ attachMiniIcon(); sessionStorage.setItem(KEY,'1'); return; }catch(_){}
   intro.classList.add('is-on');
   svg.classList.add('vb-in');
   const shadow = intro.querySelector('.vietbot-shadow');
@@ -1730,8 +1725,7 @@ window.GAS_MEALS_URL = "https://script.google.com/macros/s/AKfycbyqRIyJrD5zrwyzZ
   document.getElementById('vfChatBtn')?.addEventListener('click', ()=>setTimeout(async ()=>{
     if(!panel || !panel.classList.contains('is-open')) return;
     if(sessionStorage.getItem(PANEL_KEY)) { injectChips(); return; }
-    const h = Number(new Intl.DateTimeFormat('vi-VN',{hour:'numeric',hour12:false,timeZone:'Asia/Ho_Chi_Minh'}).format(new Date()));
-    const hint = h>=18 ? 'Buổi tối thường xem phòng và đặt lịch tư vấn. Bạn cần gì?' : 'Tôi là VIETBOT. Chọn:';
+    const h = Number(new Intl.DateTimeFormat('vi-VN',{hour:'numeric',hour12:false,timeZone:'Asia/Ho_Chi_Minh'}).format(new Date())); const greet = (h>=5&&h<=10)?'Chào buổi sáng':(h>=11&&h<=13)?'Chào buổi trưa':(h>=14&&h<=17)?'Chào buổi chiều':'Chào buổi tối'; const hint = greet + '. Tôi là VIETBOT. Chọn:';
     await addTyping(600+Math.random()*300);
     addMsg(hint);
     injectChips();
@@ -1961,7 +1955,7 @@ window.GAS_MEALS_URL = "https://script.google.com/macros/s/AKfycbyqRIyJrD5zrwyzZ
     if(!panel || !panel.classList.contains('is-open')) return;
     if(sessionStorage.getItem(PANEL_KEY)) { injectChips(); return; }
     await addTyping(650);
-    addMsg('Tôi là VIETBOT. Chọn: Tín dụng · Lưu trú · Tuyển dụng · Chat trực tiếp');
+    addMsg(greetVN()+'. Tôi là VIETBOT. Chọn: Tín dụng · Lưu trú · Tuyển dụng · Chat trực tiếp');
     injectChips();
     sessionStorage.setItem(PANEL_KEY,'1');
   },120));
@@ -2471,22 +2465,23 @@ function openZaloOA() {
     $('m-summary').innerHTML = '<strong>Tình trạng:</strong> '+pills.join(' ');
   }
 
-  function buildCard(it, idx){
-    var seed = slug(it.name);
-    var html = ''
-      +'<div class="item" data-i="'+idx+'">'
-      +'  <img alt="'+it.name+'" src="https://picsum.photos/seed/'+seed+'/600/400" style="width:100%;border-radius:12px" />'
-      +'  <h4>'+it.name+'</h4>'
-      +'  <div class="controls">'
-      +'    <span class="price">'+money(it.price)+'</span>'
-      +'    <input class="input" id="m-q-'+idx+'" type="number" min="1" value="1" style="width:80px;margin-left:auto" />'
-      +'    <button class="btn add" data-i="'+idx+'">Thêm</button>'
-      +'  </div>'
-      +'</div>';
-    return html;
-  }
-
-  function renderMenu(filter){
+  
+function buildCard(it, idx){
+  var seed = slug(it.name);
+  var img = it.img || (slug(it.name)+'.jpg');
+  var html = ''
+    +'<div class="item" data-i="'+idx+'">'
+    +'  <img alt="'+it.name+'" src="'+img+'" style="width:100%;border-radius:12px" />'
+    +'  <h4>'+it.name+'</h4>'
+    +'  <div class="controls">'
+    +'    <span class="price">'+money(it.price)+'</span>'
+    +'    <input class="input" id="m-q-'+idx+'" type="number" min="1" value="1" style="width:80px;margin-left:auto" />'
+    +'    <button class="btn add" data-i="'+idx+'">Thêm</button>'
+    +'  </div>'
+    +'</div>';
+  return html;
+}
+function renderMenu(filter){
     var grid = $('m-grid'); var html='';
     for(var i=0;i<MENU.length;i++){
       var it = MENU[i]; var name = it.name.toLowerCase();
@@ -2534,9 +2529,9 @@ function openZaloOA() {
     if(!validateAddress(addr.value)){ addr.classList.add('invalid'); ok=false; alert('Sai định dạng Lô. Ví dụ: Lô A10-26'); }
     if(!validatePhone(phone.value)){ phone.classList.add('invalid'); ok=false; alert('SĐT không hợp lệ'); }
     if(!ok) return;
-    var url=window.GAS_MEALS_URL||''; if(!url){ alert('https://script.google.com/macros/s/AKfycbzejUFmKCoE_R6qXF5KUyl4If1h_4Qd7YZoh9hUdKOtOvqhNcY75p14QAe55fdpp2msfA/exec'); return; }
+    var url=window.GAS_MEALS_URL||''; if(!url){ alert('Thiếu GAS URL'); return; }
     var payload={ type:'meals', day:(day.value==='0'?'today':'tomorrow'), dorm:dorm.value, name:name.value.trim(), address:addr.value.trim(), phone:phone.value.trim(), items:JSON.stringify(cart), notify:'email,telegram' };
-    try{ fetch(url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'},body:new URLSearchParams(payload).toString()}); alert('Đã gửi đơn.'); }catch(e){ alert('Lỗi: '+e); }
+    try{ fetch(url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:encodeForm(payload)}); alert('Đã gửi đơn.'); location.hash=ROUTE_HOME; }catch(e){ alert('Lỗi: '+e); }
   }
 
   // Delegated listeners
@@ -2545,7 +2540,7 @@ function openZaloOA() {
     // mở trang
     if(t && (t.id==='meal-open' || (t.closest && t.closest('.svc-act[data-kind="buaan"]')))){
       try{ e.preventDefault(); e.stopImmediatePropagation(); e.stopPropagation(); }catch(_){}
-      location.hash='#buaan'; openFull(); return;
+      openFull(); return;
     }
     // quay lại
     if(t && t.id==='meal-back'){ try{ e.preventDefault(); e.stopImmediatePropagation(); e.stopPropagation(); }catch(_){ } closeFull(); return; }
@@ -2668,3 +2663,66 @@ function openZaloOA() {
     }catch(_){}
   }
 })();
+
+// === KTX meals router core ===
+(function(){
+  var ROUTE_MEALS = '#buaan';
+  var ROUTE_HOME  = '#luutru';
+  function $(id){ return document.getElementById(id); }
+  function openMeals(){ var full=$('meal-fullpage'); if(full){ full.hidden=false; var g=$('m-grid'); if(g) g.classList.remove('hidden'); var t=$('m-toggle'); if(t) t.textContent='Thu gọn'; try{window.scrollTo(0,0);}catch(e){} } }
+  function closeMeals(){ var full=$('meal-fullpage'); if(full) full.hidden=true; }
+  function route(){ if(location.hash===ROUTE_MEALS){ openMeals(); } else { closeMeals(); } }
+  window.addEventListener('hashchange', route);
+  if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', route); } else { route(); }
+  // FAB click + fallback CTA
+  document.addEventListener('click', function(e){
+    var t=e.target;
+    if(t && t.id==='mealFab'){ e.preventDefault(); location.hash=ROUTE_MEALS; }
+    if(t && t.id==='meal-open'){ e.preventDefault(); location.hash=ROUTE_MEALS; }
+    if(t && t.id==='meal-back'){ e.preventDefault(); location.hash=ROUTE_HOME; }
+  }, true);
+})();
+// Meals FAB visibility
+(function(){
+  var fab = document.getElementById('mealFab');
+  if(!fab) return;
+  function visible(){
+    var v = document.getElementById('view-luutru');
+    var byHash = (location.hash||'').toLowerCase().indexOf('luu')>=0;
+    var byClass = v && (/\b(is-visible|active|show)\b/.test(v.className) || (v.offsetWidth>0 && v.offsetHeight>0));
+    fab.style.display = (byHash || byClass) ? 'grid' : 'none';
+  }
+  window.addEventListener('hashchange', visible);
+  document.addEventListener('DOMContentLoaded', function(){ setTimeout(visible, 60); });
+  if(window.MutationObserver){
+    var v = document.getElementById('view-luutru');
+    if(v){ new MutationObserver(visible).observe(v,{attributes:true,attributeFilter:['class','style']}); }
+  }
+})();
+// Notify button for Meals in Services
+document.addEventListener('click', function(e){
+  if(e.target && (e.target.id==='svcNotifyMeals' || (e.target.closest && e.target.closest('#svcNotifyMeals')))){
+    try{ e.preventDefault(); e.stopPropagation(); }catch(_){}
+    alert('Đặt bữa ăn đã chuyển về mục Lưu trú. Dùng nút 🍱 góc phải để mở panel Bữa ăn.');
+  }
+}, true);
+
+
+// Intercept 'Bữa ăn' tile in Services to show notification instead of opening
+document.addEventListener('click', function svcActInterceptMeals(e){
+  var t = e.target && (e.target.closest ? e.target.closest('.svc-act[data-kind="buaan"]') : null);
+  if(t){
+    try{ e.preventDefault(); e.stopPropagation(); e.stopImmediatePropagation(); }catch(_){}
+    alert('Đặt bữa ăn đã chuyển về mục Lưu trú. Dùng nút 🍱 góc phải để mở panel Bữa ăn.');
+  }
+}, true);
+
+
+// Services: notify tile action
+document.addEventListener('click', function(e){
+  var t = e.target && (e.target.id==='notify-open' ? e.target : (e.target.closest ? e.target.closest('#notify-open') : null));
+  if(t){
+    try{ e.preventDefault(); e.stopPropagation(); }catch(_){}
+    alert('Đặt bữa ăn đã chuyển về mục Lưu trú. Dùng nút 🍱 góc phải để mở panel Bữa Ăn.');
+  }
+}, true);
