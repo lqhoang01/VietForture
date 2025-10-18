@@ -1239,7 +1239,7 @@ details.acc[open] summary{background:#fff7f7;border-bottom:1px solid #ffe2e5}
 /* === Floating Chatbot === */
 .vfchat{position:fixed;right:16px;bottom:16px;z-index:2500}
 .vfchat-btn{width:56px;height:56px;border-radius:16px;border:0;background:#c1121f;color:#fff;font-size:22px;box-shadow:0 14px 32px rgba(193,18,31,.35);cursor:pointer}
-.vfchat-panel{position:absolute;right:0;bottom:70px;width:min(360px,92vw);height:420px;background:#fff;border:1px solid #eef2f7;border-radius:18px;box-shadow:0 24px 64px rgba(2,6,23,.22);display:none;overflow:hidden}
+.vfchat-panel{position:absolute;right:0;bottom:70px;width:min(360px,92vw);height:auto;max-height:min(560px,70vh);background:#fff;border:1px solid #eef2f7;border-radius:18px;box-shadow:0 24px 64px rgba(2,6,23,.22);display:none;overflow:hidden}
 .vfchat-panel.is-open{display:flex;flex-direction:column}
 .vfchat-head{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-bottom:1px solid #eef2f7;background:linear-gradient(180deg,#fff,#fff7f7)}
 .vfchat-close{border:0;background:#fff;color:#c1121f;border:1px solid #ffd6db;border-radius:10px;padding:4px 10px;cursor:pointer}
@@ -2075,3 +2075,48 @@ svg#vietbotSVG #vbHand{transform-origin:184px 152px}
   color:var(--ink);
 }
 
+
+#view-dichvu article[data-nav="thongbao"]{display:block!important}
+
+/* Meals FAB v2 */
+.meal-fab{position:fixed;right:16px;bottom:110px;width:56px;height:56px;border-radius:50%;
+  border:0;background:#c1121f;color:#fff;font-size:26px;display:grid;place-items:center;
+  box-shadow:0 14px 34px rgba(193,18,31,.28);z-index:5000;cursor:pointer;pointer-events:auto}
+.meal-fab:hover{transform:translateY(-2px);box-shadow:0 20px 50px rgba(193,18,31,.32)}
+.meal-fab:active{transform:translateY(0)}
+
+#meal-fullpage{position:fixed;inset:0;z-index:2147483647;background:#f8fafc}
+#meal-fullpage[hidden]{display:none}
+
+/* Zalo icon synced with Facebook */
+.zalo{width:44px;height:44px;border-radius:12px;background:#ffffff12;display:inline-flex;align-items:center;justify-content:center;position:relative;text-decoration:none}
+.zalo svg{width:20px;height:20px;display:block}
+.zalo .label{position:absolute;bottom:-16px;left:50%;transform:translateX(-50%);font-size:11px;opacity:.9;color:#ffd6db;white-space:nowrap}
+
+/* Zalo icon synced with Facebook */
+.zalo{width:44px;height:44px;border-radius:12px;background:#ffffff12;display:inline-flex;align-items:center;justify-content:center;position:relative;text-decoration:none}
+.zalo svg{width:20px;height:20px;display:block}
+.zalo .label{position:absolute;bottom:-16px;left:50%;transform:translateX(-50%);font-size:11px;opacity:.9;color:#ffd6db;white-space:nowrap}
+
+
+/* Badges for Lưu trú after removing prices */
+.sv2-badge{
+  display:inline-block;
+  padding:.25rem .5rem;
+  border:1px solid var(--line, #eef2f7);
+  border-radius:999px;
+  font-size:.875rem;
+  background:#fff;
+}
+.sv2-meta{ display:flex; gap:.5rem; align-items:center; flex-wrap:wrap; }
+
+/* Override chat body flex to reduce whitespace */
+.vfchat-body{flex:unset;max-height:min(440px,60vh);}
+
+/* Nút thông báo thay cho 'Bữa ăn' ở Dịch vụ */
+.svc-notify{display:inline-flex;align-items:center;gap:6px;border:1px dashed #c1121f;background:#fffbea;color:#7c2d12;
+  padding:8px 12px;border-radius:12px;cursor:pointer;box-shadow:0 2px 8px rgba(2,6,23,.06);}
+.svc-notify .icon{font-size:18px;line-height:1;}
+.svc-notify:active{transform:translateY(1px);}
+
+.svc-act h3 .icon{margin-right:6px}
