@@ -1148,11 +1148,9 @@
   // chào theo giờ VN
   function greetVN(){
     const now = new Date();
-    const hourVN = Number(new Intl.DateTimeFormat('en-US', {
-      hour: 'numeric', hour12: false, timeZone: 'Asia/Ho_Chi_Minh'
-    }).format(now));
+    let hourVN = Number(new Intl.DateTimeFormat('en-US', {hour: 'numeric', hour12: false, timeZone: 'Asia/Ho_Chi_Minh'}).format(now)); if(Number.isNaN(hourVN)){ const tzNow = new Date(now.toLocaleString('en-US',{timeZone:'Asia/Ho_Chi_Minh'})); hourVN = tzNow.getHours(); }
 
-    const buoi = hourVN < 12 ? 'buổi sáng' : (hourVN < 18 ? 'buổi chiều' : 'buổi tối');
+    const buoi = (hourVN>=5&&hourVN<=10)?'buổi sáng':(hourVN>=11&&hourVN<=13)?'buổi trưa':(hourVN>=14&&hourVN<=17)?'buổi chiều':'buổi tối';
     return `Chào ${buoi}! Tôi là VIETBOT.`;
   }
 
@@ -1198,7 +1196,7 @@
 
   // 1) Lời chào theo giờ Việt Nam
   function vnGreeting(){
-    const h = Number(new Intl.DateTimeFormat('en-US',{hour:'numeric',hour12:false,timeZone:'Asia/Ho_Chi_Minh'}).format(new Date()));
+    let h = Number(new Intl.DateTimeFormat('en-US',{hour:'numeric',hour12:false,timeZone:'Asia/Ho_Chi_Minh'}).format(new Date())); if(Number.isNaN(h)){ const tzNow = new Date(new Date().toLocaleString('en-US',{timeZone:'Asia/Ho_Chi_Minh'})); h = tzNow.getHours(); }
     const buoi = h < 12 ? 'SÁNG' : (h < 18 ? 'CHIỀU' : 'TỐI');
     return `VIETFORTURE CHÀO BUỔI ${buoi}`;
     // nếu muốn: + ` — Tôi là VIETBOT`
@@ -1282,7 +1280,7 @@
 
   // chào theo giờ VN
   function vnGreeting(){
-    const h = Number(new Intl.DateTimeFormat('en-US',{hour:'numeric',hour12:false,timeZone:'Asia/Ho_Chi_Minh'}).format(new Date()));
+    let h = Number(new Intl.DateTimeFormat('en-US',{hour:'numeric',hour12:false,timeZone:'Asia/Ho_Chi_Minh'}).format(new Date())); if(Number.isNaN(h)){ const tzNow = new Date(new Date().toLocaleString('en-US',{timeZone:'Asia/Ho_Chi_Minh'})); h = tzNow.getHours(); }
     const buoi = h < 12 ? 'SÁNG' : (h < 18 ? 'CHIỀU' : 'TỐI');
     return `VIETFORTURE CHÀO BUỔI ${buoi}`;
   }
@@ -1365,7 +1363,7 @@
   const KEY='vf_vietbot_seen_v10'; sessionStorage.removeItem(KEY);
 
   function vnGreeting(){
-    const h = Number(new Intl.DateTimeFormat('en-US',{hour:'numeric',hour12:false,timeZone:'Asia/Ho_Chi_Minh'}).format(new Date()));
+    let h = Number(new Intl.DateTimeFormat('en-US',{hour:'numeric',hour12:false,timeZone:'Asia/Ho_Chi_Minh'}).format(new Date())); if(Number.isNaN(h)){ const tzNow = new Date(new Date().toLocaleString('en-US',{timeZone:'Asia/Ho_Chi_Minh'})); h = tzNow.getHours(); }
     const buoi = h < 12 ? 'SÁNG' : (h < 18 ? 'CHIỀU' : 'TỐI');
     return `VIETFORTURE CHÀO BUỔI ${buoi}`;
   }
@@ -1506,8 +1504,8 @@
   // 1) Bubble trên robot: "VIETFORTURE chào buổi {sáng|chiều|tối}"
   const gEl = document.getElementById('vietbotGreet');
   if(gEl){
-    const h = Number(new Intl.DateTimeFormat('vi-VN',{hour:'numeric',hour12:false,timeZone:'Asia/Ho_Chi_Minh'}).format(new Date()));
-    const buoi = h < 12 ? 'sáng' : (h < 18 ? 'chiều' : 'tối');
+    let h = Number(new Intl.DateTimeFormat('en-US',{hour:'numeric',hour12:false,timeZone:'Asia/Ho_Chi_Minh'}).format(new Date())); if(Number.isNaN(h)){ const tzNow = new Date(new Date().toLocaleString('en-US',{timeZone:'Asia/Ho_Chi_Minh'})); h = tzNow.getHours(); }
+    const buoi = (h>=5&&h<=10)?'sáng':(h>=11&&h<=13)?'trưa':(h>=14&&h<=17)?'chiều':'tối';
     gEl.textContent = `VIETFORTURE chào buổi ${buoi}`;
   }
 
@@ -1581,8 +1579,8 @@
 
   // 1) Bubble: chào kiểu A
   function vnGreeting(){
-    const h = Number(new Intl.DateTimeFormat('vi-VN',{hour:'numeric',hour12:false,timeZone:'Asia/Ho_Chi_Minh'}).format(new Date()));
-    const buoi = h < 12 ? 'sáng' : (h < 18 ? 'chiều' : 'tối');
+    let h = Number(new Intl.DateTimeFormat('en-US',{hour:'numeric',hour12:false,timeZone:'Asia/Ho_Chi_Minh'}).format(new Date())); if(Number.isNaN(h)){ const tzNow = new Date(new Date().toLocaleString('en-US',{timeZone:'Asia/Ho_Chi_Minh'})); h = tzNow.getHours(); }
+    const buoi = (h>=5&&h<=10)?'sáng':(h>=11&&h<=13)?'trưa':(h>=14&&h<=17)?'chiều':'tối';
     return `VIETFORTURE chào buổi ${buoi}`;
   }
   greet.textContent = vnGreeting();
@@ -1725,7 +1723,7 @@
   document.getElementById('vfChatBtn')?.addEventListener('click', ()=>setTimeout(async ()=>{
     if(!panel || !panel.classList.contains('is-open')) return;
     if(sessionStorage.getItem(PANEL_KEY)) { injectChips(); return; }
-    const h = Number(new Intl.DateTimeFormat('vi-VN',{hour:'numeric',hour12:false,timeZone:'Asia/Ho_Chi_Minh'}).format(new Date())); const greet = (h>=5&&h<=10)?'Chào buổi sáng':(h>=11&&h<=13)?'Chào buổi trưa':(h>=14&&h<=17)?'Chào buổi chiều':'Chào buổi tối'; const hint = greet + '. Tôi là VIETBOT. Chọn:';
+    let h = Number(new Intl.DateTimeFormat('en-US',{hour:'numeric',hour12:false,timeZone:'Asia/Ho_Chi_Minh'}).format(new Date())); if(Number.isNaN(h)){ const tzNow = new Date(new Date().toLocaleString('en-US',{timeZone:'Asia/Ho_Chi_Minh'})); h = tzNow.getHours(); } const greet = (h>=5&&h<=10)?'Chào buổi sáng':(h>=11&&h<=13)?'Chào buổi trưa':(h>=14&&h<=17)?'Chào buổi chiều':'Chào buổi tối'; const hint = greet + '. Tôi là VIETBOT. Chọn:';
     await addTyping(600+Math.random()*300);
     addMsg(hint);
     injectChips();
@@ -1805,8 +1803,8 @@
 
   // chào kiểu A
   function vnGreeting(){
-    const h = Number(new Intl.DateTimeFormat('vi-VN',{hour:'numeric',hour12:false,timeZone:'Asia/Ho_Chi_Minh'}).format(new Date()));
-    const buoi = h < 12 ? 'sáng' : (h < 18 ? 'chiều' : 'tối');
+    let h = Number(new Intl.DateTimeFormat('en-US',{hour:'numeric',hour12:false,timeZone:'Asia/Ho_Chi_Minh'}).format(new Date())); if(Number.isNaN(h)){ const tzNow = new Date(new Date().toLocaleString('en-US',{timeZone:'Asia/Ho_Chi_Minh'})); h = tzNow.getHours(); }
+    const buoi = (h>=5&&h<=10)?'sáng':(h>=11&&h<=13)?'trưa':(h>=14&&h<=17)?'chiều':'tối';
     return `VIETFORTURE chào buổi ${buoi}`;
   }
   greet.textContent = vnGreeting();
@@ -2467,20 +2465,78 @@ function openZaloOA() {
 
   
 function buildCard(it, idx){
-  var seed = slug(it.name);
-  var img = it.img || (slug(it.name)+'.jpg');
+  var nm = (it && it.name) ? it.name : '';
+  var seed = slug(nm);
+  // Build candidate image URLs: prioritize explicit it.img, then common folders and extensions
+  var bases = ['img/buaan/','img/meals/','img/',''];
+  var exts  = ['webp','jpg','jpeg','png','avif'];
+  var cands = [];
+
+  function pushIfUnique(v){
+    if(!v) return;
+    if(cands.indexOf(v)===-1) cands.push(v);
+  }
+
+  // If explicit path provided
+  if(it && it.img){
+    pushIfUnique(it.img);
+    // also try lowercase extension variant
+    try{
+      var lower = it.img.replace(/\.(JPG|JPEG|PNG|WEBP|AVIF)$/i, function(m){ return m.toLowerCase(); });
+      pushIfUnique(lower);
+    }catch(_){}
+  }
+
+  // Add generated slugs
+  for(var i=0;i<bases.length;i++){
+    for(var j=0;j<exts.length;j++){
+      pushIfUnique(bases[i] + seed + '.' + exts[j]);
+    }
+  }
+
+  var first = cands[0] || (seed + '.jpg');
+  var rest  = cands.slice(1).join('|');
+
   var html = ''
-    +'<div class="item" data-i="'+idx+'">'
-    +'  <img alt="'+it.name+'" src="'+img+'" style="width:100%;border-radius:12px" />'
-    +'  <h4>'+it.name+'</h4>'
-    +'  <div class="controls">'
-    +'    <span class="price">'+money(it.price)+'</span>'
-    +'    <input class="input" id="m-q-'+idx+'" type="number" min="1" value="1" style="width:80px;margin-left:auto" />'
-    +'    <button class="btn add" data-i="'+idx+'">Thêm</button>'
-    +'  </div>'
-    +'</div>';
+    + '<div class="item" data-i="'+idx+'">'
+    + '  <img alt="'+nm+'" src="'+first+'" data-fallback="'+rest+'" style="width:100%;border-radius:12px" />'
+    + '  <h4>'+nm+'</h4>'
+    + '  <div class="controls">'
+    + '    <span class="price">'+money(it.price)+'</span>'
+    + '    <input class="input" id="m-q-'+idx+'" type="number" min="1" value="1" style="width:80px;margin-left:auto" />'
+    + '    <button class="btn add" data-i="'+idx+'">Thêm</button>'
+    + '  </div>'
+    + '</div>';
   return html;
 }
+
+// Fallback loader for menu images
+function attachMealImgFallback(root){
+  try{
+    var ctx = root || document;
+    var imgs = ctx.querySelectorAll('img[data-fallback]');
+    imgs.forEach(function(im){
+      if(im._vfBound) return;
+      im._vfBound = true;
+      im.addEventListener('error', function(ev){
+        var el = ev.currentTarget;
+        var list = (el.getAttribute('data-fallback')||'').split('|').filter(Boolean);
+        var idx = (el._vfIdx||0);
+        if(idx < list.length){
+          el._vfIdx = idx+1;
+          el.src = list[idx];
+        }else{
+          el.removeAttribute('data-fallback');
+          el.alt = (el.alt||'') + ' (không có ảnh)';
+          el.style.background = '#f1f5f9';
+          el.style.minHeight = '120px';
+        }
+      }, {passive:true});
+    });
+  }catch(_){}
+}
+
+
 function renderMenu(filter){
     var grid = $('m-grid'); var html='';
     for(var i=0;i<MENU.length;i++){
@@ -2726,3 +2782,32 @@ document.addEventListener('click', function(e){
     alert('Đặt bữa ăn đã chuyển về mục Lưu trú. Dùng nút 🍱 góc phải để mở panel Bữa Ăn.');
   }
 }, true);
+
+
+
+// Global binder to ensure fallback works regardless of container IDs
+(function(){
+  function globalImgFallbackInit(){
+    try{
+      if (typeof attachMealImgFallback === 'function'){
+        attachMealImgFallback(document);
+        document.addEventListener('DOMContentLoaded', function(){ attachMealImgFallback(document); });
+        if(window.MutationObserver){
+          var mo = new MutationObserver(function(muts){
+            for(var i=0;i<muts.length;i++){
+              var nodes = muts[i].addedNodes || [];
+              for(var j=0;j<nodes.length;j++){
+                var n = nodes[j];
+                if(n && n.nodeType===1){
+                  attachMealImgFallback(n);
+                }
+              }
+            }
+          });
+          mo.observe(document.documentElement,{subtree:true,childList:true});
+        }
+      }
+    }catch(_){}
+  }
+  globalImgFallbackInit();
+})();
