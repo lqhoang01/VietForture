@@ -3,6 +3,19 @@
   const $  = (sel, ctx=document) => ctx.querySelector(sel);
   const $$ = (sel, ctx=document) => Array.from(ctx.querySelectorAll(sel));
   const root = document.documentElement;
+  
+  // Chuẩn hoá hash cho trang nhiều view: luôn về Trang chủ sau khi reload
+  (function(){
+    try{
+      if(document.querySelector('#view-home')){
+        var h = (location.hash || '').replace(/^#/,'').toLowerCase();
+        if(h==='services' || h==='credit' || h==='stay' || h==='news' || h==='tindung' || h==='luutru'){
+          history.replaceState(null, '', location.pathname + location.search);
+        }
+      }
+    }catch(_){}
+  })();
+
 
   /* =================== VIEWS & NAV =================== */
   const views = {
@@ -16,10 +29,12 @@
     kitucxa: $('#view-kitucxa'),
     apply: $('#view-apply'),
     thongbao: $('#view-thongbao'),
+    contact: $('#view-contact'),
   };
 
   const morePanel = $('#morePanel');
   const navTg    = $('#navToggle');
+  const morePanelClose = $('#morePanelClose');
 
   const fontsReady = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
   const after2Frames = (fn) => requestAnimationFrame(() => requestAnimationFrame(fn));
@@ -36,27 +51,68 @@
     window.addEventListener('scroll', onScroll, {passive:true});
   })();
 
-  /* Mobile burger */
+  /* Mobile + desktop burger / overlay nav */
   function closeMore(){
-    morePanel?.classList.remove('is-open');
+    if(!morePanel) return;
+    morePanel.classList.remove('is-open');
+    morePanel.setAttribute('aria-hidden','true');
     navTg?.setAttribute('aria-expanded','false');
-    morePanel?.setAttribute('aria-hidden','true');
+  }
+  function openMore(){
+    if(!morePanel) return;
+    if(morePanel.classList.contains('is-open')) return;
+    morePanel.classList.add('is-open');
+    morePanel.setAttribute('aria-hidden','false');
+    navTg?.setAttribute('aria-expanded','true');
   }
   function toggleMore(){
     if(!morePanel) return;
-    const open = !morePanel.classList.contains('is-open');
-    morePanel.classList.toggle('is-open', open);
-    morePanel.setAttribute('aria-hidden', open ? 'false' : 'true');
-    navTg?.setAttribute('aria-expanded', String(open));
+    if(morePanel.classList.contains('is-open')){ closeMore(); } else { openMore(); }
   }
-  navTg?.addEventListener('click', (e)=>{ e.stopPropagation(); toggleMore(); });
-  document.addEventListener('click', (e)=>{
-    if (!morePanel) return;
-    if (!morePanel.contains(e.target) && !navTg?.contains(e.target)) closeMore();
-  });
-  $$('.menu-link').forEach(b=>b.addEventListener('click', ()=>{ show(b.dataset.nav); closeMore(); }));
 
-  /* View switching (smooth) */
+  navTg?.addEventListener('click', function(e){
+    e.stopPropagation();
+    toggleMore();
+  });
+
+  // Hover to open on devices that support hover (desktop)
+  if (navTg && window.matchMedia && window.matchMedia('(hover:hover)').matches) {
+    navTg.addEventListener('mouseenter', function(e){
+      e.stopPropagation();
+      openMore();
+    });
+  }
+
+  morePanelClose?.addEventListener('click', function(e){
+    e.stopPropagation();
+    closeMore();
+  });
+
+  // Prevent click inside sheet from closing the menu
+  document.querySelector('.more-panel__sheet')?.addEventListener('click', function(e){
+    e.stopPropagation();
+  });
+
+  // Click outside overlay to close
+  document.addEventListener('click', function(e){
+    if (!morePanel) return;
+    var target = e.target;
+    if (!morePanel.contains(target) && !navTg?.contains(target)) {
+      closeMore();
+    }
+  });
+
+  // Nav items
+  $$('.menu-link').forEach(function(b){
+    b.addEventListener('click', function(){
+      var target = b.dataset.nav;
+      if (target) { show(target); }
+      closeMore();
+    });
+  });
+
+
+/* View switching (smooth) */
   function setTab(id){
     $('#tab-home')?.setAttribute('aria-selected', String(id==='home'));
     $('#tab-gioithieu')?.setAttribute('aria-selected', String(id==='about'));
@@ -1057,7 +1113,8 @@
   el.form.addEventListener('submit', e=>{ e.preventDefault(); handleInput(el.input.value); el.input.value=''; el.input.focus(); });
 
   // chào mừng
-  addMsg('Xin chào! Tôi là trợ lý VietForture. Tôi có thể giúp gì cho bạn?', 'bot', {
+  const __vfGreet=(function(){try{const h=Number(new Date().toLocaleString('en-US',{hour:'2-digit',hour12:false,timeZone:'Asia/Ho_Chi_Minh'}));if(h>=5&&h<10)return'Chào buổi sáng!';if(h>=10&&h<13)return'Chào buổi trưa!';if(h>=13&&h<18)return'Chào buổi chiều!';return'Chào buổi tối!';}catch(_){return'Xin chào!';}})();
+  addMsg(__vfGreet+' Tôi là trợ lý VietForture. Tôi có thể giúp gì cho bạn?', 'bot', {
     suggest:[
       {label:'Tín dụng', send:'tín dụng'},
       {label:'Lưu trú', send:'lưu trú'},
@@ -1148,9 +1205,11 @@
   // chào theo giờ VN
   function greetVN(){
     const now = new Date();
-    let hourVN = Number(new Intl.DateTimeFormat('en-US', {hour: 'numeric', hour12: false, timeZone: 'Asia/Ho_Chi_Minh'}).format(now)); if(Number.isNaN(hourVN)){ const tzNow = new Date(now.toLocaleString('en-US',{timeZone:'Asia/Ho_Chi_Minh'})); hourVN = tzNow.getHours(); }
+    const hourVN = Number(new Intl.DateTimeFormat('en-US', {
+      hour: 'numeric', hour12: false, timeZone: 'Asia/Ho_Chi_Minh'
+    }).format(now));
 
-    const buoi = (hourVN>=5&&hourVN<=10)?'buổi sáng':(hourVN>=11&&hourVN<=13)?'buổi trưa':(hourVN>=14&&hourVN<=17)?'buổi chiều':'buổi tối';
+    const buoi = hourVN < 12 ? 'buổi sáng' : (hourVN < 18 ? 'buổi chiều' : 'buổi tối');
     return `Chào ${buoi}! Tôi là VIETBOT.`;
   }
 
@@ -1196,7 +1255,7 @@
 
   // 1) Lời chào theo giờ Việt Nam
   function vnGreeting(){
-    let h = Number(new Intl.DateTimeFormat('en-US',{hour:'numeric',hour12:false,timeZone:'Asia/Ho_Chi_Minh'}).format(new Date())); if(Number.isNaN(h)){ const tzNow = new Date(new Date().toLocaleString('en-US',{timeZone:'Asia/Ho_Chi_Minh'})); h = tzNow.getHours(); }
+    const h = Number(new Intl.DateTimeFormat('en-US',{hour:'numeric',hour12:false,timeZone:'Asia/Ho_Chi_Minh'}).format(new Date()));
     const buoi = h < 12 ? 'SÁNG' : (h < 18 ? 'CHIỀU' : 'TỐI');
     return `VIETFORTURE CHÀO BUỔI ${buoi}`;
     // nếu muốn: + ` — Tôi là VIETBOT`
@@ -1280,7 +1339,7 @@
 
   // chào theo giờ VN
   function vnGreeting(){
-    let h = Number(new Intl.DateTimeFormat('en-US',{hour:'numeric',hour12:false,timeZone:'Asia/Ho_Chi_Minh'}).format(new Date())); if(Number.isNaN(h)){ const tzNow = new Date(new Date().toLocaleString('en-US',{timeZone:'Asia/Ho_Chi_Minh'})); h = tzNow.getHours(); }
+    const h = Number(new Intl.DateTimeFormat('en-US',{hour:'numeric',hour12:false,timeZone:'Asia/Ho_Chi_Minh'}).format(new Date()));
     const buoi = h < 12 ? 'SÁNG' : (h < 18 ? 'CHIỀU' : 'TỐI');
     return `VIETFORTURE CHÀO BUỔI ${buoi}`;
   }
@@ -1363,7 +1422,7 @@
   const KEY='vf_vietbot_seen_v10'; sessionStorage.removeItem(KEY);
 
   function vnGreeting(){
-    let h = Number(new Intl.DateTimeFormat('en-US',{hour:'numeric',hour12:false,timeZone:'Asia/Ho_Chi_Minh'}).format(new Date())); if(Number.isNaN(h)){ const tzNow = new Date(new Date().toLocaleString('en-US',{timeZone:'Asia/Ho_Chi_Minh'})); h = tzNow.getHours(); }
+    const h = Number(new Intl.DateTimeFormat('en-US',{hour:'numeric',hour12:false,timeZone:'Asia/Ho_Chi_Minh'}).format(new Date()));
     const buoi = h < 12 ? 'SÁNG' : (h < 18 ? 'CHIỀU' : 'TỐI');
     return `VIETFORTURE CHÀO BUỔI ${buoi}`;
   }
@@ -1504,8 +1563,8 @@
   // 1) Bubble trên robot: "VIETFORTURE chào buổi {sáng|chiều|tối}"
   const gEl = document.getElementById('vietbotGreet');
   if(gEl){
-    let h = Number(new Intl.DateTimeFormat('en-US',{hour:'numeric',hour12:false,timeZone:'Asia/Ho_Chi_Minh'}).format(new Date())); if(Number.isNaN(h)){ const tzNow = new Date(new Date().toLocaleString('en-US',{timeZone:'Asia/Ho_Chi_Minh'})); h = tzNow.getHours(); }
-    const buoi = (h>=5&&h<=10)?'sáng':(h>=11&&h<=13)?'trưa':(h>=14&&h<=17)?'chiều':'tối';
+    const h = Number(new Date().toLocaleString('en-US',{hour:'2-digit',hour12:false,timeZone:'Asia/Ho_Chi_Minh'}));
+    const buoi = h < 12 ? 'sáng' : (h < 18 ? 'chiều' : 'tối');
     gEl.textContent = `VIETFORTURE chào buổi ${buoi}`;
   }
 
@@ -1579,8 +1638,8 @@
 
   // 1) Bubble: chào kiểu A
   function vnGreeting(){
-    let h = Number(new Intl.DateTimeFormat('en-US',{hour:'numeric',hour12:false,timeZone:'Asia/Ho_Chi_Minh'}).format(new Date())); if(Number.isNaN(h)){ const tzNow = new Date(new Date().toLocaleString('en-US',{timeZone:'Asia/Ho_Chi_Minh'})); h = tzNow.getHours(); }
-    const buoi = (h>=5&&h<=10)?'sáng':(h>=11&&h<=13)?'trưa':(h>=14&&h<=17)?'chiều':'tối';
+    const h = Number(new Date().toLocaleString('en-US',{hour:'2-digit',hour12:false,timeZone:'Asia/Ho_Chi_Minh'}));
+    const buoi = h < 12 ? 'sáng' : (h < 18 ? 'chiều' : 'tối');
     return `VIETFORTURE chào buổi ${buoi}`;
   }
   greet.textContent = vnGreeting();
@@ -1723,7 +1782,7 @@
   document.getElementById('vfChatBtn')?.addEventListener('click', ()=>setTimeout(async ()=>{
     if(!panel || !panel.classList.contains('is-open')) return;
     if(sessionStorage.getItem(PANEL_KEY)) { injectChips(); return; }
-    let h = Number(new Intl.DateTimeFormat('en-US',{hour:'numeric',hour12:false,timeZone:'Asia/Ho_Chi_Minh'}).format(new Date())); if(Number.isNaN(h)){ const tzNow = new Date(new Date().toLocaleString('en-US',{timeZone:'Asia/Ho_Chi_Minh'})); h = tzNow.getHours(); } const greet = (h>=5&&h<=10)?'Chào buổi sáng':(h>=11&&h<=13)?'Chào buổi trưa':(h>=14&&h<=17)?'Chào buổi chiều':'Chào buổi tối'; const hint = greet + '. Tôi là VIETBOT. Chọn:';
+    const h = Number(new Date().toLocaleString('en-US',{hour:'2-digit',hour12:false,timeZone:'Asia/Ho_Chi_Minh'})); const greet = (h>=5&&h<=10)?'Chào buổi sáng':(h>=11&&h<=13)?'Chào buổi trưa':(h>=14&&h<=17)?'Chào buổi chiều':'Chào buổi tối'; const hint = greet + '. Tôi là VIETBOT. Chọn:';
     await addTyping(600+Math.random()*300);
     addMsg(hint);
     injectChips();
@@ -1803,8 +1862,8 @@
 
   // chào kiểu A
   function vnGreeting(){
-    let h = Number(new Intl.DateTimeFormat('en-US',{hour:'numeric',hour12:false,timeZone:'Asia/Ho_Chi_Minh'}).format(new Date())); if(Number.isNaN(h)){ const tzNow = new Date(new Date().toLocaleString('en-US',{timeZone:'Asia/Ho_Chi_Minh'})); h = tzNow.getHours(); }
-    const buoi = (h>=5&&h<=10)?'sáng':(h>=11&&h<=13)?'trưa':(h>=14&&h<=17)?'chiều':'tối';
+    const h = Number(new Date().toLocaleString('en-US',{hour:'2-digit',hour12:false,timeZone:'Asia/Ho_Chi_Minh'}));
+    const buoi = h < 12 ? 'sáng' : (h < 18 ? 'chiều' : 'tối');
     return `VIETFORTURE chào buổi ${buoi}`;
   }
   greet.textContent = vnGreeting();
@@ -2025,7 +2084,7 @@ function openZaloOA() {
 
     // Hero slider autoplay
     (function(){
-      const stage = $('.cr-hero__stage', root); if(!stage) return;
+      const stage = $('.cr-hero__stage[data-hero="main-slider"]', root) || $('.cr-hero__stage', root); if(!stage) return;
       const slides = $$('.slide', stage); const dots = $$('.cr-hero__dots .dot', root);
       if(!slides.length) return;
       let idx = 0, t=null;
@@ -2465,78 +2524,20 @@ function openZaloOA() {
 
   
 function buildCard(it, idx){
-  var nm = (it && it.name) ? it.name : '';
-  var seed = slug(nm);
-  // Build candidate image URLs: prioritize explicit it.img, then common folders and extensions
-  var bases = ['img/buaan/','img/meals/','img/',''];
-  var exts  = ['webp','jpg','jpeg','png','avif'];
-  var cands = [];
-
-  function pushIfUnique(v){
-    if(!v) return;
-    if(cands.indexOf(v)===-1) cands.push(v);
-  }
-
-  // If explicit path provided
-  if(it && it.img){
-    pushIfUnique(it.img);
-    // also try lowercase extension variant
-    try{
-      var lower = it.img.replace(/\.(JPG|JPEG|PNG|WEBP|AVIF)$/i, function(m){ return m.toLowerCase(); });
-      pushIfUnique(lower);
-    }catch(_){}
-  }
-
-  // Add generated slugs
-  for(var i=0;i<bases.length;i++){
-    for(var j=0;j<exts.length;j++){
-      pushIfUnique(bases[i] + seed + '.' + exts[j]);
-    }
-  }
-
-  var first = cands[0] || (seed + '.jpg');
-  var rest  = cands.slice(1).join('|');
-
+  var seed = slug(it.name);
+  var img = it.img || (slug(it.name)+'.jpg');
   var html = ''
-    + '<div class="item" data-i="'+idx+'">'
-    + '  <img alt="'+nm+'" src="'+first+'" data-fallback="'+rest+'" style="width:100%;border-radius:12px" />'
-    + '  <h4>'+nm+'</h4>'
-    + '  <div class="controls">'
-    + '    <span class="price">'+money(it.price)+'</span>'
-    + '    <input class="input" id="m-q-'+idx+'" type="number" min="1" value="1" style="width:80px;margin-left:auto" />'
-    + '    <button class="btn add" data-i="'+idx+'">Thêm</button>'
-    + '  </div>'
-    + '</div>';
+    +'<div class="item" data-i="'+idx+'">'
+    +'  <img alt="'+it.name+'" src="'+img+'" style="width:100%;border-radius:12px" />'
+    +'  <h4>'+it.name+'</h4>'
+    +'  <div class="controls">'
+    +'    <span class="price">'+money(it.price)+'</span>'
+    +'    <input class="input" id="m-q-'+idx+'" type="number" min="1" value="1" style="width:80px;margin-left:auto" />'
+    +'    <button class="btn add" data-i="'+idx+'">Thêm</button>'
+    +'  </div>'
+    +'</div>';
   return html;
 }
-
-// Fallback loader for menu images
-function attachMealImgFallback(root){
-  try{
-    var ctx = root || document;
-    var imgs = ctx.querySelectorAll('img[data-fallback]');
-    imgs.forEach(function(im){
-      if(im._vfBound) return;
-      im._vfBound = true;
-      im.addEventListener('error', function(ev){
-        var el = ev.currentTarget;
-        var list = (el.getAttribute('data-fallback')||'').split('|').filter(Boolean);
-        var idx = (el._vfIdx||0);
-        if(idx < list.length){
-          el._vfIdx = idx+1;
-          el.src = list[idx];
-        }else{
-          el.removeAttribute('data-fallback');
-          el.alt = (el.alt||'') + ' (không có ảnh)';
-          el.style.background = '#f1f5f9';
-          el.style.minHeight = '120px';
-        }
-      }, {passive:true});
-    });
-  }catch(_){}
-}
-
-
 function renderMenu(filter){
     var grid = $('m-grid'); var html='';
     for(var i=0;i<MENU.length;i++){
@@ -2784,30 +2785,460 @@ document.addEventListener('click', function(e){
 }, true);
 
 
-
-// Global binder to ensure fallback works regardless of container IDs
+// ===== [VF HOME] Hero slider + search router + home-only lock =====
 (function(){
-  function globalImgFallbackInit(){
-    try{
-      if (typeof attachMealImgFallback === 'function'){
-        attachMealImgFallback(document);
-        document.addEventListener('DOMContentLoaded', function(){ attachMealImgFallback(document); });
-        if(window.MutationObserver){
-          var mo = new MutationObserver(function(muts){
-            for(var i=0;i<muts.length;i++){
-              var nodes = muts[i].addedNodes || [];
-              for(var j=0;j<nodes.length;j++){
-                var n = nodes[j];
-                if(n && n.nodeType===1){
-                  attachMealImgFallback(n);
-                }
-              }
-            }
-          });
-          mo.observe(document.documentElement,{subtree:true,childList:true});
+  // Slider
+  const slides = Array.from(document.querySelectorAll('.vh4-slide'));
+  if(slides.length){
+    let i = 0; const D = 4500;
+    setInterval(()=>{ slides[i]?.classList.remove('is-active'); i=(i+1)%slides.length; slides[i]?.classList.add('is-active'); }, D);
+  }
+  // Search popover
+  const input = document.getElementById('vh4SearchInput');
+  const pop   = document.getElementById('vh4SearchPop');
+  const closeBtn = document.querySelector('.vh4-pop-close');
+  function open(){ pop?.classList.add('is-open'); pop?.setAttribute('aria-hidden','false'); }
+  function close(){ pop?.classList.remove('is-open'); pop?.setAttribute('aria-hidden','true'); }
+  input?.addEventListener('focus', open);
+  input?.addEventListener('click', open);
+  closeBtn?.addEventListener('click', close);
+  document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') close(); });
+  document.addEventListener('click', (e)=>{
+    const within = e.target.closest('.vh4-search');
+    if(!within && !pop?.contains(e.target)) close();
+  });
+  function go(which){
+    if(typeof window.show === 'function'){
+      if(which==='tindung') { window.show('tindung'); return; }
+      if(which==='luutru') { window.show('luutru'); return; }
+      window.show('dichvu'); return;
+    }
+    if(which==='tindung') location.hash = '#tindung';
+    else if(which==='luutru') location.hash = '#luutru';
+    else location.hash = '#dichvu';
+  }
+  document.addEventListener('click', (e)=>{
+    const chip = e.target.closest('.vh4-chip');
+    if(chip){
+      const q = (chip.dataset.q||'').toLowerCase();
+      if(q.includes('tín dụng')) { close(); go('tindung'); }
+      else if(q.includes('căn hộ')||q.includes('ktx')||q.includes('lưu trú')) { close(); go('luutru'); }
+      else open();
+      return;
+    }
+    const cat = e.target.closest('.vh4-cat');
+    if(cat){
+      const g = cat.getAttribute('data-go');
+      close();
+      if(g==='credit') go('tindung'); else if(g==='home') go('luutru'); else go();
+    }
+  });
+
+  // Bottom reveal CTA and home-only lock
+  function applyHomeState(){
+    const isHome = document.getElementById('view-home')?.classList.contains('is-visible') || location.hash==='' || location.hash==='#home' || location.hash==='#view-home';
+    document.body.classList.toggle('vh4-home-locked', !!isHome);
+  }
+  applyHomeState();
+  window.addEventListener('hashchange', applyHomeState);
+
+  const tip = document.querySelector('.vh4-bottom-reveal');
+  if(tip){
+    function check(e){
+      const y = (e.touches && e.touches[0]) ? e.touches[0].clientY : (e.clientY ?? 0);
+      if(y > window.innerHeight - 80){ tip.classList.add('is-show'); } else { tip.classList.remove('is-show'); }
+    }
+    window.addEventListener('mousemove', check);
+    window.addEventListener('touchmove', check, {passive:true});
+    tip.addEventListener('click', function(ev){
+      ev.preventDefault();
+      if(typeof window.show === 'function') window.show('about'); else location.hash = '#about';
+    });
+  }
+})();
+
+
+/* === PATCH: HOME LOCK, BOTTOM REVEAL, SEARCH NAV ROUTING, NAV TEXT ONLY === */
+(function(){
+  /* lock scroll + footer hide on Trang chủ only */
+  function lockHomeView(id){
+    var isHome = (id === 'home');
+    document.body.classList.toggle('vh4-home-locked', isHome);
+  }
+  lockHomeView('home');
+
+  /* wrap original show() to also toggle lock */
+  if (window.show){
+    var _origShow = window.show;
+    window.show = function(id){
+      _origShow(id);
+      lockHomeView(id);
+    };
+  }
+
+  /* bottom reveal CTA */
+  (function(){
+    var tip = document.querySelector('.vh4-bottom-reveal');
+    if(!tip) return;
+    function checkPos(e){
+      var y;
+      if(e.touches && e.touches[0]){
+        y = e.touches[0].clientY;
+      }else{
+        y = e.clientY;
+      }
+      if(y > window.innerHeight - 80){
+        tip.classList.add('is-show');
+      }else{
+        tip.classList.remove('is-show');
+      }
+    }
+    window.addEventListener('mousemove', checkPos);
+    window.addEventListener('touchmove', checkPos, {passive:true});
+    tip.addEventListener('click', function(ev){
+      ev.preventDefault();
+      if(window.show) window.show('about');
+    });
+  })();
+
+  /* search popover open/close + route to đúng dịch vụ */
+  (function(){
+    var input = document.getElementById('vh4SearchInput');
+    var pop   = document.getElementById('vh4SearchPop');
+    var closeBtn = document.querySelector('.vh4-pop-close');
+    if(!input || !pop) return;
+
+    function openPop(){
+      pop.classList.add('is-open');
+      pop.setAttribute('aria-hidden','false');
+    }
+    function closePop(){
+      pop.classList.remove('is-open');
+      pop.setAttribute('aria-hidden','true');
+    }
+
+    input.addEventListener('focus', openPop);
+    input.addEventListener('click', openPop);
+    if(closeBtn) closeBtn.addEventListener('click', closePop);
+
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape') closePop();
+    });
+
+    document.addEventListener('click', function(e){
+      var within = e.target.closest && e.target.closest('.vh4-search');
+      if(!within && !pop.contains(e.target)) closePop();
+    });
+
+    document.addEventListener('click', function(e){
+      var chip = e.target.closest && e.target.closest('.vh4-chip');
+      if(chip){
+        var q = (chip.dataset.q || '').toLowerCase();
+        closePop();
+        if(q.includes('tín') || q.includes('dụng')){
+          if(window.show) window.show('tindung');
+        }else{
+          if(window.show) window.show('luutru');
         }
       }
-    }catch(_){}
-  }
-  globalImgFallbackInit();
+      var cat = e.target.closest && e.target.closest('.vh4-cat');
+      if(cat){
+        var g = cat.getAttribute('data-go');
+        closePop();
+        if(g === 'credit'){
+          if(window.show) window.show('tindung');
+        }else if(g === 'home'){
+          if(window.show) window.show('luutru');
+        }
+      }
+    });
+  })();
 })();
+
+// ===== [PATCH] Search router override — accents-insensitive + Enter + chips & category clicks =====
+(function(){
+  var input = document.getElementById('vh4SearchInput');
+  var pop   = document.getElementById('vh4SearchPop');
+  if(!input) return;
+
+  function closePop(){
+    if(!pop) return;
+    pop.classList.remove('is-open');
+    pop.setAttribute('aria-hidden','true');
+  }
+
+  // helpers
+  function norm(s){
+    return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim();
+  }
+  function go(viewId){
+    if(typeof window.show === 'function'){ window.show(viewId); }
+  }
+  function goCredit(){
+    if(typeof window.openSvc === 'function'){ window.openSvc('credit'); }
+    else{ go('tindung'); }
+  }
+  function goStay(){
+    if(typeof window.openSvc === 'function'){ window.openSvc('stay'); }
+    else{ go('luutru'); }
+  }
+  function routeByQuery(q){
+    var x = norm(q);
+
+    // Tuyển dụng
+    if (/(tuyen dung|ung tuyen|viec lam|việc làm|tuyendung)/.test(x)){
+      closePop(); go('tuyendung'); return;
+    }
+
+    // Tín dụng
+    if (/(tin dung|tín dụng|vay tin chap|vay tín chấp|vay tieu dung|vay tiêu dùng|doanh nghiep|doanh nghiệp|vay\b)/.test(x)){
+      closePop(); goCredit(); return;
+    }
+
+    // Lưu trú
+    if (/(luu tru|lưu trú|can ho dich vu|căn hộ dịch vụ|ktx|ky tuc xa|ký túc xá|can ho|căn hộ)/.test(x)){
+      closePop(); goStay(); return;
+    }
+
+    // Giới thiệu
+    if (/(gioi thieu|giới thiệu|tam nhin|tầm nhìn|su menh|sứ mệnh|vietforture|viet fortune)/.test(x)){
+      closePop(); go('about'); return;
+    }
+
+    // Tin tức
+    if (/(tin tuc|tin tức|thong bao|thông báo|news)/.test(x)){
+      closePop(); go('tintuc'); return;
+    }
+  }
+
+  // Enter on input
+  input.addEventListener('keydown', function(e){
+    if(e.key === 'Enter'){
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      routeByQuery(input.value);
+    }
+  }, true);
+
+  // Chips click
+  document.addEventListener('click', function(e){
+    var chip = e.target.closest && e.target.closest('.vh4-chip');
+    if(!chip) return;
+    e.preventDefault(); e.stopImmediatePropagation();
+    routeByQuery(chip.dataset.q || chip.textContent || '');
+  }, true);
+
+  // Category cards click
+  document.addEventListener('click', function(e){
+    var cat = e.target.closest && e.target.closest('.vh4-cat');
+    if(!cat) return;
+    e.preventDefault(); e.stopImmediatePropagation();
+    var g = cat.getAttribute('data-go');
+    closePop();
+    if(g==='credit') goCredit();
+    else if(g==='home') goStay();
+  }, true);
+})();
+
+// ===== VF NOTIFY MODULE (scoped) =====
+(function(){
+  const $ = (s,ctx=document)=>ctx.querySelector(s);
+  const $$ = (s,ctx=document)=>Array.from(ctx.querySelectorAll(s));
+  const nbList  = document.getElementById('nbList');
+  const nbPanel = document.getElementById('nbPanel');
+  const nbCount = document.getElementById('nbCount');
+  if(!nbList || !nbPanel || !nbCount) return;
+
+  
+  // Build NB_DATA from existing page content (credit & home) to avoid hard-coded text
+  function buildNBFromPage(){
+    const pick = (root, sels)=>(sels.map(s=>root.querySelector(s)).find(Boolean));
+    function fromSection(id, kind){
+      const sec = document.querySelector(id);
+      if(!sec) return null;
+      const titleEl = pick(sec, ['h1','h2','h3']);
+      const subEl   = pick(sec, ['.bk-kicker','.ui-hero__subtitle','p']);
+      const imgEl   = pick(sec, ['.ui-hero__img','img']);
+      const title = (titleEl && titleEl.textContent.trim()) || (kind==='credit'?'VIETFORTURE CREDIT':'VIETFORTURE HOME');
+      const excerpt = (subEl && subEl.textContent.trim()) || (kind==='credit'?'Giải pháp vốn linh hoạt cho Cá nhân & Doanh nghiệp':'Ký túc xá (KTX)');
+      const img = (imgEl && (imgEl.getAttribute('src')||'').trim()) || '';
+      const body = `<p>${excerpt}</p>`;
+      const ctas = kind==='credit'
+        ? [{label:'Mở Tín dụng', go:'tindung'}]
+        : [{label:'Xem Lưu trú', go:'luutru'}];
+      return {
+        id: (kind==='credit'?'credit':'home')+'-from-page',
+        kind, pinned: (kind==='credit'), unread:true,
+        title, excerpt, time:'', img, body, ctas
+      };
+    }
+    const a = fromSection('#view-tindung','credit');
+    const b = fromSection('#view-luutru','home');
+    return [a,b].filter(Boolean);
+  }
+  const NB_DATA = buildNBFromPage();
+
+
+  let filter = 'all';
+  let selected = null;
+
+  function formatTime(t){ return t; }
+  function computeCount(){ nbCount.textContent = NB_DATA.filter(x=>x.unread).length; }
+
+  function renderList(){
+    nbList.innerHTML = '';
+    const items = NB_DATA.filter(x=>{
+      if(filter==='all') return true;
+      if(filter==='unread') return x.unread;
+      if(filter==='pinned') return x.pinned;
+      if(filter==='credit') return x.kind==='credit';
+      if(filter==='home') return x.kind==='home';
+      return true;
+    });
+    if(!items.length){ nbList.innerHTML = `<li class="empty">Không có thông báo.</li>`; return; }
+    items
+      .sort((a,b)=>a.pinned===b.pinned?0:(a.pinned?-1:1))
+      .forEach((it, idx)=>{
+        const li = document.createElement('li');
+        li.className = 'item'+(it.unread?' unread':'');
+        li.setAttribute('data-id', it.id);
+        li.style.setProperty('--i', idx);
+        li.innerHTML = `
+          <div class="meta">
+            <div class="row1">
+              <span class="title">${it.title}</span>
+              ${it.pinned?'<span class="pin">Ghim</span>':''}
+            </div>
+            <p>${it.excerpt}</p>
+            <div class="labels">${it.kind==='credit'?'Tín dụng':'Lưu trú'}${it.unread?' · Chưa đọc':''}</div>
+          </div>
+          <div class="time">${formatTime(it.time)}</div>`;
+        li.addEventListener('click', ()=>openDetail(it.id));
+        nbList.appendChild(li);
+      });
+  }
+
+  function toast(msg){
+    const t = document.getElementById('toast'); if(!t) return;
+    document.getElementById('toastMsg').textContent = msg;
+    t.classList.add('on'); setTimeout(()=>t.classList.remove('on'), 1800);
+  }
+
+  function legacyCopy(text){
+    try{
+      const ta = document.createElement('textarea');
+      ta.value = text; ta.setAttribute('readonly','');
+      ta.style.position='fixed'; ta.style.top='-9999px';
+      document.body.appendChild(ta); ta.focus(); ta.select();
+      const ok = document.execCommand && document.execCommand('copy');
+      document.body.removeChild(ta);
+      return !!ok;
+    }catch(e){ return false; }
+  }
+  function copyLinkSafe(text){
+    return new Promise(async (resolve)=>{
+      let ok = false;
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        try{ await navigator.clipboard.writeText(text); ok = true; }catch(e){ ok = false; }
+      }
+      if(!ok) ok = legacyCopy(text);
+      if(!ok){ try{ window.prompt('Sao chép liên kết:', text); ok = true; }catch(e){ ok = false; } }
+      resolve(ok);
+    });
+  }
+  async function shareLink(link){
+    const ok = await copyLinkSafe(link);
+    toast(ok? 'Đã sao chép liên kết hoặc đã mở hộp thoại': 'Không thể sao chép. Vui lòng copy thủ công');
+  }
+
+  function openDetail(id){
+    const it = NB_DATA.find(x=>x.id===id); if(!it) return;
+    selected = id;
+    nbPanel.innerHTML = `
+      <img class="panel-img" src="${it.img || 'https://placehold.co/1200x600?text=VietForture'}" alt="">
+      <div class="panel-body">
+        <div class="kv"><b>${it.title}</b><span style="color:#64748b">${formatTime(it.time)}</span></div>
+        <div class="rich">${it.body}</div>
+        <div class="actions">
+          ${it.ctas?.map(c=>c.go?`<button class="btn primary" data-go="${c.go}">${c.label}</button>`:`<a class="btn link" href="${c.href}">${c.label}</a>`).join('')}
+          <button class="btn link" id="toggleRead">${it.unread?'Đánh dấu đã đọc':'Đánh dấu chưa đọc'}</button>
+          <button class="btn link" id="togglePin">${it.pinned?'Bỏ ghim':'Ghim'}</button>
+          <button class="btn link" id="shareBtn">Chia sẻ</button>
+        </div>
+      </div>`;
+    nbPanel.classList.add('reveal');
+    nbPanel.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>{ const dest=b.getAttribute('data-go'); if(window.show) window.show(dest); }));
+    document.getElementById('toggleRead').addEventListener('click',()=>{ it.unread=!it.unread; computeCount(); renderList(); toast(it.unread?'Đánh dấu chưa đọc':'Đánh dấu đã đọc'); });
+    document.getElementById('togglePin').addEventListener('click',()=>{ it.pinned=!it.pinned; renderList(); toast(it.pinned?'Đã ghim thông báo':'Đã bỏ ghim'); });
+    document.getElementById('shareBtn').addEventListener('click',()=>{ const link = location.href+'#'+id; shareLink(link); });
+    if(it.unread){ it.unread=false; computeCount(); renderList(); }
+  }
+
+  function bindFilters(){
+    $$('.chip').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        $$('.chip').forEach(b=>b.setAttribute('aria-pressed','false')); btn.setAttribute('aria-pressed','true');
+        filter = btn.dataset.filter; renderList();
+      });
+    });
+  }
+
+  function initNotify(){
+    computeCount(); bindFilters(); renderList();
+    document.getElementById('markAll')?.addEventListener('click',()=>{ NB_DATA.forEach(x=>x.unread=false); computeCount(); renderList(); toast('Đã đánh dấu tất cả đã đọc'); });
+    document.getElementById('refreshBtn')?.addEventListener('click',()=>{ toast('Đang tải tin mới…'); setTimeout(()=>toast('Đã cập nhật'), 600); });
+    document.getElementById('backBtn')?.addEventListener('click',()=>{ document.body.classList.remove('show-notify'); if(window.show) window.show('dichvu'); });
+    document.getElementById('toastClose')?.addEventListener('click',()=>document.getElementById('toast').classList.remove('on'));
+    if(NB_DATA[0]) openDetail(NB_DATA[0].id);
+  }
+
+  // Open from Service bell/tiles/buttons
+  document.addEventListener('click', function(e){
+    const el = e.target;
+    const isBell = el && (el.id==='notify-open' || (el.closest && el.closest('#notify-open')));
+    const inTile = el && el.closest && el.closest('[data-nav="notify"], .svc-tile[data-nav="notify"]');
+    const isXem = el && el.closest && el.closest('[data-nav="notify"] .btn, .svc-tile[data-nav="notify"] .btn, a[href="#thongbao"], [data-go="thongbao"]');
+    if(isBell || inTile || isXem){
+      try{ e.preventDefault(); e.stopPropagation(); }catch(_){}
+      document.body.classList.add('show-notify');
+      if(window.show) window.show('thongbao');
+      // Lazy init when first time enters
+      if(!nbList.dataset.ready){ initNotify(); nbList.dataset.ready='1'; }
+    }
+  }, true);
+
+  // Wrapper to toggle footer hide when using global show()
+  if(typeof window.show === 'function' && !window.show.__vfWrap){
+    const __origShow = window.show;
+    window.show = function(id){
+      __origShow(id);
+      if(id==='thongbao'){ document.body.classList.add('show-notify'); if(!nbList.dataset.ready){ initNotify(); nbList.dataset.ready='1'; } }
+      else { document.body.classList.remove('show-notify'); }
+    };
+    window.show.__vfWrap = 1;
+  }
+
+  // If user lands with hash or tab
+  document.addEventListener('DOMContentLoaded', ()=>{
+    if(location.hash==='#news' || location.hash==='#thongbao'){ document.body.classList.add('show-notify'); if(window.show) window.show('thongbao'); if(!nbList.dataset.ready){ initNotify(); nbList.dataset.ready='1'; } }
+  });
+})();
+
+// Greeting fix (VN timezone) – non-invasive
+(function(){
+  function vfGreeting(){
+    try{
+      const tz='Asia/Ho_Chi_Minh';
+      const h=Number(new Date().toLocaleString('en-US',{hour:'2-digit',hour12:false,timeZone:tz}));
+      if(h>=5&&h<11) return 'Chào buổi sáng!';
+      if(h>=11&&h<13) return 'Chào buổi trưa!';
+      if(h>=13&&h<18) return 'Chào buổi chiều!';
+      return 'Chào buổi tối!';
+    }catch(_){ return 'Xin chào!'; }
+  }
+  document.addEventListener('DOMContentLoaded', ()=>{
+    document.querySelectorAll('.greet,#greet,.greet-msg').forEach(el=>{ el.textContent = vfGreeting(); });
+    window.__vfGreet = vfGreeting();
+  });
+})();
+
