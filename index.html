@@ -7,13 +7,7 @@
   <title>VietForture – Tín dụng & Lưu trú</title>
   <meta name="description" content="VietForture: giải pháp tín dụng minh bạch và lưu trú tiện nghi." />
   <link rel="preload" href="SVN-Mightiest.woff2" as="font" type="font/woff2" crossorigin>
-  <!-- Favicon -->
-<link rel="icon" href="favicon.ico">
-<link rel="icon" href="favicon-32x32.png" sizes="32x32" type="image/png">
-<link rel="icon" href="favicon-16x16.png" sizes="16x16" type="image/png">
-<link rel="apple-touch-icon" href="apple-touch-icon.png" sizes="180x180">
-<link rel="manifest" href="site.webmanifest">
-<meta name="theme-color" content="#c1121f">
+  <link rel="icon" href="favicon.ico">
   <link rel="stylesheet" href="style.css" />
   <noscript><style>.view{display:block!important;opacity:1!important}</style></noscript>
 
@@ -30,7 +24,7 @@
   <script>window.GAS_MEALS_URL="https://script.google.com/macros/s/AKfycbzejUFmKCoE_R6qXF5KUyl4If1h_4Qd7YZoh9hUdKOtOvqhNcY75p14QAe55fdpp2msfA/exec"</script>
 </head>
 
-<body>
+<body class="vh4-home-locked">
   <!-- Header -->
   <header class="site-header" role="banner">
     <div class="inner container">
@@ -38,46 +32,53 @@
         <a class="brand" id="brandHome" href="#" aria-label="Trang chủ">
           <img class="logo-rect" src="avatar.png" alt="VietForture" decoding="async" fetchpriority="high" />
         </a>
-        <!-- Mobile primary -->
-        <div class="mobile-primary">
-          <button role="tab" class="tab mob" id="tab-home" aria-controls="view-home" aria-selected="true">Trang chủ</button>
-          <button role="tab" class="tab mob" id="tab-gioithieu" aria-controls="view-about" aria-selected="false">Giới Thiệu</button>
-        </div>
-        <button class="nav-toggle" id="navToggle" aria-label="Mở menu" aria-expanded="false"><span></span></button>
+        <button class="nav-toggle" id="navToggle" aria-label="Mở menu điều hướng" aria-expanded="false" type="button">
+          <span class="sr-only">Mở menu</span>
+          <span class="nav-toggle-icon">
+            <span class="nav-toggle-line nav-toggle-line--top"></span>
+            <span class="nav-toggle-line nav-toggle-line--middle"></span>
+            <span class="nav-toggle-line nav-toggle-line--bottom"></span>
+            <span class="nav-toggle-dot"></span>
+          </span>
+        </button>
       </div>
+    </div>
 
-      <!-- Desktop tabs -->
-      <nav aria-label="Điều hướng tabs" class="main-nav">
-        <ul class="tabs" id="tabs" role="tablist">
-          <li><button role="tab" class="tab desk" id="tab-home-d" aria-controls="view-home" aria-selected="true">Trang chủ</button></li>
-          <li><button role="tab" class="tab desk" id="tab-gioithieu-d" aria-controls="view-about" aria-selected="false">Giới Thiệu</button></li>
-          <li><button role="tab" class="tab desk" id="tab-dichvu" aria-controls="view-dichvu" aria-selected="false">Dịch Vụ</button></li>
-          <li><button role="tab" class="tab desk" id="tab-tuyendung" aria-controls="view-tuyendung" aria-selected="false">Tuyển Dụng</button></li>
-          <li><button role="tab" class="tab desk" id="tab-tintuc" aria-controls="view-tintuc" aria-selected="false">Tin Tức</button></li>
-        </ul>
-      </nav>
+    <div id="morePanel" class="more-panel" aria-hidden="true">
+      <div class="more-panel__sheet" role="dialog" aria-modal="true" aria-label="Điều hướng VietForture">
+        <div class="more-panel__header">
+          <span class="more-panel__eyebrow">Điều hướng</span>
+          <button class="more-panel__close" type="button" id="morePanelClose" aria-label="Đóng menu">&times;</button>
+        </div>
 
-      <!-- Burger dropdown (mobile) -->
-      <div id="morePanel" class="more-panel" aria-hidden="true">
-        <button class="menu-link" data-nav="dichvu">Dịch Vụ</button>
-        <button class="menu-link" data-nav="tuyendung">Tuyển Dụng</button>
-        <button class="menu-link" data-nav="tintuc">Tin Tức</button>
+        <nav class="more-panel__nav" aria-label="Mục chính">
+          <button class="menu-link" type="button" data-nav="home">Trang chủ</button>
+          <button class="menu-link" type="button" data-nav="about">Giới thiệu</button>
+          <button class="menu-link" type="button" data-nav="dichvu">Dịch vụ</button>
+          <button class="menu-link" type="button" data-nav="tuyendung">Tuyển dụng</button>
+          <button class="menu-link" type="button" data-nav="tintuc">Tin tức</button>
+          <button class="menu-link" type="button" data-nav="thongbao">Thông báo</button>
+        </nav>
+
+        <button class="menu-link menu-link--contact" type="button" data-nav="contact">
+          Liên hệ chúng tôi
+        </button>
+
+        <div class="more-panel__meta">
+          <span>VietForture – Tín dụng minh bạch, Lưu trú tiện nghi.</span>
+          <span>Hotline: <strong>028 3782 2239</strong></span>
+        </div>
       </div>
     </div>
   </header>
 
       
 
-<section class="cr-hero anim fi-up" aria-label="Ảnh tiêu đề">
-  <div class="cr-hero__stage">
-    <figure class="slide is-active"><img src="img/credit-hero-1.jpg" alt=""></figure>
-  </div>
-  <div class="cr-hero__dots" hidden><button class="dot is-active"></button></div>
-</section>
+
 
 <section class="cr-hero anim fi-up" aria-label="Ảnh tiêu đề">
   <div class="cr-hero__stage">
-    <figure class="slide is-active"><img src="img/credit-hero-1.jpg" alt=""></figure>
+    <figure class="slide is-active"><img src="img/vietforture-hero-static.jpg" alt="Ảnh trang chủ VietForture"></figure>
   </div>
   <div class="cr-hero__dots" hidden>
     <button class="dot is-active"></button>
@@ -85,44 +86,84 @@
 </section>
 
 <!-- Credit hero slider -->
-      <section class="cr-hero anim" aria-label="Bộ ảnh tiêu đề">
-        <div class="cr-hero__stage">
-          <figure class="slide is-active"><img src="img/credit-hero-1.jpg" alt=""></figure>
-          <figure class="slide"><img src="img/credit-hero-2.jpg" alt=""></figure>
-          <figure class="slide"><img src="img/credit-hero-3.jpg" alt=""></figure>
-          <figure class="slide"><img src="img/credit-hero-4.jpg" alt=""></figure>
-        </div>
-        <div class="cr-hero__dots">
-          <button aria-label="1" class="dot is-active"></button>
-          <button aria-label="2" class="dot"></button>
-          <button aria-label="3" class="dot"></button>
-          <button aria-label="4" class="dot"></button>
-        </div>
-      </section>
+<section class="cr-hero anim" aria-label="Bộ ảnh tiêu đề">
+  <div class="cr-hero__stage" data-hero="main-slider">
+    <figure class="slide is-active">
+      <img src="img/vietforture-credit-main.jpg"
+           alt="Khách hàng tư vấn tín dụng VietForture">
+    </figure>
+
+    <figure class="slide">
+      <img src="img/vietforture-credit-office.jpg"
+           alt="Nhân viên VietForture làm việc tại văn phòng VietForture">
+    </figure>
+
+    <figure class="slide">
+      <img src="img/vietforture-home-dorm.jpg"
+           alt="Ký túc xá VietForture Home dành cho sinh viên">
+    </figure>
+
+    <figure class="slide">
+      <img src="img/vietforture-home-apartment.jpg"
+           alt="Căn hộ dịch vụ VietForture Home cho khách hàng">
+    </figure>
+  </div>
+  <div class="cr-hero__dots">
+    <button aria-label="1" class="dot is-active"></button>
+    <button aria-label="2" class="dot"></button>
+    <button aria-label="3" class="dot"></button>
+    <button aria-label="4" class="dot"></button>
+  </div>
+</section>
+
 
 
   <main id="main" class="container" tabindex="-1">
     <!-- HOME -->
-    <section id="view-home" class="view is-visible" role="tabpanel" aria-label="Trang chủ">
-      <div class="hero hero-bleed">
-        <div class="wm-giant" aria-hidden="true">
-          <div class="wm-track">
-            <span>VIETFORTURE</span><span>VIETFORTURE</span><span>VIETFORTURE</span>
-            <span>VIETFORTURE</span><span>VIETFORTURE</span><span>VIETFORTURE</span>
+        <section id="view-home" class="view is-visible" role="tabpanel" aria-label="Trang chủ">
+      <section class="vh4-home vh4-hero" aria-label="Trang chủ — Hero">
+        <div class="vh4-hero__bg" aria-hidden="true">
+          <div class="vh4-slides">
+            <figure class="vh4-slide is-active"><img alt="Credit — tư vấn minh bạch" src="https://images.unsplash.com/photo-1554224155-3a589877462e?q=80&w=1600&auto=format&fit=crop"/></figure>
+            <figure class="vh4-slide"><img alt="Credit — quy trình số hoá" src="https://images.unsplash.com/photo-1556745753-b2904692b3cd?q=80&w=1600&auto=format&fit=crop"/></figure>
+            <figure class="vh4-slide"><img alt="Home — căn hộ dịch vụ" src="https://images.unsplash.com/photo-1505691723518-36a5ac3b2d55?q=80&w=1600&auto=format&fit=crop"/></figure>
+            <figure class="vh4-slide"><img alt="Home — ký túc xá" src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?q=80&w=1600&auto=format&fit=crop"/></figure>
           </div>
+          <div class="vh4-hero__shade"></div>
         </div>
-        <div class="hero-inner">
-          <div class="vf-hero">
-            <div class="vf-wordmark">
-              <span class="word animate-in a-fadeUp" style="--a-delay:0ms">VIETFORTURE</span>
-              <div class="greet animate-in a-fadeUp" style="--a-delay:120ms">XIN CHÀO</div>
+
+        <div class="vh4-hero__content">
+          <div class="vh4-eyeline"><span class="vh4-eyeline__bar"></span><span class="vh4-eyeline__label">VIETFORTURE</span></div>
+          <h1 class="vh4-title">VIETFORTURE</h1>
+          <p class="vh4-lead">Nền tảng <b>Tín dụng</b> minh bạch và <b>Lưu trú</b> tiện nghi. Quy trình số hoá, phản hồi nhanh, trải nghiệm an toàn.</p>
+
+          <div class="vh4-search">
+            <label class="vh4-search__field" for="vh4SearchInput">
+              <svg class="vh4-search__ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79L20 21.5 21.5 20l-6-6zM9.5 14C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
+              <input id="vh4SearchInput" type="search" placeholder="Tín dụng, căn hộ dịch vụ, KTX..." autocomplete="off" />
+            </label>
+            <div id="vh4SearchPop" class="vh4-search-pop" role="dialog" aria-modal="false" aria-labelledby="vh4SearchTitle" aria-hidden="true">
+              <div class="pop-hd"><div id="vh4SearchTitle">Tìm kiếm</div><button class="vh4-pop-close" aria-label="Đóng">×</button></div>
+              <div class="pop-body">
+                <div class="vh4-sec-title">Từ khóa gần đây</div>
+                <div class="vh4-chips">
+                  <button class="vh4-chip" data-q="tín dụng">Tín dụng</button>
+                  <button class="vh4-chip" data-q="căn hộ dịch vụ">Căn hộ dịch vụ</button>
+                  <button class="vh4-chip" data-q="KTX">KTX</button>
+                  <button class="vh4-chip" data-q="lưu trú">Lưu trú</button>
+                </div>
+                <div class="vh4-sec-title">Danh mục</div>
+                <div class="vh4-catlist">
+                  <button class="vh4-cat" data-go="credit"><span class="vh4-cat-ico">₫</span><span><b>Tín dụng</b><br/><small>Vay tiêu dùng, doanh nghiệp, thẻ</small></span></button>
+                  <button class="vh4-cat" data-go="home"><span class="vh4-cat-ico">🏠</span><span><b>Lưu trú</b><br/><small>Căn hộ DV, Ký túc xá</small></span></button>
+                </div>
+              </div>
             </div>
           </div>
-          <button id="btn-show-about" class="cta-down ghost subtle animate-in a-pop" style="--a-delay:300ms" type="button" aria-controls="view-about" aria-label="Đến Giới thiệu">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
         </div>
-      </div>
+      </section>
+
+      <div class="vh4-bottom-reveal" data-nav="#about" aria-label="Xem thêm"><span class="txt">Xem thêm</span><span class="arr">↓</span></div>
     </section>
 
     <!-- ABOUT -->
@@ -967,9 +1008,30 @@
       <div class="panel-flat news-wrap">
         <h2 class="view-title">Tin Tức</h2>
         <div class="news-grid">
-          <a class="news-card animate-in a-fadeIn" href="#"><h3>Mẹo tối ưu chi phí email doanh nghiệp</h3><p>Tổng hợp cách chọn gói hợp lý.</p></a>
-          <a class="news-card animate-in a-fadeIn" style="--a-delay:120ms" href="#"><h3>Những điều cần biết trước khi thuê KTX</h3><p>Checklist cho tân sinh viên.</p></a>
-          <a class="news-card animate-in a-fadeIn" style="--a-delay:240ms" href="#"><h3>Tín dụng an toàn cho sinh viên</h3><p>Nguyên tắc 3 không – 3 có.</p></a>
+          <a class="news-card animate-in a-fadeIn" href="https://znews.vn/lai-suat-cho-vay-du-bao-tang-tro-lai-post1603207.html" target="_blank" rel="noopener">
+            <h3>Dự báo lãi suất cho vay tăng trở lại</h3>
+            <p>Báo cáo của VCBS phân tích xu hướng lãi suất huy động và cho vay cuối năm 2025.</p>
+          </a>
+          <a class="news-card animate-in a-fadeIn" href="https://vietnamnet.vn/lai-suat-ngan-hang-hom-nay-17-11-2025-lai-suat-huy-dong-len-cao-vut-2463355.html" target="_blank" rel="noopener" style="--a-delay:0.03s">
+            <h3>Tổng hợp lãi suất ngân hàng hôm nay 17/11</h3>
+            <p>Cập nhật bảng lãi suất huy động tại nhiều ngân hàng thương mại, so sánh mức cao nhất thị trường.</p>
+          </a>
+          <a class="news-card animate-in a-fadeIn" href="https://laodong.vn/tien-te-dau-tu/lai-suat-vietcombank-moi-nhat-gui-200-trieu-ve-tay-188-trieu-dong-1610261.ldo" target="_blank" rel="noopener" style="--a-delay:0.06s">
+            <h3>Lãi suất tiền gửi Vietcombank mới nhất</h3>
+            <p>Ví dụ thực tế số tiền lãi khi gửi tiết kiệm tại Vietcombank ở các kỳ hạn khác nhau.</p>
+          </a>
+          <a class="news-card animate-in a-fadeIn" href="https://www.agribank.com.vn/vn/khuyen-mai/khuyen-mai-ca-nhan/tin-dung-uu-dai/agribank-trien-khai-goi-tin-dung-5000-ty-dong-uu-dai-lai-suat-ho-tro-khach-hang-ca-nhan-khac-phuc-thiet-hai-do-bao-lu" target="_blank" rel="noopener" style="--a-delay:0.09s">
+            <h3>Agribank ưu đãi gói tín dụng 5.000 tỷ đồng</h3>
+            <p>Chương trình cho vay lãi suất thấp hỗ trợ khách hàng cá nhân khắc phục thiệt hại do bão lũ.</p>
+          </a>
+          <a class="news-card animate-in a-fadeIn" href="https://cafef.vn/nhieu-ngan-hang-giam-lai-suat-tiep-suc-khach-hang-phuc-hoi-sau-bao-lu-188251115184142108.chn" target="_blank" rel="noopener" style="--a-delay:0.12s">
+            <h3>Nhiều ngân hàng giảm lãi suất hỗ trợ khách hàng</h3>
+            <p>Tổng hợp các gói giảm lãi suất cho vay, cơ cấu nợ của ngân hàng sau thiên tai.</p>
+          </a>
+          <a class="news-card animate-in a-fadeIn" href="https://baochinhphu.vn/nhnn-yeu-cau-ngan-hang-giam-lai-suat-cho-vay-ho-tro-tang-truong-kinh-te-102250805105637032.htm" target="_blank" rel="noopener" style="--a-delay:0.15s">
+            <h3>NHNN chỉ đạo giảm lãi suất cho vay</h3>
+            <p>Ngân hàng Nhà nước yêu cầu các tổ chức tín dụng tiếp tục hạ lãi suất, hỗ trợ tăng trưởng kinh tế.</p>
+          </a>
         </div>
       </div>
     </section>
@@ -1377,7 +1439,158 @@
         </form>
       </div>
     </section>
-  </main>
+  
+  <!-- ===== VIEW: THÔNG BÁO ===== -->
+  <section id="view-thongbao" class="view" role="tabpanel" aria-labelledby="tab-thongbao">
+    <header class="nb-hero">
+      <div class="nb-hero__inner container">
+        <button class="btn link back" id="backBtn" aria-label="Quay lại dịch vụ">← Quay lại</button>
+        <div>
+          <h2 class="nb-title">Thông báo</h2>
+          <p class="nb-sub">Tin mới về Tín dụng và Lưu trú</p>
+        </div>
+        <div class="nb-actions">
+          <div class="nb-bell" aria-live="polite">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0 1 18 14.158V11a6 6 0 1 0-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 1 1-6 0v-1m6 0H9" stroke="#c1121f" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <span class="badge" id="nbCount">0</span>
+          </div>
+          <button class="btn ghost" id="markAll">Đánh dấu đã đọc</button>
+          <button class="btn" id="refreshBtn">Làm mới</button>
+        </div>
+      </div>
+      <div class="container">
+        <div class="filters" role="toolbar" aria-label="Bộ lọc">
+          <button class="chip" data-filter="all" aria-pressed="true">Tất cả</button>
+          <button class="chip" data-filter="unread">Chưa đọc</button>
+          <button class="chip" data-filter="pinned">Ghim</button>
+          <button class="chip" data-filter="credit" data-kind="credit"><span class="dot"></span> Tín dụng</button>
+          <button class="chip" data-filter="home" data-kind="home"><span class="dot"></span> Lưu trú</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="container nb-grid" id="nbGrid">
+      <aside class="list-card" aria-label="Danh sách thông báo">
+        <ul class="list" id="nbList"></ul>
+      </aside>
+      <article class="panel" aria-live="polite" id="nbPanel">
+        <div class="empty">Chọn một thông báo để xem chi tiết.</div>
+      </article>
+    </div>
+  </section>
+
+  
+  <section id="view-contact" class="view contact-view" role="tabpanel" aria-label="Liên hệ chúng tôi">
+    <div class="contact-shell container">
+      <header class="contact-header">
+        <div class="contact-header-main">
+          <p class="contact-kicker">Liên hệ chúng tôi</p>
+          <h1 class="contact-title">VIET FORTURE JOINT STOCK COMPANY (JSC)</h1>
+          <p class="contact-sub">
+            Mã số thuế <strong>0319086562</strong>
+            &nbsp;–&nbsp;<span class="contact-status">Đang hoạt động</span> (ngày cấp 05/08/2025).
+          </p>
+        </div>
+        <div class="contact-tags">
+          <span class="contact-tag contact-tag--solid">Công ty cổ phần</span>
+          <span class="contact-tag contact-tag--outline">VIETFORTURE</span>
+        </div>
+      </header>
+
+      <div class="contact-grid">
+        <div class="contact-col contact-col--left">
+          <section class="contact-block">
+            <h2 class="contact-block-title">Thông tin pháp lý</h2>
+            <p><strong>CÔNG TY CỔ PHẦN VIỆT THỊNH VƯỢNG</strong></p>
+            <p>Tên quốc tế: <strong>VIET FORTURE JOINT STOCK COMPANY (JSC)</strong></p>
+            <p>Tên viết tắt: <strong>VIETFORTURE</strong></p>
+            <p>Loại hình pháp lý: <strong>Công ty cổ phần</strong></p>
+            <p>
+              Địa chỉ trụ sở:
+              Lô Số A18-22, Số 10, Đường Số 13, KDC Nhơn Đức, Xã Nhà Bè,
+              Huyện Nhà Bè, Thành phố Hồ Chí Minh, Việt Nam.
+            </p>
+          </section>
+
+          <section class="contact-block contact-block--channels">
+            <h2 class="contact-block-title">Kênh liên hệ nhanh</h2>
+            <p><strong>Tín dụng</strong> – Tư vấn khoản vay cá nhân / doanh nghiệp.</p>
+            <p><strong>Lưu trú</strong> – Căn hộ dịch vụ &amp; ký túc xá sinh viên.</p>
+            <p><strong>Hợp tác</strong> – Đối tác tài chính, bất động sản, vận hành.</p>
+            <p>
+              Hotline hỗ trợ:
+              <strong>028 3782 2239</strong><br/>
+              Email:
+              <strong>vietforture@gmail.com</strong>
+            </p>
+          </section>
+
+          <section class="contact-block contact-block--form">
+            <h2 class="contact-block-title">Yêu cầu VietForture gọi lại</h2>
+            <p><small>Để lại thông tin, VietForture sẽ liên hệ trong thời gian sớm nhất.</small></p>
+            <form class="contact-form" action="#" method="post" novalidate>
+              <div class="contact-form-row">
+                <div class="field">
+                  <label for="cf_name">Họ và tên</label>
+                  <input id="cf_name" name="name" type="text" placeholder="Nguyễn Văn A" required />
+                </div>
+                <div class="field">
+                  <label for="cf_phone">Số điện thoại</label>
+                  <input id="cf_phone" name="phone" type="tel" placeholder="09xx xxx xxx" required />
+                </div>
+              </div>
+              <div class="contact-form-row">
+                <div class="field">
+                  <label for="cf_type">Nhu cầu</label>
+                  <select id="cf_type" name="type">
+                    <option value="">Chọn nhu cầu</option>
+                    <option value="credit">Tư vấn tín dụng</option>
+                    <option value="home">Lưu trú (căn hộ / KTX)</option>
+                    <option value="other">Khác</option>
+                  </select>
+                </div>
+              </div>
+              <div class="contact-form-actions">
+                <p class="contact-form-note">
+                  Bấm “Gửi yêu cầu” để VietForture liên hệ lại qua số điện thoại bạn cung cấp.
+                </p>
+                <button type="submit" class="btn primary">Gửi yêu cầu</button>
+              </div>
+            </form>
+          </section>
+        </div>
+
+        <div class="contact-col contact-col--right">
+          <section class="contact-map-card">
+            <div class="contact-map-header">
+              <div>
+                <h2 class="contact-block-title">Bản đồ trụ sở</h2>
+                <p class="contact-map-address">
+                  Lô Số A18-22, Số 10, Đường Số 13, KDC Nhơn Đức, Xã Nhà Bè, Huyện Nhà Bè, TP. Hồ Chí Minh.
+                </p>
+              </div>
+              <span>Google Maps</span>
+            </div>
+            <div class="contact-map-frame">
+              <iframe
+                src="https://www.google.com/maps?q=10.676793386752056,106.69023716654154&z=14&t=m&mapclient=embed&output=embed"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                allowfullscreen=""
+              ></iframe>
+            </div>
+            
+          </section>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<div class="toast" id="toast"><span id="toastMsg">Đã cập nhật</span><button class="btn ghost" id="toastClose">Đóng</button></div>
+
+</main>
 
   <!-- Modal: Thông tin job -->
   <div class="modal" id="jobInfoModal" aria-hidden="true" role="dialog" aria-labelledby="jobInfoTitle">
@@ -1765,4 +1978,3 @@ document.addEventListener('DOMContentLoaded', function(){
 
 </body>
 </html>
-
